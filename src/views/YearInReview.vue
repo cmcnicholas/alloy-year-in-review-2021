@@ -43,7 +43,6 @@ import SingleCard from '@/components/SingleCard.vue';
 import { AlloyError } from '@/models/AlloyError';
 import { State } from '@/store/State';
 import { formatNumber } from '@/utils/formatNumber';
-import { serialise } from '@/utils/serialise';
 import html2canvas from 'html2canvas';
 import { computed, defineComponent, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
