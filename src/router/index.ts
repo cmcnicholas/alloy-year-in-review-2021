@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import Calculating from '../views/Calculating.vue';
 import Failed from '../views/Failed.vue';
 import Login from '../views/Login.vue';
+import Customers from '../views/Customers.vue';
 import Start from '../views/Start.vue';
 import YearInReview from '../views/YearInReview.vue';
 
@@ -20,6 +21,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/login',
     name: 'Login',
     component: Login,
+  },
+  {
+    path: '/customers',
+    name: 'Customers',
+    component: Customers,
   },
   {
     path: '/calculating',

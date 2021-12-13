@@ -1,0 +1,27 @@
+/* eslint-disable */
+
+export enum BackgroundTaskType {
+  Bulk = 'Bulk',
+  RunWorkflow = 'RunWorkflow',
+  ImportInitialise = 'ImportInitialise',
+  ImportValidate = 'ImportValidate',
+  ImportCommit = 'ImportCommit',
+  ReportRunner = 'ReportRunner',
+  ConfigChanger = 'ConfigChanger',
+  Export = 'Export',
+  BulkFileDownload = 'BulkFileDownload',
+  CardCacher = 'CardCacher',
+  CustomerBoundingBoxBuilder = 'CustomerBoundingBoxBuilder',
+  ItemChangesProcessor = 'ItemChangesProcessor',
+  Janitor = 'Janitor',
+  MasterJanitor = 'MasterJanitor',
+  LayerBuildMonitor = 'LayerBuildMonitor',
+  LayerClusterBuilder = 'LayerClusterBuilder',
+  LayerBasicBuilder = 'LayerBasicBuilder',
+  LayerNetworkBuilder = 'LayerNetworkBuilder',
+  LayerClusterCleaner = 'LayerClusterCleaner',
+  LayerBasicCleaner = 'LayerBasicCleaner',
+  LayerNetworkCleaner = 'LayerNetworkCleaner',
+  Scheduler = 'Scheduler',
+  QuotaCalculator = 'QuotaCalculator',
+}

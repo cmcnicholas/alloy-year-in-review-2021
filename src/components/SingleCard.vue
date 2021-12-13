@@ -9,6 +9,7 @@
 </template>
 
 <script lang="ts">
+import { formatNumber } from '@/utils/formatNumber';
 import { computed, defineComponent } from 'vue';
 
 export default defineComponent({
@@ -60,7 +61,7 @@ export default defineComponent({
       color: props.color,
     }));
     const headerText = computed(() => props.header);
-    const valueText = computed(() => props.value);
+    const valueText = computed(() => (props.value ? formatNumber(props.value) : null));
 
     return {
       classes,

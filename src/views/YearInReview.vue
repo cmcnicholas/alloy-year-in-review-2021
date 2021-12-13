@@ -12,55 +12,16 @@
         >
       </p>
     </div>
-    <DottedPath />
-    <SingleCard
-      icon="icon-system-layers"
-      color="#ff7300"
-      header="You're using this many layers to manage your data, good job!"
-      value="1231"
-    />
-    <DottedPath flip="true" />
-    <SingleCard
-      icon="icon-system-workflow"
-      color="#99cf22"
-      header="This many workflows are automating your day to day tasks, what a timesaver!"
-      value="278"
-      flip="true"
-    />
-    <DottedPath />
-    <SingleCard
-      icon="icon-resource-job"
-      color="#df412c"
-      header="You created more than <strong>800</strong> jobs this year and managed a total of <strong>1.2k</strong>, 👏"
-    />
-    <DottedPath flip="true" />
-    <SingleCard
-      icon="icon-inspection"
-      color="#3d8fbd"
-      header="A total of <strong>652</strong> inspections were started this year and you processed <strong>1.9k</strong>, what an effort!"
-      flip="true"
-    />
-    <DottedPath />
-    <SingleCard
-      icon="icon-folder-files"
-      color="#7f44df"
-      header="Projects were managed this year, good job you have Alloy to help out!"
-      value="190"
-    />
-    <DottedPath flip="true" />
-    <SingleCard
-      icon="icon-budgets"
-      color="#da5aa7"
-      header="You guys created <strong>390</strong> assets this year, you now manage a total of <strong>1.9k</strong> with Alloy, neat 👌"
-      flip="true"
-    />
-    <DottedPath />
-    <SingleCard
-      icon="icon-import-done"
-      color="#0266a7"
-      header="You ran a bunch of imports this year, good stuff, keep em coming!"
-      value="56"
-    />
+    <section v-for="(card, index) in cards" :key="index">
+      <DottedPath :flip="index % 2 === 0" />
+      <SingleCard
+        :icon="card.icon"
+        :color="card.color"
+        :header="card.header"
+        :value="card.value"
+        :flip="index % 2 === 0"
+      />
+    </section>
     <div class="year-in-review__footer">
       <h3 class="year-in-review__footer-header">
         That's all for the Alloy 2021 Year in Review {{ customerName }}, Thanks for taking part and
@@ -77,10 +38,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { formatNumber } from '@/utils/formatNumber';
+import { computed, defineComponent, ref } from 'vue';
 import DottedPath from '@/components/DottedPath.vue';
 import SingleCard from '@/components/SingleCard.vue';
 import html2canvas from 'html2canvas';
+import { Store, useStore } from 'vuex';
+import { State } from '@/store/State';
 
 export default defineComponent({
   name: 'YearInReview',
@@ -89,7 +53,9 @@ export default defineComponent({
     SingleCard,
   },
   setup: () => {
-    const customerName = ref('Warwickshire CC');
+    const store = useStore<State>();
+
+    const customerName = ref(store.state.customerName);
     const shareUrl = ref('https://yearinreview2021.alloyapp.io/#/year-in-review/sjasdFjha86asdf');
     const root = ref<HTMLElement | null>(null);
     const onDownloadClick = async (e: MouseEvent) => {
@@ -103,14 +69,135 @@ export default defineComponent({
         downloadCanvasAsImage(canvas);
       }
     };
+
+    const cards = computed(() =>
+      [
+        layerCardInfo(store),
+        assetCardInfo(store),
+        jobCardInfo(store),
+        inspectionCardInfo(store),
+        workflowCardInfo(store),
+        projectCardInfo(store),
+        importCardInfo(store),
+      ].filter((card) => card !== null),
+    );
+
     return {
       root,
       shareUrl,
       customerName,
       onDownloadClick,
+      cards,
     };
   },
 });
+
+interface CardInfo {
+  icon: string;
+  color: string;
+  header: string;
+  value?: number;
+}
+
+function assetCardInfo(store: Store<State>): CardInfo | null {
+  if (store.state.assetsCreated === 0 && store.state.assetsManaged === 0) {
+    return null;
+  }
+
+  return {
+    icon: 'icon-budgets',
+    color: '#da5aa7',
+    header: `You guys created <strong>${formatNumber(
+      store.state.assetsCreated,
+    )}</strong> assets this year, you now manage a total of <strong>${formatNumber(
+      store.state.assetsManaged,
+    )}</strong> with Alloy, neat 👌`,
+  };
+}
+
+function importCardInfo(store: Store<State>): CardInfo | null {
+  if (store.state.importsProcessed === 0) {
+    return null;
+  }
+
+  return {
+    icon: 'icon-import-done',
+    color: '#0266a7',
+    header: `You ran a bunch of imports this year, good stuff, keep em coming!`,
+    value: store.state.importsProcessed,
+  };
+}
+
+function projectCardInfo(store: Store<State>): CardInfo | null {
+  if (store.state.projectsCreated === 0) {
+    return null;
+  }
+
+  return {
+    icon: 'icon-folder-files',
+    color: '#7f44df',
+    header: `Projects were created this year, good job you have Alloy to help out!`,
+    value: store.state.projectsCreated,
+  };
+}
+
+function workflowCardInfo(store: Store<State>): CardInfo | null {
+  if (store.state.workflowsActive === 0) {
+    return null;
+  }
+
+  return {
+    icon: 'icon-system-workflow',
+    color: '#99cf22',
+    header: `Workflows are automating your day to day tasks, what a timesaver!`,
+    value: store.state.workflowsActive,
+  };
+}
+
+function layerCardInfo(store: Store<State>): CardInfo | null {
+  if (store.state.layersManaged === 0) {
+    return null;
+  }
+
+  return {
+    icon: 'icon-system-layers',
+    color: '#ff7300',
+    header: `You're using this many layers to manage your data, good job!`,
+    value: store.state.layersManaged,
+  };
+}
+
+function inspectionCardInfo(store: Store<State>): CardInfo | null {
+  if (store.state.inspectionsCreated === 0 || store.state.inspectionsCompleted === 0) {
+    return null;
+  }
+
+  return {
+    icon: 'icon-inspection',
+    color: '#3d8fbd',
+    header: `A total of <strong>${formatNumber(
+      store.state.inspectionsCreated,
+    )}</strong> inspections were started this year and you processed <strong>${formatNumber(
+      store.state.inspectionsCompleted,
+    )}</strong>, what an effort!`,
+  };
+}
+
+function jobCardInfo(store: Store<State>): CardInfo | null {
+  if (store.state.jobsCreated === 0 || store.state.jobsCompleted === 0) {
+    return null;
+  }
+
+  return {
+    icon: 'icon-resource-job',
+    color: '#df412c',
+    header: `You created more than <strong>${formatNumber(
+      store.state.jobsCreated,
+    )}</strong> jobs this year and managed a total of <strong>${formatNumber(
+      store.state.jobsCompleted,
+    )}</strong>, 👏`,
+  };
+}
 
 function downloadCanvasAsImage(canvas: HTMLCanvasElement) {
   let canvasImage = canvas.toDataURL('image/png');

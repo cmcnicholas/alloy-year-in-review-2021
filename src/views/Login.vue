@@ -2,6 +2,7 @@
   <div class="login">
     <h2 class="login-title">Login so we can see your year in review</h2>
     <input
+      v-model="emailModel"
       class="login-entry login-entry--email"
       type="email"
       :name="emailName"
@@ -9,6 +10,7 @@
       placeholder="Email"
     />
     <input
+      v-model="passwordModel"
       class="login-entry login-entry--password"
       type="password"
       :name="passwordName"
@@ -21,7 +23,8 @@
 
 <script lang="ts">
 import { AlloyError } from '@/models/AlloyError';
-import { LoginPayload } from '@/store/actions/login';
+import { LoginPayload, LoginResult } from '@/store/actions/login';
+import { LoginCustomerPayload } from '@/store/actions/loginCustomer';
 import { State } from '@/store/State';
 import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -33,17 +36,19 @@ export default defineComponent({
     const router = useRouter();
     const store = useStore<State>();
 
+    const emailModel = ref('');
+    const passwordModel = ref('');
+
     const onLoginClick = async () => {
-      const payload: LoginPayload = {
-        email: '',
-        password: '',
-      };
+      let result: LoginResult;
 
       try {
-        await store.dispatch('login', payload);
-        router.push({
-          path: '/calculating',
-        });
+        const payload: LoginPayload = {
+          email: emailModel.value,
+          password: passwordModel.value,
+        };
+
+        result = await store.dispatch('login', payload);
       } catch (e) {
         store.commit(
           'setFailed',
@@ -52,13 +57,57 @@ export default defineComponent({
         router.push({
           path: '/failed',
         });
+        return;
       }
+
+      // special case for no customers
+      if (result.customers.length === 0) {
+        store.commit(
+          'setFailed',
+          new AlloyError(1639362405, 'your account does not have access to any customers'),
+        );
+        router.push({
+          path: '/failed',
+        });
+      }
+
+      // if we have 1 customer then go ahead
+      if (result.customers.length === 1) {
+        try {
+          const payload: LoginCustomerPayload = {
+            customerName: result.customers[0].name,
+            customerCode: result.customers[0].name,
+            token: result.token,
+          };
+          await store.dispatch('loginCustomer', payload);
+          router.push({
+            path: '/calculating',
+          });
+        } catch (e) {
+          store.commit(
+            'setFailed',
+            e instanceof AlloyError ? e : new AlloyError(1639362548, 'failed to login to customer'),
+          );
+          router.push({
+            path: '/failed',
+          });
+          return;
+        }
+      }
+
+      // otherwise we have more than 1 customer and we need to let the user choose
+      store.commit('setCustomers', result.customers);
+      router.push({
+        path: '/customers',
+      });
     };
 
     const emailName = ref(`login-email-${new Date().getTime()}-${Math.random()}`);
     const passwordName = ref(`login-password-${new Date().getTime()}-${Math.random()}`);
 
     return {
+      emailModel,
+      passwordModel,
       emailName,
       passwordName,
       onLoginClick,

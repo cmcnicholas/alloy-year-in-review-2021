@@ -2,6 +2,12 @@ import { AlloyError } from '@/models/AlloyError';
 
 export interface State {
   token: string | null;
+  customers: Array<{
+    code: string;
+    name: string;
+  }>;
+  customerCode: string;
+  customerName: string;
   failed: AlloyError | null;
   loaded: boolean;
   jobsCreated: number;
@@ -10,11 +16,9 @@ export interface State {
   inspectionsCompleted: number;
   projectsCreated: number;
   defectsRaised: number;
-  layersCreated: number;
   layersManaged: number;
   assetsCreated: number;
   assetsManaged: number;
   importsProcessed: number;
   workflowsActive: number;
-  workflowsRan: number;
 }
