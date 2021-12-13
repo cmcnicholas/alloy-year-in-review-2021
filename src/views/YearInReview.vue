@@ -104,14 +104,23 @@ function assetCardInfo(store: Store<State>): CardInfo | null {
     return null;
   }
 
-  return {
-    icon: 'icon-budgets',
-    color: '#da5aa7',
-    header: `You guys created <strong>${formatNumber(
+  let header = '';
+  if (store.state.assetsCreated === 0) {
+    header = `You didn't create any assets this year 😢, but you still manage a total of <strong>${formatNumber(
+      store.state.assetsManaged,
+    )}</strong> with Alloy, neat 👌`;
+  } else {
+    header = `You guys created <strong>${formatNumber(
       store.state.assetsCreated,
     )}</strong> assets this year, you now manage a total of <strong>${formatNumber(
       store.state.assetsManaged,
-    )}</strong> with Alloy, neat 👌`,
+    )}</strong> with Alloy, neat 👌`;
+  }
+
+  return {
+    icon: 'icon-budgets',
+    color: '#da5aa7',
+    header,
   };
 }
 
@@ -168,34 +177,60 @@ function layerCardInfo(store: Store<State>): CardInfo | null {
 }
 
 function inspectionCardInfo(store: Store<State>): CardInfo | null {
-  if (store.state.inspectionsCreated === 0 || store.state.inspectionsCompleted === 0) {
+  if (store.state.inspectionsCreated === 0 && store.state.inspectionsCompleted === 0) {
     return null;
+  }
+
+  let header = '';
+  if (store.state.inspectionsCreated === 0) {
+    header = `You didn't start any new inspections this year but you processed <strong>${formatNumber(
+      store.state.inspectionsCompleted,
+    )}</strong>, what an effort!`;
+  } else if (store.state.inspectionsCompleted === 0) {
+    header = `A total of <strong>${formatNumber(
+      store.state.inspectionsCreated,
+    )}</strong> inspections were started this year, what an effort!`;
+  } else {
+    header = `A total of <strong>${formatNumber(
+      store.state.inspectionsCreated,
+    )}</strong> inspections were started this year and you processed <strong>${formatNumber(
+      store.state.inspectionsCompleted,
+    )}</strong>, what an effort!`;
   }
 
   return {
     icon: 'icon-inspection',
     color: '#3d8fbd',
-    header: `A total of <strong>${formatNumber(
-      store.state.inspectionsCreated,
-    )}</strong> inspections were started this year and you processed <strong>${formatNumber(
-      store.state.inspectionsCompleted,
-    )}</strong>, what an effort!`,
+    header,
   };
 }
 
 function jobCardInfo(store: Store<State>): CardInfo | null {
-  if (store.state.jobsCreated === 0 || store.state.jobsCompleted === 0) {
+  if (store.state.jobsCreated === 0 && store.state.jobsCompleted === 0) {
     return null;
+  }
+
+  let header = '';
+  if (store.state.jobsCreated === 0) {
+    header = `Looks like you didn't start any new jobs this year, but you managed <strong>${formatNumber(
+      store.state.jobsCompleted,
+    )}</strong>, 👏`;
+  } else if (store.state.jobsCompleted === 0) {
+    header = `You created more than <strong>${formatNumber(
+      store.state.jobsCreated,
+    )}</strong> jobs this year, 👏`;
+  } else {
+    header = `You created more than <strong>${formatNumber(
+      store.state.jobsCreated,
+    )}</strong> jobs this year and managed a total of <strong>${formatNumber(
+      store.state.jobsCompleted,
+    )}</strong>, 👏`;
   }
 
   return {
     icon: 'icon-resource-job',
     color: '#df412c',
-    header: `You created more than <strong>${formatNumber(
-      store.state.jobsCreated,
-    )}</strong> jobs this year and managed a total of <strong>${formatNumber(
-      store.state.jobsCompleted,
-    )}</strong>, 👏`,
+    header,
   };
 }
 

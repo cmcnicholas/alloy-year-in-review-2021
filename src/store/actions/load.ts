@@ -10,6 +10,7 @@ import { ActionContext } from 'vuex';
 import { State } from '../State';
 
 const StartOfYearObjectId = '5fee66000000000000000000';
+const EndOfYearObjectId = '61cf99800000000000000000';
 
 export async function load(context: ActionContext<State, State>): Promise<void> {
   await loadAssets(context);
@@ -21,12 +22,10 @@ export async function load(context: ActionContext<State, State>): Promise<void> 
   await loadImports(context);
   await randomWait();
 
-  context.state.inspectionsCompleted = 27899;
-  context.state.inspectionsCreated = 12889;
+  await loadInspections(context);
   await randomWait();
 
-  context.state.jobsCompleted = 29881;
-  context.state.jobsCreated = 2309;
+  await loadJobs(context);
   await randomWait();
 
   await loadLayers(context);
@@ -54,14 +53,9 @@ function getAqsService(context: ActionContext<State, State>): AqsService {
   });
 }
 
-async function loadAssets(context: ActionContext<State, State>): Promise<void> {
-  context.state.assetsCreated = await getAqsCountResult(context, {
-    type: AqsItemType.StatisticsAggregation,
-    properties: {
-      dodiCode: 'designInterfaces_assets',
-      collectionCode: ['Live'],
-      aggregationType: 'Count',
-    },
+function aqsDateRange(): AqsJsonNode {
+  return {
+    type: AqsItemType.And,
     children: [
       {
         type: AqsItemType.GreaterThan,
@@ -80,7 +74,36 @@ async function loadAssets(context: ActionContext<State, State>): Promise<void> {
           },
         ],
       },
+      {
+        type: AqsItemType.LessThan,
+        children: [
+          {
+            type: AqsItemType.ItemProperty,
+            properties: {
+              itemPropertyName: 'itemId',
+            },
+          },
+          {
+            type: AqsItemType.AlloyId,
+            properties: {
+              value: [EndOfYearObjectId],
+            },
+          },
+        ],
+      },
     ],
+  };
+}
+
+async function loadAssets(context: ActionContext<State, State>): Promise<void> {
+  context.state.assetsCreated = await getAqsCountResult(context, {
+    type: AqsItemType.StatisticsAggregation,
+    properties: {
+      dodiCode: 'designInterfaces_assets',
+      collectionCode: ['Live'],
+      aggregationType: 'Count',
+    },
+    children: [aqsDateRange()],
   });
   context.state.assetsManaged = await getAqsCountResult(context, {
     type: AqsItemType.StatisticsAggregation,
@@ -92,6 +115,98 @@ async function loadAssets(context: ActionContext<State, State>): Promise<void> {
   });
 }
 
+async function loadInspections(context: ActionContext<State, State>): Promise<void> {
+  context.state.inspectionsCreated = await getAqsCountResult(context, {
+    type: AqsItemType.StatisticsAggregation,
+    properties: {
+      dodiCode: 'designInterfaces_inspections',
+      collectionCode: ['Live'],
+      aggregationType: 'Count',
+    },
+    children: [aqsDateRange()],
+  });
+  context.state.inspectionsCompleted = await getAqsCountResult(context, {
+    type: AqsItemType.StatisticsAggregation,
+    properties: {
+      dodiCode: 'designInterfaces_inspections',
+      collectionCode: ['Live'],
+      aggregationType: 'Count',
+    },
+    children: [
+      {
+        type: AqsItemType.And,
+        children: [
+          aqsDateRange(),
+          {
+            type: AqsItemType.Equals,
+            children: [
+              {
+                type: AqsItemType.Attribute,
+                properties: {
+                  attributeCode: 'attributes_taskStatusTypesTreatAs',
+                  path: 'root.attributes_tasksStatus.attributes_taskStatusesStatusType',
+                },
+              },
+              {
+                type: AqsItemType.String,
+                properties: {
+                  value: ['Closed'],
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  });
+}
+
+async function loadJobs(context: ActionContext<State, State>): Promise<void> {
+  context.state.jobsCreated = await getAqsCountResult(context, {
+    type: AqsItemType.StatisticsAggregation,
+    properties: {
+      dodiCode: 'designInterfaces_jobs',
+      collectionCode: ['Live'],
+      aggregationType: 'Count',
+    },
+    children: [aqsDateRange()],
+  });
+  context.state.jobsCompleted = await getAqsCountResult(context, {
+    type: AqsItemType.StatisticsAggregation,
+    properties: {
+      dodiCode: 'designInterfaces_jobs',
+      collectionCode: ['Live'],
+      aggregationType: 'Count',
+    },
+    children: [
+      {
+        type: AqsItemType.And,
+        children: [
+          aqsDateRange(),
+          {
+            type: AqsItemType.Equals,
+            children: [
+              {
+                type: AqsItemType.Attribute,
+                properties: {
+                  attributeCode: 'attributes_taskStatusTypesTreatAs',
+                  path: 'root.attributes_tasksStatus.attributes_taskStatusesStatusType',
+                },
+              },
+              {
+                type: AqsItemType.String,
+                properties: {
+                  value: ['Closed'],
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  });
+}
+
 async function loadProjects(context: ActionContext<State, State>): Promise<void> {
   context.state.projectsCreated = await getAqsCountResult(context, {
     type: AqsItemType.StatisticsAggregation,
@@ -100,25 +215,7 @@ async function loadProjects(context: ActionContext<State, State>): Promise<void>
       collectionCode: ['Live'],
       aggregationType: 'Count',
     },
-    children: [
-      {
-        type: AqsItemType.GreaterThan,
-        children: [
-          {
-            type: AqsItemType.ItemProperty,
-            properties: {
-              itemPropertyName: 'itemId',
-            },
-          },
-          {
-            type: AqsItemType.AlloyId,
-            properties: {
-              value: [StartOfYearObjectId],
-            },
-          },
-        ],
-      },
-    ],
+    children: [aqsDateRange()],
   });
 }
 
@@ -130,25 +227,7 @@ async function loadDefects(context: ActionContext<State, State>): Promise<void> 
       collectionCode: ['Live'],
       aggregationType: 'Count',
     },
-    children: [
-      {
-        type: AqsItemType.GreaterThan,
-        children: [
-          {
-            type: AqsItemType.ItemProperty,
-            properties: {
-              itemPropertyName: 'itemId',
-            },
-          },
-          {
-            type: AqsItemType.AlloyId,
-            properties: {
-              value: [StartOfYearObjectId],
-            },
-          },
-        ],
-      },
-    ],
+    children: [aqsDateRange()],
   });
 }
 
