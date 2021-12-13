@@ -38,13 +38,16 @@
 </template>
 
 <script lang="ts">
-import { formatNumber } from '@/utils/formatNumber';
-import { computed, defineComponent, ref } from 'vue';
 import DottedPath from '@/components/DottedPath.vue';
 import SingleCard from '@/components/SingleCard.vue';
-import html2canvas from 'html2canvas';
-import { Store, useStore } from 'vuex';
+import { AlloyError } from '@/models/AlloyError';
 import { State } from '@/store/State';
+import { formatNumber } from '@/utils/formatNumber';
+import { serialise } from '@/utils/serialise';
+import html2canvas from 'html2canvas';
+import { computed, defineComponent, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { Store, useStore } from 'vuex';
 
 export default defineComponent({
   name: 'YearInReview',
@@ -53,10 +56,31 @@ export default defineComponent({
     SingleCard,
   },
   setup: () => {
+    const router = useRouter();
+    const route = useRoute();
     const store = useStore<State>();
 
+    // if we haven't loaded (we came from deep link) then load the data
+    if (!store.state.loaded) {
+      try {
+        // it will either pass or throw, everything should be reactive
+        store.commit('setFromShare', route.params.share);
+      } catch (e) {
+        store.commit(
+          'setFailed',
+          e instanceof AlloyError
+            ? e
+            : new AlloyError(1639389386, 'failed to deserialise from share'),
+        );
+        router.push({
+          path: '/failed',
+        });
+        return;
+      }
+    }
+
     const customerName = ref(store.state.customerName);
-    const shareUrl = ref('https://yearinreview2021.alloyapp.io/#/year-in-review/sjasdFjha86asdf');
+    const shareUrl = ref(window.location.href);
     const root = ref<HTMLElement | null>(null);
     const onDownloadClick = async (e: MouseEvent) => {
       e.preventDefault();

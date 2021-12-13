@@ -4,6 +4,7 @@ import { login } from './actions/login';
 import { loginCustomer } from './actions/loginCustomer';
 import { setCustomers } from './mutations/setCustomers';
 import { setFailed } from './mutations/setFailed';
+import { setFromShare } from './mutations/setFromShare';
 import { State } from './State';
 
 export default createStore<State>({
@@ -29,6 +30,7 @@ export default createStore<State>({
   mutations: {
     setFailed,
     setCustomers,
+    setFromShare,
   },
   actions: {
     login,

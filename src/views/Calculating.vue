@@ -7,6 +7,7 @@
 <script lang="ts">
 import { AlloyError } from '@/models/AlloyError';
 import { State } from '@/store/State';
+import { serialise } from '@/utils/serialise';
 import { defineComponent, ref, computed, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
@@ -40,8 +41,9 @@ export default defineComponent({
     watch(
       () => store.state.loaded,
       () => {
+        const serialised = serialise(store.state);
         router.push({
-          path: '/year-in-review',
+          path: `/year-in-review/${serialised}`,
         });
       },
     );

@@ -33,7 +33,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Calculating,
   },
   {
-    path: '/year-in-review',
+    path: '/year-in-review/:share',
     name: 'YearInReview',
     component: YearInReview,
   },
