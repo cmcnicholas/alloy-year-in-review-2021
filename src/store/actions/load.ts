@@ -5,6 +5,7 @@ import { AqsServiceDefault } from '@/api/services/AqsServiceDefault';
 import { ImportServiceDefault } from '@/api/services/ImportServiceDefault';
 import { LayerServiceDefault } from '@/api/services/LayerServiceDefault';
 import { WorkflowServiceDefault } from '@/api/services/WorkflowServiceDefault';
+import { getApiName } from '@/utils/getApiName';
 import { getApiUrl } from '@/utils/getApiUrl';
 import { ActionContext } from 'vuex';
 import { State } from '../State';
@@ -46,7 +47,7 @@ async function randomWait(): Promise<void> {
 
 function getAqsService(context: ActionContext<State, State>): AqsService {
   return new AqsServiceDefault({
-    baseUrl: getApiUrl(),
+    baseUrl: getApiUrl(getApiName()),
     defaultHeaders: {
       token: context.state.token ?? 'unknown',
     },
@@ -234,7 +235,7 @@ async function loadDefects(context: ActionContext<State, State>): Promise<void> 
 async function loadWorkflows(context: ActionContext<State, State>): Promise<void> {
   try {
     const service = new WorkflowServiceDefault({
-      baseUrl: getApiUrl(),
+      baseUrl: getApiUrl(getApiName()),
       defaultHeaders: {
         token: context.state.token ?? 'unknown',
       },
@@ -250,7 +251,7 @@ async function loadWorkflows(context: ActionContext<State, State>): Promise<void
 async function loadImports(context: ActionContext<State, State>): Promise<void> {
   try {
     const service = new ImportServiceDefault({
-      baseUrl: getApiUrl(),
+      baseUrl: getApiUrl(getApiName()),
       defaultHeaders: {
         token: context.state.token ?? 'unknown',
       },
@@ -266,7 +267,7 @@ async function loadImports(context: ActionContext<State, State>): Promise<void> 
 async function loadLayers(context: ActionContext<State, State>): Promise<void> {
   try {
     const service = new LayerServiceDefault({
-      baseUrl: getApiUrl(),
+      baseUrl: getApiUrl(getApiName()),
       defaultHeaders: {
         token: context.state.token ?? 'unknown',
       },

@@ -184,22 +184,32 @@ const quotes = [
   {
     quote: `Did you know the Babylonians invented "New Years"? Yet they didn't build Alloy!`,
     foreground: 'right-smile',
+    background: '',
+  },
+  {
+    quote: '"Pleasure in the job puts perfection in the work." - Arisbotle',
+    foreground: 'left-big-smile',
     background: 'buildings',
   },
   {
-    quote: '"I know some things, I can, you know, do math and stuff." - Harry Botter',
-    foreground: 'left-big-smile',
+    quote: '"The only way to do great work is to love what you do." - Steve Bots',
+    foreground: 'right-smile',
     background: '',
   },
   {
     quote:
       '"Life is like riding a bicycle. To keep your balance, you must keep moving." - Albot Einstein',
     foreground: 'front-smile',
+    background: '',
+  },
+  {
+    quote: '"Time toooo, say goodbyeee" (to 2021) - Andrea Botcelli',
+    foreground: 'right-smirk',
     background: 'buildings',
   },
   {
-    quote: '"Time toooo, say goodbyeee" - Andrea Botcelli',
-    foreground: 'right-smirk',
+    quote: '"I know some things, I can, you know, do math and stuff." - Harry Botter',
+    foreground: 'left-big-smile',
     background: '',
   },
 ];
@@ -350,7 +360,7 @@ function defectCardInfo(store: Store<State>): CardInfo | null {
 
   return {
     icon: 'icon-defect',
-    color: '#feeb4d',
+    color: '#e74444',
     header,
   };
 }

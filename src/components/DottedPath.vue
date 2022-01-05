@@ -76,6 +76,7 @@ export default defineComponent({
     background: white;
     margin-left: -50px;
     font-size: 16px;
+    line-height: 24px;
   }
 }
 </style>

@@ -1,6 +1,7 @@
 import { ApiOptions } from '@/api/core/ApiOptions';
 import { SessionServiceDefault } from '@/api/services/SessionServiceDefault';
 import { AlloyError } from '@/models/AlloyError';
+import { getApiName } from '@/utils/getApiName';
 import { getApiUrl } from '@/utils/getApiUrl';
 import { ActionContext } from 'vuex';
 import { State } from '../State';
@@ -16,7 +17,7 @@ export async function loginCustomer(
   payload: LoginCustomerPayload,
 ): Promise<void> {
   const options: ApiOptions = {
-    baseUrl: getApiUrl(),
+    baseUrl: getApiUrl(getApiName()),
     defaultHeaders: {
       token: payload.token,
     },
