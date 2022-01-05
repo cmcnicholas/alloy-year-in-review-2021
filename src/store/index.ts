@@ -2,6 +2,7 @@ import { createStore } from 'vuex';
 import { load } from './actions/load';
 import { login } from './actions/login';
 import { loginCustomer } from './actions/loginCustomer';
+import { verifySession } from './actions/verifySession';
 import { setCustomers } from './mutations/setCustomers';
 import { setFailed } from './mutations/setFailed';
 import { setFromShare } from './mutations/setFromShare';
@@ -36,6 +37,7 @@ export default createStore<State>({
     login,
     loginCustomer,
     load,
+    verifySession,
   },
   modules: {},
 });

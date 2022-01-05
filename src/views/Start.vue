@@ -8,17 +8,75 @@
       title="2021 Year in review - Alloy"
       width="300"
     />
-    <router-link class="start-link" to="Login">Let's get started!</router-link>
+    <div class="start-bottom">
+      <Botty class="start-bottom-botty" foreground="left-big-smile" />
+      <router-link v-if="!checking" class="start-link" to="Login">Let's get started!</router-link>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import Botty from '@/components/Botty.vue';
+import { State } from '@/store/State';
+import confetti from 'canvas-confetti';
+import { defineComponent, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 export default defineComponent({
   name: 'Start',
+  components: {
+    Botty,
+  },
   setup: () => {
-    return {};
+    const router = useRouter();
+    const route = useRoute();
+    const store = useStore<State>();
+    const checking = ref(false);
+
+    async function checkDeepLinkToken(token: string): Promise<void> {
+      checking.value = true;
+
+      try {
+        await store.dispatch('verifySession', token);
+        router.push({
+          path: `/calculating`,
+        });
+      } catch (e) {
+        console.log('failed to shortcut session token', e);
+      } finally {
+        checking.value = false;
+      }
+    }
+
+    // check the deep linking
+    if (route.query.token && typeof route.query.token === 'string') {
+      checkDeepLinkToken(route.query.token);
+    }
+
+    return {
+      checking,
+    };
+  },
+  mounted: () => {
+    setTimeout(() => {
+      confetti({
+        angle: 0,
+        spread: 90,
+        origin: {
+          x: 0,
+          y: 0,
+        },
+      });
+      confetti({
+        angle: 180,
+        spread: 90,
+        origin: {
+          x: 1,
+          y: 0,
+        },
+      });
+    }, 200);
   },
 });
 </script>
@@ -60,11 +118,27 @@ export default defineComponent({
   text-transform: uppercase;
 }
 
-.start-link {
+.start-bottom {
   position: absolute;
-  bottom: -40px;
-  left: 50%;
-  transform: translate(-50%, 0);
+  width: 100%;
+  height: 100px;
+  left: 0;
+  bottom: -120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.start-link {
   color: #25aae1;
+  padding: 20px;
+  background: white;
+  margin-left: -5px;
+  text-decoration: none;
+}
+
+.start-bottom-botty {
+  width: 100px;
+  height: 100px;
 }
 </style>

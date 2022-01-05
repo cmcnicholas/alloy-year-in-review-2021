@@ -1,6 +1,13 @@
 <template>
   <div ref="root" class="year-in-review">
     <div class="year-in-review__customer">
+      <img
+        class="year-in-review__logo"
+        src="../assets/alloy.svg"
+        alt="2021 Year in review - Alloy"
+        title="2021 Year in review - Alloy"
+        width="300"
+      />
       <h1 class="year-in-review__customer-header">{{ customerName }}, 2021 Alloy Year In Review</h1>
       <p class="year-in-review__customer-text">
         Here it is, your personalised review of 2021 using Alloy, scroll down and enjoy!<br />Don't
@@ -13,7 +20,12 @@
       </p>
     </div>
     <section v-for="(card, index) in cards" :key="index">
-      <DottedPath :flip="index % 2 === 0" />
+      <DottedPath
+        :flip="index % 2 === 0"
+        :quote="card.quote"
+        :foreground="card.foreground"
+        :background="card.background"
+      />
       <SingleCard
         :icon="card.icon"
         :color="card.color"
@@ -22,11 +34,18 @@
         :flip="index % 2 === 0"
       />
     </section>
+    <div v-if="cards.length === 0" class="year-in-review__not-found">
+      Sorry, it doesn't look like you've used Alloy much during 2021, but you can do better for
+      2022!
+    </div>
     <div class="year-in-review__footer">
-      <h3 class="year-in-review__footer-header">
-        That's all for the Alloy 2021 Year in Review {{ customerName }}, Thanks for taking part and
-        have a happy new year! 👋👋👋
-      </h3>
+      <div class="year-in-review__footer-container">
+        <Botty />
+        <h3 class="year-in-review__footer-header">
+          That's all for the Alloy 2021 Year in Review {{ customerName }}, Thanks for taking part
+          and have a happy new year! 👋👋👋
+        </h3>
+      </div>
       <p class="year-in-review__footer-text">
         All data used in this infographic is processed using your Alloy session, no sensitive
         information is requested and only data visible to the account processor is used. If
@@ -40,6 +59,7 @@
 <script lang="ts">
 import DottedPath from '@/components/DottedPath.vue';
 import SingleCard from '@/components/SingleCard.vue';
+import Botty from '@/components/Botty.vue';
 import { AlloyError } from '@/models/AlloyError';
 import { State } from '@/store/State';
 import { formatNumber } from '@/utils/formatNumber';
@@ -47,12 +67,14 @@ import html2canvas from 'html2canvas';
 import { computed, defineComponent, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { Store, useStore } from 'vuex';
+import confetti from 'canvas-confetti';
 
 export default defineComponent({
   name: 'YearInReview',
   components: {
     DottedPath,
     SingleCard,
+    Botty,
   },
   setup: () => {
     const router = useRouter();
@@ -93,17 +115,30 @@ export default defineComponent({
       }
     };
 
-    const cards = computed(() =>
-      [
+    const cards = computed(() => {
+      const data = [
         layerCardInfo(store),
         assetCardInfo(store),
         jobCardInfo(store),
         inspectionCardInfo(store),
+        defectCardInfo(store),
         workflowCardInfo(store),
         projectCardInfo(store),
         importCardInfo(store),
-      ].filter((card) => card !== null),
-    );
+      ].filter((card) => card !== null);
+
+      // add quotes
+      data.forEach((card, index) => {
+        if (card && index % 2 === 1) {
+          const i = Math.floor(index / 2);
+          card.quote = quotes[i]?.quote;
+          card.foreground = quotes[i]?.foreground;
+          card.background = quotes[i]?.background;
+        }
+      });
+
+      return data;
+    });
 
     return {
       root,
@@ -113,6 +148,26 @@ export default defineComponent({
       cards,
     };
   },
+  mounted: () => {
+    setTimeout(() => {
+      confetti({
+        angle: 0,
+        spread: 90,
+        origin: {
+          x: 0,
+          y: 0,
+        },
+      });
+      confetti({
+        angle: 180,
+        spread: 90,
+        origin: {
+          x: 1,
+          y: 0,
+        },
+      });
+    }, 200);
+  },
 });
 
 interface CardInfo {
@@ -120,7 +175,34 @@ interface CardInfo {
   color: string;
   header: string;
   value?: number;
+  quote?: string;
+  foreground?: string;
+  background?: string;
 }
+
+const quotes = [
+  {
+    quote: `Did you know the Babylonians invented "New Years"? Yet they didn't build Alloy!`,
+    foreground: 'right-smile',
+    background: 'buildings',
+  },
+  {
+    quote: '"I know some things, I can, you know, do math and stuff." - Harry Botter',
+    foreground: 'left-big-smile',
+    background: '',
+  },
+  {
+    quote:
+      '"Life is like riding a bicycle. To keep your balance, you must keep moving." - Albot Einstein',
+    foreground: 'front-smile',
+    background: 'buildings',
+  },
+  {
+    quote: '"Time toooo, say goodbyeee" - Andrea Botcelli',
+    foreground: 'right-smirk',
+    background: '',
+  },
+];
 
 function assetCardInfo(store: Store<State>): CardInfo | null {
   if (store.state.assetsCreated === 0 && store.state.assetsManaged === 0) {
@@ -194,7 +276,7 @@ function layerCardInfo(store: Store<State>): CardInfo | null {
   return {
     icon: 'icon-system-layers',
     color: '#ff7300',
-    header: `You're using this many layers to manage your data, good job!`,
+    header: `You're using this many layers to visualise your data, good job!`,
     value: store.state.layersManaged,
   };
 }
@@ -257,6 +339,22 @@ function jobCardInfo(store: Store<State>): CardInfo | null {
   };
 }
 
+function defectCardInfo(store: Store<State>): CardInfo | null {
+  if (store.state.defectsRaised === 0) {
+    return null;
+  }
+
+  const header = `<strong>${formatNumber(
+    store.state.defectsRaised,
+  )}</strong> defects were identified this year, 🎉`;
+
+  return {
+    icon: 'icon-defect',
+    color: '#feeb4d',
+    header,
+  };
+}
+
 function downloadCanvasAsImage(canvas: HTMLCanvasElement) {
   let canvasImage = canvas.toDataURL('image/png');
 
@@ -279,6 +377,10 @@ function downloadCanvasAsImage(canvas: HTMLCanvasElement) {
 
 <style lang="less">
 .year-in-review {
+  &__logo {
+    margin-bottom: 10px;
+  }
+
   &__customer {
     width: 800px;
     padding: 40px;
@@ -327,10 +429,28 @@ function downloadCanvasAsImage(canvas: HTMLCanvasElement) {
     }
   }
 
+  &__not-found {
+    width: 800px;
+    margin: 200px auto 100px;
+    text-align: center;
+
+    text-align: center;
+    color: #0e4677;
+    font-weight: 100;
+    font-size: 35px;
+    line-height: 50px;
+    text-transform: uppercase;
+  }
+
   &__footer {
     width: 800px;
     margin: 200px auto 100px;
     text-align: center;
+  }
+
+  &__footer-container {
+    display: flex;
+    flex-shrink: 0;
   }
 
   &__footer-header {
@@ -340,6 +460,7 @@ function downloadCanvasAsImage(canvas: HTMLCanvasElement) {
     font-size: 35px;
     line-height: 50px;
     text-transform: uppercase;
+    width: 600px;
   }
 
   &__footer-text {
