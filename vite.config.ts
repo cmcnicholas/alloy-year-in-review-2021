@@ -3,15 +3,9 @@ import { defineConfig } from 'vite';
 import path from 'path';
 
 export default defineConfig({
-  plugins: [
-    vue(),
-  ],
+  plugins: [vue()],
   optimizeDeps: {
-    include: [
-      'vue',
-      'vue-router',
-      'vuex',
-    ]
+    include: ['vue', 'vue-router', 'vuex'],
   },
   resolve: {
     alias: {

@@ -4,74 +4,74 @@
       <img
         v-if="bg === 'buildings'"
         class="botty__background"
-        src="../assets/bot/secondary-blue-bg-buildings.svg"
+        src="../assets/bot/secondary-blue-bg-buildings.png"
         alt="Botty background"
       />
       <img
         v-else
         class="botty__background"
-        src="../assets/bot/grey-bg-pattern.svg"
+        src="../assets/bot/grey-bg-pattern.png"
         alt="Botty background"
       />
 
       <img
         v-if="fg === 'front-big-smile'"
         class="botty__foreground"
-        src="../assets/bot/alloybot-front-big-smile.svg"
+        src="../assets/bot/alloybot-front-big-smile.png"
         alt="Botty"
       />
       <img
         v-else-if="fg === 'front-smile'"
         class="botty__foreground"
-        src="../assets/bot/alloybot-front-smile.svg"
+        src="../assets/bot/alloybot-front-smile.png"
         alt="Botty"
       />
       <img
         v-else-if="fg === 'front-smirk'"
         class="botty__foreground"
-        src="../assets/bot/alloybot-front-smirk.svg"
+        src="../assets/bot/alloybot-front-smirk.png"
         alt="Botty"
       />
       <img
         v-else-if="fg === 'left-big-smile'"
         class="botty__foreground"
-        src="../assets/bot/alloybot-offset-left-big-smile.svg"
+        src="../assets/bot/alloybot-offset-left-big-smile.png"
         alt="Botty"
       />
       <img
         v-else-if="fg === 'left-smile'"
         class="botty__foreground"
-        src="../assets/bot/alloybot-offset-left-smile.svg"
+        src="../assets/bot/alloybot-offset-left-smile.png"
         alt="Botty"
       />
       <img
         v-else-if="fg === 'left-smirk'"
         class="botty__foreground"
-        src="../assets/bot/alloybot-offset-left-smirk.svg"
+        src="../assets/bot/alloybot-offset-left-smirk.png"
         alt="Botty"
       />
       <img
         v-else-if="fg === 'right-big-smile'"
         class="botty__foreground"
-        src="../assets/bot/alloybot-offset-right-big-smile.svg"
+        src="../assets/bot/alloybot-offset-right-big-smile.png"
         alt="Botty"
       />
       <img
         v-else-if="fg === 'right-smile'"
         class="botty__foreground"
-        src="../assets/bot/alloybot-offset-right-smile.svg"
+        src="../assets/bot/alloybot-offset-right-smile.png"
         alt="Botty"
       />
       <img
         v-else-if="fg === 'right-smirk'"
         class="botty__foreground"
-        src="../assets/bot/alloybot-offset-right-smirk.svg"
+        src="../assets/bot/alloybot-offset-right-smirk.png"
         alt="Botty"
       />
       <img
         v-else
         class="botty__foreground"
-        src="../assets/bot/alloybot-offset-left-smirk.svg"
+        src="../assets/bot/alloybot-offset-left-smirk.png"
         alt="Botty"
       />
     </div>
@@ -165,5 +165,11 @@ export default defineComponent({
     animation-fill-mode: both;
     animation-iteration-count: 1;
   }
+}
+
+.animation-off .botty * {
+  animation-name: unset !important;
+  animation-duration: 0 !important;
+  animation-delay: 0 !important;
 }
 </style>

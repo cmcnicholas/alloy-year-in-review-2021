@@ -3,7 +3,7 @@
     <div class="year-in-review__customer">
       <img
         class="year-in-review__logo"
-        src="../assets/alloy.svg"
+        src="../assets/alloy.png"
         alt="2021 Year in review - Alloy"
         title="2021 Year in review - Alloy"
         width="300"
@@ -108,10 +108,15 @@ export default defineComponent({
       e.stopPropagation();
 
       if (root.value) {
-        const canvas = await html2canvas(root.value, {
-          backgroundColor: '#ddf6ff',
-        });
-        downloadCanvasAsImage(canvas);
+        try {
+          root.value.classList.add('animation-off');
+          const canvas = await html2canvas(root.value, {
+            backgroundColor: '#ddf6ff',
+          });
+          downloadCanvasAsImage(canvas);
+        } finally {
+          root.value.classList.remove('animation-off');
+        }
       }
     };
 
