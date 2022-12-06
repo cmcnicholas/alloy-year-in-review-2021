@@ -18,31 +18,53 @@ export class AuditLogServiceDefault implements AuditLogService {
     this.config = config;
   }
 
-  public async auditLogListAuditLogsByFeatures(
-    features?: Array<LogFeature> | null,
-    startDate?: string | null,
-    endDate?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<AuditLogListWebResponseModel> {
-    const options = this.auditLogListAuditLogsByFeaturesApiRequestOptions(
+  public async auditLogListAuditLogsByFeatures({
+    features,
+    startDate,
+    endDate,
+    page,
+    pageSize,
+  }: {
+    /** Audit logs features to get logs for **/
+    features?: Array<LogFeature> | null;
+    /** Optional start date, if specified only audit logs created after that date will be retrieved **/
+    startDate?: string | null;
+    /** Optional start date, if specified only audit logs created before that date will be retrieved **/
+    endDate?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<AuditLogListWebResponseModel> {
+    const options = this.auditLogListAuditLogsByFeaturesApiRequestOptions({
       features,
       startDate,
       endDate,
       page,
       pageSize,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public auditLogListAuditLogsByFeaturesApiRequestOptions(
-    features?: Array<LogFeature> | null,
-    startDate?: string | null,
-    endDate?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public auditLogListAuditLogsByFeaturesApiRequestOptions({
+    features,
+    startDate,
+    endDate,
+    page,
+    pageSize,
+  }: {
+    /** Audit logs features to get logs for **/
+    features?: Array<LogFeature> | null;
+    /** Optional start date, if specified only audit logs created after that date will be retrieved **/
+    startDate?: string | null;
+    /** Optional start date, if specified only audit logs created before that date will be retrieved **/
+    endDate?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -57,25 +79,39 @@ export class AuditLogServiceDefault implements AuditLogService {
     };
   }
 
-  public async auditLogListAuditLogsByDocumentCode(
-    documentCode: string,
-    page?: number,
-    pageSize?: number,
-  ): Promise<AuditLogListWebResponseModel> {
-    const options = this.auditLogListAuditLogsByDocumentCodeApiRequestOptions(
+  public async auditLogListAuditLogsByDocumentCode({
+    documentCode,
+    page,
+    pageSize,
+  }: {
+    /** The the document code whose related logs need to be fetched e.g. design code. For user documents use username instead. **/
+    documentCode: string;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<AuditLogListWebResponseModel> {
+    const options = this.auditLogListAuditLogsByDocumentCodeApiRequestOptions({
       documentCode,
       page,
       pageSize,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public auditLogListAuditLogsByDocumentCodeApiRequestOptions(
-    documentCode: string,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public auditLogListAuditLogsByDocumentCodeApiRequestOptions({
+    documentCode,
+    page,
+    pageSize,
+  }: {
+    /** The the document code whose related logs need to be fetched e.g. design code. For user documents use username instead. **/
+    documentCode: string;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',

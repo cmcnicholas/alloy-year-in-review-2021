@@ -1,7 +1,7 @@
 /* eslint-disable */
 
-import type { CustomReportControlPropertyWebModelOfNullableMargin } from './CustomReportControlPropertyWebModelOfNullableMargin';
-import type { CustomReportControlPropertyWebModelOfNullableRelativeWidth } from './CustomReportControlPropertyWebModelOfNullableRelativeWidth';
+import type { CustomReportControlPropertyWebModelOfNullableCustomReportMarginWebModel } from './CustomReportControlPropertyWebModelOfNullableCustomReportMarginWebModel';
+import type { CustomReportControlPropertyWebModelOfNullableCustomReportRelativeWidthWebModel } from './CustomReportControlPropertyWebModelOfNullableCustomReportRelativeWidthWebModel';
 
 /**
  * Custom report control base
@@ -10,23 +10,23 @@ export type CustomReportControlFlowWebModelBase = {
   /**
    * The margin top of the control in relation to its siblings
    */
-  marginTop?: CustomReportControlPropertyWebModelOfNullableMargin | null;
+  marginTop?: CustomReportControlPropertyWebModelOfNullableCustomReportMarginWebModel | null;
   /**
    * The margin left of the control in relation to its siblings
    */
-  marginLeft?: CustomReportControlPropertyWebModelOfNullableMargin | null;
+  marginLeft?: CustomReportControlPropertyWebModelOfNullableCustomReportMarginWebModel | null;
   /**
    * The margin right of the control in relation to its siblings
    */
-  marginRight?: CustomReportControlPropertyWebModelOfNullableMargin | null;
+  marginRight?: CustomReportControlPropertyWebModelOfNullableCustomReportMarginWebModel | null;
   /**
    * The margin bottom of the control in relation to its siblings
    */
-  marginBottom?: CustomReportControlPropertyWebModelOfNullableMargin | null;
+  marginBottom?: CustomReportControlPropertyWebModelOfNullableCustomReportMarginWebModel | null;
   /**
    * The relative width of the control in relation to its parent, the default is Auto for most controls
    */
-  relativeWidth?: CustomReportControlPropertyWebModelOfNullableRelativeWidth | null;
+  relativeWidth?: CustomReportControlPropertyWebModelOfNullableCustomReportRelativeWidthWebModel | null;
   /**
    * Description or notes relating to the control for use with the Reports Builder
    */

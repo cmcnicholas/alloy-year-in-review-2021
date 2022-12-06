@@ -27,13 +27,25 @@ export class ItemServiceDefault implements ItemService {
     this.config = config;
   }
 
-  public async itemGet(id: string): Promise<ItemGetWebResponseModel> {
-    const options = this.itemGetApiRequestOptions(id);
+  public async itemGet({
+    id,
+  }: {
+    /** The AId of the item to retrieve **/
+    id: string;
+  }): Promise<ItemGetWebResponseModel> {
+    const options = this.itemGetApiRequestOptions({
+      id,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public itemGetApiRequestOptions(id: string): ApiRequestOptions {
+  public itemGetApiRequestOptions({
+    id,
+  }: {
+    /** The AId of the item to retrieve **/
+    id: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -41,19 +53,32 @@ export class ItemServiceDefault implements ItemService {
     };
   }
 
-  public async itemEdit(
-    id: string,
-    requestBody: ItemEditWebRequestModel,
-  ): Promise<ItemEditWebResponseModel> {
-    const options = this.itemEditApiRequestOptions(id, requestBody);
+  public async itemEdit({
+    id,
+    requestBody,
+  }: {
+    /** The AId of the item to edit **/
+    id: string;
+    /** The model containing the info to edit the item **/
+    requestBody: ItemEditWebRequestModel;
+  }): Promise<ItemEditWebResponseModel> {
+    const options = this.itemEditApiRequestOptions({
+      id,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public itemEditApiRequestOptions(
-    id: string,
-    requestBody: ItemEditWebRequestModel,
-  ): ApiRequestOptions {
+  public itemEditApiRequestOptions({
+    id,
+    requestBody,
+  }: {
+    /** The AId of the item to edit **/
+    id: string;
+    /** The model containing the info to edit the item **/
+    requestBody: ItemEditWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -63,13 +88,25 @@ export class ItemServiceDefault implements ItemService {
     };
   }
 
-  public async itemDelete(id: string): Promise<void> {
-    const options = this.itemDeleteApiRequestOptions(id);
+  public async itemDelete({
+    id,
+  }: {
+    /** The AId of the item to delete **/
+    id: string;
+  }): Promise<void> {
+    const options = this.itemDeleteApiRequestOptions({
+      id,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public itemDeleteApiRequestOptions(id: string): ApiRequestOptions {
+  public itemDeleteApiRequestOptions({
+    id,
+  }: {
+    /** The AId of the item to delete **/
+    id: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'DELETE',
@@ -77,13 +114,25 @@ export class ItemServiceDefault implements ItemService {
     };
   }
 
-  public async itemTouch(id: string): Promise<ItemTouchWebResponseModel> {
-    const options = this.itemTouchApiRequestOptions(id);
+  public async itemTouch({
+    id,
+  }: {
+    /** The AId of the item to touch **/
+    id: string;
+  }): Promise<ItemTouchWebResponseModel> {
+    const options = this.itemTouchApiRequestOptions({
+      id,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public itemTouchApiRequestOptions(id: string): ApiRequestOptions {
+  public itemTouchApiRequestOptions({
+    id,
+  }: {
+    /** The AId of the item to touch **/
+    id: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -91,15 +140,25 @@ export class ItemServiceDefault implements ItemService {
     };
   }
 
-  public async itemCreate(
-    requestBody: ItemCreateWebRequestModel,
-  ): Promise<ItemCreateWebResponseModel> {
-    const options = this.itemCreateApiRequestOptions(requestBody);
+  public async itemCreate({
+    requestBody,
+  }: {
+    /** The models containing the info about the item to be created **/
+    requestBody: ItemCreateWebRequestModel;
+  }): Promise<ItemCreateWebResponseModel> {
+    const options = this.itemCreateApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public itemCreateApiRequestOptions(requestBody: ItemCreateWebRequestModel): ApiRequestOptions {
+  public itemCreateApiRequestOptions({
+    requestBody,
+  }: {
+    /** The models containing the info about the item to be created **/
+    requestBody: ItemCreateWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -109,19 +168,32 @@ export class ItemServiceDefault implements ItemService {
     };
   }
 
-  public async itemClone(
-    id: string,
-    requestBody: ItemCloneWebRequestModel,
-  ): Promise<ItemCloneWebResponseModel> {
-    const options = this.itemCloneApiRequestOptions(id, requestBody);
+  public async itemClone({
+    id,
+    requestBody,
+  }: {
+    /** The AId item id of the item to clone **/
+    id: string;
+    /** The models containing the info about the item to be cloned **/
+    requestBody: ItemCloneWebRequestModel;
+  }): Promise<ItemCloneWebResponseModel> {
+    const options = this.itemCloneApiRequestOptions({
+      id,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public itemCloneApiRequestOptions(
-    id: string,
-    requestBody: ItemCloneWebRequestModel,
-  ): ApiRequestOptions {
+  public itemCloneApiRequestOptions({
+    id,
+    requestBody,
+  }: {
+    /** The AId item id of the item to clone **/
+    id: string;
+    /** The models containing the info about the item to be cloned **/
+    requestBody: ItemCloneWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -131,28 +203,46 @@ export class ItemServiceDefault implements ItemService {
     };
   }
 
-  public async itemGetItemGraph(
-    id: string,
-    code: string,
-    collectionCodes?: Array<CollectionCode> | null,
-    maxRecursionDepth?: number | null,
-  ): Promise<ItemGraphGetWebResponseModel> {
-    const options = this.itemGetItemGraphApiRequestOptions(
+  public async itemGetItemGraph({
+    id,
+    code,
+    collectionCodes,
+    maxRecursionDepth,
+  }: {
+    /** The AId of the item to retrieve **/
+    id: string;
+    /** The code of the graph to retrieve for example "Component", "Job", "Lookup", "Network" **/
+    code: string;
+    /** Optional collections to filter the children by **/
+    collectionCodes?: Array<CollectionCode> | null;
+    /** Optional maximum recursion depth **/
+    maxRecursionDepth?: number | null;
+  }): Promise<ItemGraphGetWebResponseModel> {
+    const options = this.itemGetItemGraphApiRequestOptions({
       id,
       code,
       collectionCodes,
       maxRecursionDepth,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public itemGetItemGraphApiRequestOptions(
-    id: string,
-    code: string,
-    collectionCodes?: Array<CollectionCode> | null,
-    maxRecursionDepth?: number | null,
-  ): ApiRequestOptions {
+  public itemGetItemGraphApiRequestOptions({
+    id,
+    code,
+    collectionCodes,
+    maxRecursionDepth,
+  }: {
+    /** The AId of the item to retrieve **/
+    id: string;
+    /** The code of the graph to retrieve for example "Component", "Job", "Lookup", "Network" **/
+    code: string;
+    /** Optional collections to filter the children by **/
+    collectionCodes?: Array<CollectionCode> | null;
+    /** Optional maximum recursion depth **/
+    maxRecursionDepth?: number | null;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -164,31 +254,53 @@ export class ItemServiceDefault implements ItemService {
     };
   }
 
-  public async itemGetItemParents(
-    id: string,
-    attributeCode?: string | null,
-    graphCode?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<ItemParentsGetWebResponseModel> {
-    const options = this.itemGetItemParentsApiRequestOptions(
+  public async itemGetItemParents({
+    id,
+    attributeCode,
+    graphCode,
+    page,
+    pageSize,
+  }: {
+    /** The AId of the item to retrieve parents for **/
+    id: string;
+    /** Optional attribute code to filter parents on **/
+    attributeCode?: string | null;
+    /** Optional graph code to filter parents on **/
+    graphCode?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<ItemParentsGetWebResponseModel> {
+    const options = this.itemGetItemParentsApiRequestOptions({
       id,
       attributeCode,
       graphCode,
       page,
       pageSize,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public itemGetItemParentsApiRequestOptions(
-    id: string,
-    attributeCode?: string | null,
-    graphCode?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public itemGetItemParentsApiRequestOptions({
+    id,
+    attributeCode,
+    graphCode,
+    page,
+    pageSize,
+  }: {
+    /** The AId of the item to retrieve parents for **/
+    id: string;
+    /** Optional attribute code to filter parents on **/
+    attributeCode?: string | null;
+    /** Optional graph code to filter parents on **/
+    graphCode?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',

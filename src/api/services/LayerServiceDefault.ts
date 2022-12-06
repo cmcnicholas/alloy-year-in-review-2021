@@ -32,13 +32,25 @@ export class LayerServiceDefault implements LayerService {
     this.config = config;
   }
 
-  public async layerGet(code: string): Promise<LayerWithOperationsSummaryWebResponseModel> {
-    const options = this.layerGetApiRequestOptions(code);
+  public async layerGet({
+    code,
+  }: {
+    /** The Guc for the layer being requested **/
+    code: string;
+  }): Promise<LayerWithOperationsSummaryWebResponseModel> {
+    const options = this.layerGetApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public layerGetApiRequestOptions(code: string): ApiRequestOptions {
+  public layerGetApiRequestOptions({
+    code,
+  }: {
+    /** The Guc for the layer being requested **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -46,19 +58,32 @@ export class LayerServiceDefault implements LayerService {
     };
   }
 
-  public async layerEdit(
-    code: string,
-    requestBody: LayerEditWebRequestModel,
-  ): Promise<LayerWithOperationsSummaryWebResponseModel> {
-    const options = this.layerEditApiRequestOptions(code, requestBody);
+  public async layerEdit({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the layer to edit **/
+    code: string;
+    /** Model containing the new layer details **/
+    requestBody: LayerEditWebRequestModel;
+  }): Promise<LayerWithOperationsSummaryWebResponseModel> {
+    const options = this.layerEditApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public layerEditApiRequestOptions(
-    code: string,
-    requestBody: LayerEditWebRequestModel,
-  ): ApiRequestOptions {
+  public layerEditApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the layer to edit **/
+    code: string;
+    /** Model containing the new layer details **/
+    requestBody: LayerEditWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -68,13 +93,25 @@ export class LayerServiceDefault implements LayerService {
     };
   }
 
-  public async layerDelete(code: string): Promise<void> {
-    const options = this.layerDeleteApiRequestOptions(code);
+  public async layerDelete({
+    code,
+  }: {
+    /** The Guc of the layer to delete **/
+    code: string;
+  }): Promise<void> {
+    const options = this.layerDeleteApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public layerDeleteApiRequestOptions(code: string): ApiRequestOptions {
+  public layerDeleteApiRequestOptions({
+    code,
+  }: {
+    /** The Guc of the layer to delete **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'DELETE',
@@ -82,18 +119,42 @@ export class LayerServiceDefault implements LayerService {
     };
   }
 
-  public async layerList(
-    name?: string | null,
-    context?: Context | null,
-    andTags?: Array<string> | null,
-    orTags?: Array<string> | null,
-    notTags?: Array<string> | null,
-    userGroup?: string | null,
-    visualisations?: Array<LayerVisualisationType> | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<LayerListWebResponseModel> {
-    const options = this.layerListApiRequestOptions(
+  public async layerList({
+    name,
+    context,
+    andTags,
+    orTags,
+    notTags,
+    userGroup,
+    visualisations,
+    page,
+    pageSize,
+  }: {
+    /** The optional layer name (full or partial) to filter on **/
+    name?: string | null;
+    /** The optional layer context to filter on **/
+    context?: Context | null;
+    /** If this parameter is passed, only the layers with ALL of the specified tags will be returned
+     * It is possible to use this in conjunction with the other tags conditions **/
+    andTags?: Array<string> | null;
+    /** If this parameter is passed, only the layers with AT LEAST one of the specified tags will be returned
+     * It is possible to use this in conjunction with the other tags conditions **/
+    orTags?: Array<string> | null;
+    /** If this parameter is passed, only the layers with NONE of the specified tags will be returned
+     * It is possible to use this in conjunction with the other tags conditions **/
+    notTags?: Array<string> | null;
+    /** Optional Guc to filter layers by. If specified, only the layers
+     * that have this user group code within their permissions are returned **/
+    userGroup?: string | null;
+    /** The optional layer style visualisations to filter on. If specified, only layers
+     * that contain any styles with the given visualisations are returned **/
+    visualisations?: Array<LayerVisualisationType> | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<LayerListWebResponseModel> {
+    const options = this.layerListApiRequestOptions({
       name,
       context,
       andTags,
@@ -103,22 +164,46 @@ export class LayerServiceDefault implements LayerService {
       visualisations,
       page,
       pageSize,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public layerListApiRequestOptions(
-    name?: string | null,
-    context?: Context | null,
-    andTags?: Array<string> | null,
-    orTags?: Array<string> | null,
-    notTags?: Array<string> | null,
-    userGroup?: string | null,
-    visualisations?: Array<LayerVisualisationType> | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public layerListApiRequestOptions({
+    name,
+    context,
+    andTags,
+    orTags,
+    notTags,
+    userGroup,
+    visualisations,
+    page,
+    pageSize,
+  }: {
+    /** The optional layer name (full or partial) to filter on **/
+    name?: string | null;
+    /** The optional layer context to filter on **/
+    context?: Context | null;
+    /** If this parameter is passed, only the layers with ALL of the specified tags will be returned
+     * It is possible to use this in conjunction with the other tags conditions **/
+    andTags?: Array<string> | null;
+    /** If this parameter is passed, only the layers with AT LEAST one of the specified tags will be returned
+     * It is possible to use this in conjunction with the other tags conditions **/
+    orTags?: Array<string> | null;
+    /** If this parameter is passed, only the layers with NONE of the specified tags will be returned
+     * It is possible to use this in conjunction with the other tags conditions **/
+    notTags?: Array<string> | null;
+    /** Optional Guc to filter layers by. If specified, only the layers
+     * that have this user group code within their permissions are returned **/
+    userGroup?: string | null;
+    /** The optional layer style visualisations to filter on. If specified, only layers
+     * that contain any styles with the given visualisations are returned **/
+    visualisations?: Array<LayerVisualisationType> | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -137,15 +222,25 @@ export class LayerServiceDefault implements LayerService {
     };
   }
 
-  public async layerCreate(
-    requestBody: LayerCreateWebRequestModel,
-  ): Promise<LayerWithOperationsSummaryWebResponseModel> {
-    const options = this.layerCreateApiRequestOptions(requestBody);
+  public async layerCreate({
+    requestBody,
+  }: {
+    /** Model containing the new layer details **/
+    requestBody: LayerCreateWebRequestModel;
+  }): Promise<LayerWithOperationsSummaryWebResponseModel> {
+    const options = this.layerCreateApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public layerCreateApiRequestOptions(requestBody: LayerCreateWebRequestModel): ApiRequestOptions {
+  public layerCreateApiRequestOptions({
+    requestBody,
+  }: {
+    /** Model containing the new layer details **/
+    requestBody: LayerCreateWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -169,21 +264,39 @@ export class LayerServiceDefault implements LayerService {
     };
   }
 
-  public async layerResetQuery(
-    code: string,
-    id: string,
-    requestBody: LayerStyleResetWebRequestModel,
-  ): Promise<LayerWithOperationsSummaryWebResponseModel> {
-    const options = this.layerResetQueryApiRequestOptions(code, id, requestBody);
+  public async layerResetQuery({
+    code,
+    id,
+    requestBody,
+  }: {
+    /** The Guc of the layer to reset the style for **/
+    code: string;
+    /** The AId of the style to reset **/
+    id: string;
+    /** The model containing the information necessary to reset a layer style **/
+    requestBody: LayerStyleResetWebRequestModel;
+  }): Promise<LayerWithOperationsSummaryWebResponseModel> {
+    const options = this.layerResetQueryApiRequestOptions({
+      code,
+      id,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public layerResetQueryApiRequestOptions(
-    code: string,
-    id: string,
-    requestBody: LayerStyleResetWebRequestModel,
-  ): ApiRequestOptions {
+  public layerResetQueryApiRequestOptions({
+    code,
+    id,
+    requestBody,
+  }: {
+    /** The Guc of the layer to reset the style for **/
+    code: string;
+    /** The AId of the style to reset **/
+    id: string;
+    /** The model containing the information necessary to reset a layer style **/
+    requestBody: LayerStyleResetWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -193,25 +306,59 @@ export class LayerServiceDefault implements LayerService {
     };
   }
 
-  public async layerGetNetworkLayerTile(
-    code: string,
-    x: number,
-    y: number,
-    z: number,
-    styleIds?: Array<string> | null,
-  ): Promise<LayerGetNetworkTileWebResponseModel> {
-    const options = this.layerGetNetworkLayerTileApiRequestOptions(code, x, y, z, styleIds);
+  public async layerGetNetworkLayerTile({
+    code,
+    x,
+    y,
+    z,
+    styleIds,
+  }: {
+    /** The code of the layer to query for **/
+    code: string;
+    /** The x google tile coordinate **/
+    x: number;
+    /** The y google tile coordinate **/
+    y: number;
+    /** The z google tile coordinate **/
+    z: number;
+    /** The list of style ids to query for. An item will only be returned in one style.
+     * The order of the styles specified is thus important since an item belonging to both the first
+     * and the last style in the list, will only appear for the first one.
+     * A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account **/
+    styleIds?: Array<string> | null;
+  }): Promise<LayerGetNetworkTileWebResponseModel> {
+    const options = this.layerGetNetworkLayerTileApiRequestOptions({
+      code,
+      x,
+      y,
+      z,
+      styleIds,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public layerGetNetworkLayerTileApiRequestOptions(
-    code: string,
-    x: number,
-    y: number,
-    z: number,
-    styleIds?: Array<string> | null,
-  ): ApiRequestOptions {
+  public layerGetNetworkLayerTileApiRequestOptions({
+    code,
+    x,
+    y,
+    z,
+    styleIds,
+  }: {
+    /** The code of the layer to query for **/
+    code: string;
+    /** The x google tile coordinate **/
+    x: number;
+    /** The y google tile coordinate **/
+    y: number;
+    /** The z google tile coordinate **/
+    z: number;
+    /** The list of style ids to query for. An item will only be returned in one style.
+     * The order of the styles specified is thus important since an item belonging to both the first
+     * and the last style in the list, will only appear for the first one.
+     * A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account **/
+    styleIds?: Array<string> | null;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -222,25 +369,55 @@ export class LayerServiceDefault implements LayerService {
     };
   }
 
-  public async layerGetClusterLayerTile(
-    code: string,
-    x: number,
-    y: number,
-    z: number,
-    styleIds?: Array<string> | null,
-  ): Promise<LayerGetClusterTileWebResponseModel> {
-    const options = this.layerGetClusterLayerTileApiRequestOptions(code, x, y, z, styleIds);
+  public async layerGetClusterLayerTile({
+    code,
+    x,
+    y,
+    z,
+    styleIds,
+  }: {
+    /** The code of the layer to query for **/
+    code: string;
+    /** The x google tile coordinate **/
+    x: number;
+    /** The y google tile coordinate **/
+    y: number;
+    /** The z google tile coordinate **/
+    z: number;
+    /** The list of style ids to query for.
+     * A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account **/
+    styleIds?: Array<string> | null;
+  }): Promise<LayerGetClusterTileWebResponseModel> {
+    const options = this.layerGetClusterLayerTileApiRequestOptions({
+      code,
+      x,
+      y,
+      z,
+      styleIds,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public layerGetClusterLayerTileApiRequestOptions(
-    code: string,
-    x: number,
-    y: number,
-    z: number,
-    styleIds?: Array<string> | null,
-  ): ApiRequestOptions {
+  public layerGetClusterLayerTileApiRequestOptions({
+    code,
+    x,
+    y,
+    z,
+    styleIds,
+  }: {
+    /** The code of the layer to query for **/
+    code: string;
+    /** The x google tile coordinate **/
+    x: number;
+    /** The y google tile coordinate **/
+    y: number;
+    /** The z google tile coordinate **/
+    z: number;
+    /** The list of style ids to query for.
+     * A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account **/
+    styleIds?: Array<string> | null;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -251,25 +428,55 @@ export class LayerServiceDefault implements LayerService {
     };
   }
 
-  public async layerGetBasicLayerTile(
-    code: string,
-    x: number,
-    y: number,
-    z: number,
-    styleIds?: Array<string> | null,
-  ): Promise<LayerGetBasicTileWebResponseModel> {
-    const options = this.layerGetBasicLayerTileApiRequestOptions(code, x, y, z, styleIds);
+  public async layerGetBasicLayerTile({
+    code,
+    x,
+    y,
+    z,
+    styleIds,
+  }: {
+    /** The code of the layer to query for **/
+    code: string;
+    /** The x google tile coordinate **/
+    x: number;
+    /** The y google tile coordinate **/
+    y: number;
+    /** The z google tile coordinate **/
+    z: number;
+    /** The list of style ids to query for.
+     * A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account **/
+    styleIds?: Array<string> | null;
+  }): Promise<LayerGetBasicTileWebResponseModel> {
+    const options = this.layerGetBasicLayerTileApiRequestOptions({
+      code,
+      x,
+      y,
+      z,
+      styleIds,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public layerGetBasicLayerTileApiRequestOptions(
-    code: string,
-    x: number,
-    y: number,
-    z: number,
-    styleIds?: Array<string> | null,
-  ): ApiRequestOptions {
+  public layerGetBasicLayerTileApiRequestOptions({
+    code,
+    x,
+    y,
+    z,
+    styleIds,
+  }: {
+    /** The code of the layer to query for **/
+    code: string;
+    /** The x google tile coordinate **/
+    x: number;
+    /** The y google tile coordinate **/
+    y: number;
+    /** The z google tile coordinate **/
+    z: number;
+    /** The list of style ids to query for.
+     * A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account **/
+    styleIds?: Array<string> | null;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -280,21 +487,43 @@ export class LayerServiceDefault implements LayerService {
     };
   }
 
-  public async layerGetPermissions(
-    code: string,
-    username?: string | null,
-    role?: string | null,
-  ): Promise<LayerPermissionsGetWebResponseModel> {
-    const options = this.layerGetPermissionsApiRequestOptions(code, username, role);
+  public async layerGetPermissions({
+    code,
+    username,
+    role,
+  }: {
+    /** The Guc for the layer whose permissions are being requested **/
+    code: string;
+    /** Optional username to get permissions for the specific user.
+     * This value is mutually exclusive with Role. **/
+    username?: string | null;
+    /** Optional role to get permissions for the specific role.
+     * This value is mutually exclusive with Username. **/
+    role?: string | null;
+  }): Promise<LayerPermissionsGetWebResponseModel> {
+    const options = this.layerGetPermissionsApiRequestOptions({
+      code,
+      username,
+      role,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public layerGetPermissionsApiRequestOptions(
-    code: string,
-    username?: string | null,
-    role?: string | null,
-  ): ApiRequestOptions {
+  public layerGetPermissionsApiRequestOptions({
+    code,
+    username,
+    role,
+  }: {
+    /** The Guc for the layer whose permissions are being requested **/
+    code: string;
+    /** Optional username to get permissions for the specific user.
+     * This value is mutually exclusive with Role. **/
+    username?: string | null;
+    /** Optional role to get permissions for the specific role.
+     * This value is mutually exclusive with Username. **/
+    role?: string | null;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -306,19 +535,32 @@ export class LayerServiceDefault implements LayerService {
     };
   }
 
-  public async layerEditPermissions(
-    code: string,
-    requestBody: LayerPermissionsEditWebRequestModel,
-  ): Promise<LayerWithPermissionsWebResponseModel> {
-    const options = this.layerEditPermissionsApiRequestOptions(code, requestBody);
+  public async layerEditPermissions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the layer to edit the permissions of **/
+    code: string;
+    /** The model containing the info necessary to the edit permissions operation **/
+    requestBody: LayerPermissionsEditWebRequestModel;
+  }): Promise<LayerWithPermissionsWebResponseModel> {
+    const options = this.layerEditPermissionsApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public layerEditPermissionsApiRequestOptions(
-    code: string,
-    requestBody: LayerPermissionsEditWebRequestModel,
-  ): ApiRequestOptions {
+  public layerEditPermissionsApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the layer to edit the permissions of **/
+    code: string;
+    /** The model containing the info necessary to the edit permissions operation **/
+    requestBody: LayerPermissionsEditWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -328,28 +570,46 @@ export class LayerServiceDefault implements LayerService {
     };
   }
 
-  public async layerLayerAccessAdvisorByUser(
-    username: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<LayerAccessAdvisorByUserListWebResponseModel> {
-    const options = this.layerLayerAccessAdvisorByUserApiRequestOptions(
+  public async layerLayerAccessAdvisorByUser({
+    username,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The name of the user to get layer access advisor for **/
+    username: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<LayerAccessAdvisorByUserListWebResponseModel> {
+    const options = this.layerLayerAccessAdvisorByUserApiRequestOptions({
       username,
       query,
       page,
       pageSize,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public layerLayerAccessAdvisorByUserApiRequestOptions(
-    username: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public layerLayerAccessAdvisorByUserApiRequestOptions({
+    username,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The name of the user to get layer access advisor for **/
+    username: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -362,28 +622,46 @@ export class LayerServiceDefault implements LayerService {
     };
   }
 
-  public async layerLayerAccessAdvisorByRole(
-    code: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<LayerAccessAdvisorByRoleListWebResponseModel> {
-    const options = this.layerLayerAccessAdvisorByRoleApiRequestOptions(
+  public async layerLayerAccessAdvisorByRole({
+    code,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The code of the role to get layer access advisor for **/
+    code: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<LayerAccessAdvisorByRoleListWebResponseModel> {
+    const options = this.layerLayerAccessAdvisorByRoleApiRequestOptions({
       code,
       query,
       page,
       pageSize,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public layerLayerAccessAdvisorByRoleApiRequestOptions(
-    code: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public layerLayerAccessAdvisorByRoleApiRequestOptions({
+    code,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The code of the role to get layer access advisor for **/
+    code: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',

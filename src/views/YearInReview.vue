@@ -4,13 +4,13 @@
       <img
         class="year-in-review__logo"
         src="../assets/alloy.png"
-        alt="2021 Year in review - Alloy"
-        title="2021 Year in review - Alloy"
+        alt="2022 Year in review - Alloy"
+        title="2022 Year in review - Alloy"
         width="300"
       />
-      <h1 class="year-in-review__customer-header">{{ customerName }}, 2021 Alloy Year In Review</h1>
+      <h1 class="year-in-review__customer-header">{{ customerName }}, 2022 Alloy Year In Review</h1>
       <p class="year-in-review__customer-text">
-        Here it is, your personalised review of 2021 using Alloy, scroll down and enjoy!<br />Don't
+        Here it is, your personalised review of 2022 using Alloy, scroll down and enjoy!<br />Don't
         forget you can share this page with the url:
         <a class="year-in-review__customer-share" :href="shareUrl" title="Share">{{ shareUrl }}</a>
         <br />or
@@ -35,14 +35,14 @@
       />
     </section>
     <div v-if="cards.length === 0" class="year-in-review__not-found">
-      Sorry, it doesn't look like you've used Alloy much during 2021, but you can do better for
+      Sorry, it doesn't look like you've used Alloy much during 2022, but you can do better for
       2022!
     </div>
     <div class="year-in-review__footer">
       <div class="year-in-review__footer-container">
         <Botty />
         <h3 class="year-in-review__footer-header">
-          That's all for the Alloy 2021 Year in Review {{ customerName }}, Thanks for taking part
+          That's all for the Alloy 2022 Year in Review {{ customerName }}, Thanks for taking part
           and have a happy new year! 👋👋👋
         </h3>
       </div>
@@ -187,6 +187,11 @@ interface CardInfo {
 
 const quotes = [
   {
+    quote: '"You can do anything you set your mind to." - Benjabot Franklin',
+    foreground: 'front-smile',
+    background: 'buildings',
+  },
+  {
     quote: `Did you know the Babylonians invented "New Years"? Yet they didn't build Alloy!`,
     foreground: 'right-smile',
     background: '',
@@ -197,9 +202,19 @@ const quotes = [
     background: 'buildings',
   },
   {
+    quote: '"I\'m going to make him an offer he can\'t refuse." - The Botfather',
+    foreground: 'left-smirk',
+    background: '',
+  },
+  {
     quote: '"The only way to do great work is to love what you do." - Steve Bots',
     foreground: 'right-smile',
     background: '',
+  },
+  {
+    quote: '"Wherever you go, go with all your heart." - Botfucius',
+    foreground: 'right-big-smile',
+    background: 'buildings',
   },
   {
     quote:
@@ -208,7 +223,7 @@ const quotes = [
     background: '',
   },
   {
-    quote: '"Time toooo, say goodbyeee" (to 2021) - Andrea Botcelli',
+    quote: '"Time toooo, say goodbyeee" (to 2022) - Andrea Botcelli',
     foreground: 'right-smirk',
     background: 'buildings',
   },
@@ -379,7 +394,7 @@ function downloadCanvasAsImage(canvas: HTMLCanvasElement) {
   xhr.onload = function () {
     let a = document.createElement('a');
     a.href = window.URL.createObjectURL(xhr.response);
-    a.download = 'alloy-2021-year-in-review.png';
+    a.download = 'alloy-2022-year-in-review.png';
     a.style.display = 'none';
     document.body.appendChild(a);
     a.click();

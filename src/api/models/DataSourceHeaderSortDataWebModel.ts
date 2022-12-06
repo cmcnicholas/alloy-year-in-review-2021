@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import type { SortingOrder } from './SortingOrder';
+import type { CustomReportSortingOrderWebModel } from './CustomReportSortingOrderWebModel';
 
 /**
  * Header sort date web model
@@ -13,7 +13,7 @@ export type DataSourceHeaderSortDataWebModel = {
   /**
    * Whether the sorting is ascending or descending
    */
-  sortingOrder: SortingOrder;
+  sortingOrder: CustomReportSortingOrderWebModel;
 };
 
 export namespace DataSourceHeaderSortDataWebModel {

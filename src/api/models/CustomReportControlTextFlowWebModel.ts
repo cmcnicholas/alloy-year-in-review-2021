@@ -2,8 +2,8 @@
 
 import type { CustomReportControlFlowWebModelBase } from './CustomReportControlFlowWebModelBase';
 import type { CustomReportControlPropertyWebModelOfNullableBoolean } from './CustomReportControlPropertyWebModelOfNullableBoolean';
-import type { CustomReportControlPropertyWebModelOfNullableTextAlign } from './CustomReportControlPropertyWebModelOfNullableTextAlign';
-import type { CustomReportControlPropertyWebModelOfNullableTextStyle } from './CustomReportControlPropertyWebModelOfNullableTextStyle';
+import type { CustomReportControlPropertyWebModelOfNullableCustomReportTextAlignWebModel } from './CustomReportControlPropertyWebModelOfNullableCustomReportTextAlignWebModel';
+import type { CustomReportControlPropertyWebModelOfNullableCustomReportTextStyleWebModel } from './CustomReportControlPropertyWebModelOfNullableCustomReportTextStyleWebModel';
 import type { CustomReportControlPropertyWebModelOfString } from './CustomReportControlPropertyWebModelOfString';
 
 export type CustomReportControlTextFlowWebModel = CustomReportControlFlowWebModelBase & {
@@ -14,11 +14,11 @@ export type CustomReportControlTextFlowWebModel = CustomReportControlFlowWebMode
   /**
    * Optional style of the text, defaults to normal
    */
-  style?: CustomReportControlPropertyWebModelOfNullableTextStyle | null;
+  style?: CustomReportControlPropertyWebModelOfNullableCustomReportTextStyleWebModel | null;
   /**
    * Optional alignment of the text, defaults to left
    */
-  align?: CustomReportControlPropertyWebModelOfNullableTextAlign | null;
+  align?: CustomReportControlPropertyWebModelOfNullableCustomReportTextAlignWebModel | null;
   /**
    * Optional wrapping setting of the text, defaults to false
    */

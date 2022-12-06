@@ -27,13 +27,25 @@ export class CardServiceDefault implements CardService {
     this.config = config;
   }
 
-  public async cardGet(code: string): Promise<CardWithOperationsSummaryWebResponseModel> {
-    const options = this.cardGetApiRequestOptions(code);
+  public async cardGet({
+    code,
+  }: {
+    /** The Guc for the card being requested **/
+    code: string;
+  }): Promise<CardWithOperationsSummaryWebResponseModel> {
+    const options = this.cardGetApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public cardGetApiRequestOptions(code: string): ApiRequestOptions {
+  public cardGetApiRequestOptions({
+    code,
+  }: {
+    /** The Guc for the card being requested **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -41,19 +53,32 @@ export class CardServiceDefault implements CardService {
     };
   }
 
-  public async cardEdit(
-    code: string,
-    requestBody: CardEditWebRequestModel,
-  ): Promise<CardWithOperationsSummaryWebResponseModel> {
-    const options = this.cardEditApiRequestOptions(code, requestBody);
+  public async cardEdit({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the card to edit **/
+    code: string;
+    /** Model containing the new card details **/
+    requestBody: CardEditWebRequestModel;
+  }): Promise<CardWithOperationsSummaryWebResponseModel> {
+    const options = this.cardEditApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public cardEditApiRequestOptions(
-    code: string,
-    requestBody: CardEditWebRequestModel,
-  ): ApiRequestOptions {
+  public cardEditApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the card to edit **/
+    code: string;
+    /** Model containing the new card details **/
+    requestBody: CardEditWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -63,13 +88,25 @@ export class CardServiceDefault implements CardService {
     };
   }
 
-  public async cardDelete(code: string): Promise<void> {
-    const options = this.cardDeleteApiRequestOptions(code);
+  public async cardDelete({
+    code,
+  }: {
+    /** The Guc of the card to delete **/
+    code: string;
+  }): Promise<void> {
+    const options = this.cardDeleteApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public cardDeleteApiRequestOptions(code: string): ApiRequestOptions {
+  public cardDeleteApiRequestOptions({
+    code,
+  }: {
+    /** The Guc of the card to delete **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'DELETE',
@@ -77,25 +114,55 @@ export class CardServiceDefault implements CardService {
     };
   }
 
-  public async cardList(
-    query?: string | null,
-    userGroup?: string | null,
-    context?: Context | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<CardListWebResponseModel> {
-    const options = this.cardListApiRequestOptions(query, userGroup, context, page, pageSize);
+  public async cardList({
+    query,
+    userGroup,
+    context,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the cards by **/
+    query?: string | null;
+    /** Optional Guc to filter cards by. If specified, only the cards
+     * that have this user group code within their permissions are returned **/
+    userGroup?: string | null;
+    /** The optional cards context to filter on **/
+    context?: Context | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<CardListWebResponseModel> {
+    const options = this.cardListApiRequestOptions({
+      query,
+      userGroup,
+      context,
+      page,
+      pageSize,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public cardListApiRequestOptions(
-    query?: string | null,
-    userGroup?: string | null,
-    context?: Context | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public cardListApiRequestOptions({
+    query,
+    userGroup,
+    context,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the cards by **/
+    query?: string | null;
+    /** Optional Guc to filter cards by. If specified, only the cards
+     * that have this user group code within their permissions are returned **/
+    userGroup?: string | null;
+    /** The optional cards context to filter on **/
+    context?: Context | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -110,15 +177,25 @@ export class CardServiceDefault implements CardService {
     };
   }
 
-  public async cardCreate(
-    requestBody: CardCreateWebRequestModel,
-  ): Promise<CardWithOperationsSummaryWebResponseModel> {
-    const options = this.cardCreateApiRequestOptions(requestBody);
+  public async cardCreate({
+    requestBody,
+  }: {
+    /** Model containing the new card details **/
+    requestBody: CardCreateWebRequestModel;
+  }): Promise<CardWithOperationsSummaryWebResponseModel> {
+    const options = this.cardCreateApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public cardCreateApiRequestOptions(requestBody: CardCreateWebRequestModel): ApiRequestOptions {
+  public cardCreateApiRequestOptions({
+    requestBody,
+  }: {
+    /** Model containing the new card details **/
+    requestBody: CardCreateWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -128,21 +205,39 @@ export class CardServiceDefault implements CardService {
     };
   }
 
-  public async cardResetQuery(
-    code: string,
-    id: string,
-    requestBody: CardQueryResetWebRequestModel,
-  ): Promise<CardWithOperationsSummaryWebResponseModel> {
-    const options = this.cardResetQueryApiRequestOptions(code, id, requestBody);
+  public async cardResetQuery({
+    code,
+    id,
+    requestBody,
+  }: {
+    /** The Guc of the card to reset the query for **/
+    code: string;
+    /** The AId of the query to reset **/
+    id: string;
+    /** The model containing the information necessary to reset a card query **/
+    requestBody: CardQueryResetWebRequestModel;
+  }): Promise<CardWithOperationsSummaryWebResponseModel> {
+    const options = this.cardResetQueryApiRequestOptions({
+      code,
+      id,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public cardResetQueryApiRequestOptions(
-    code: string,
-    id: string,
-    requestBody: CardQueryResetWebRequestModel,
-  ): ApiRequestOptions {
+  public cardResetQueryApiRequestOptions({
+    code,
+    id,
+    requestBody,
+  }: {
+    /** The Guc of the card to reset the query for **/
+    code: string;
+    /** The AId of the query to reset **/
+    id: string;
+    /** The model containing the information necessary to reset a card query **/
+    requestBody: CardQueryResetWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -152,21 +247,43 @@ export class CardServiceDefault implements CardService {
     };
   }
 
-  public async cardGetPermissions(
-    code: string,
-    username?: string | null,
-    role?: string | null,
-  ): Promise<CardPermissionsGetWebResponseModel> {
-    const options = this.cardGetPermissionsApiRequestOptions(code, username, role);
+  public async cardGetPermissions({
+    code,
+    username,
+    role,
+  }: {
+    /** The Guc for the card whose permissions are being requested **/
+    code: string;
+    /** Optional username to get permissions for the specific user.
+     * This value is mutually exclusive with Role. **/
+    username?: string | null;
+    /** Optional role to get permissions for the specific role.
+     * This value is mutually exclusive with Username. **/
+    role?: string | null;
+  }): Promise<CardPermissionsGetWebResponseModel> {
+    const options = this.cardGetPermissionsApiRequestOptions({
+      code,
+      username,
+      role,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public cardGetPermissionsApiRequestOptions(
-    code: string,
-    username?: string | null,
-    role?: string | null,
-  ): ApiRequestOptions {
+  public cardGetPermissionsApiRequestOptions({
+    code,
+    username,
+    role,
+  }: {
+    /** The Guc for the card whose permissions are being requested **/
+    code: string;
+    /** Optional username to get permissions for the specific user.
+     * This value is mutually exclusive with Role. **/
+    username?: string | null;
+    /** Optional role to get permissions for the specific role.
+     * This value is mutually exclusive with Username. **/
+    role?: string | null;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -178,19 +295,32 @@ export class CardServiceDefault implements CardService {
     };
   }
 
-  public async cardEditPermissions(
-    code: string,
-    requestBody: CardPermissionsEditWebRequestModel,
-  ): Promise<CardWithPermissionsWebResponseModel> {
-    const options = this.cardEditPermissionsApiRequestOptions(code, requestBody);
+  public async cardEditPermissions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the card to edit the permissions of **/
+    code: string;
+    /** The model containing the info necessary to the edit permissions operation **/
+    requestBody: CardPermissionsEditWebRequestModel;
+  }): Promise<CardWithPermissionsWebResponseModel> {
+    const options = this.cardEditPermissionsApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public cardEditPermissionsApiRequestOptions(
-    code: string,
-    requestBody: CardPermissionsEditWebRequestModel,
-  ): ApiRequestOptions {
+  public cardEditPermissionsApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the card to edit the permissions of **/
+    code: string;
+    /** The model containing the info necessary to the edit permissions operation **/
+    requestBody: CardPermissionsEditWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -200,28 +330,46 @@ export class CardServiceDefault implements CardService {
     };
   }
 
-  public async cardCardAccessAdvisorByUser(
-    username: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<CardAccessAdvisorByUserListWebResponseModel> {
-    const options = this.cardCardAccessAdvisorByUserApiRequestOptions(
+  public async cardCardAccessAdvisorByUser({
+    username,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The name of the user to get card access advisor for **/
+    username: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<CardAccessAdvisorByUserListWebResponseModel> {
+    const options = this.cardCardAccessAdvisorByUserApiRequestOptions({
       username,
       query,
       page,
       pageSize,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public cardCardAccessAdvisorByUserApiRequestOptions(
-    username: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public cardCardAccessAdvisorByUserApiRequestOptions({
+    username,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The name of the user to get card access advisor for **/
+    username: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -234,23 +382,46 @@ export class CardServiceDefault implements CardService {
     };
   }
 
-  public async cardCardAccessAdvisorByRole(
-    code: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<CardAccessAdvisorByRoleListWebResponseModel> {
-    const options = this.cardCardAccessAdvisorByRoleApiRequestOptions(code, query, page, pageSize);
+  public async cardCardAccessAdvisorByRole({
+    code,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The code of the role to get card access advisor for **/
+    code: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<CardAccessAdvisorByRoleListWebResponseModel> {
+    const options = this.cardCardAccessAdvisorByRoleApiRequestOptions({
+      code,
+      query,
+      page,
+      pageSize,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public cardCardAccessAdvisorByRoleApiRequestOptions(
-    code: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public cardCardAccessAdvisorByRoleApiRequestOptions({
+    code,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The code of the role to get card access advisor for **/
+    code: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',

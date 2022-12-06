@@ -1,6 +1,7 @@
 /* eslint-disable */
 
-import type { AqsJsonNode } from './AqsJsonNode';
+import type { AqsJsonNodeWebModel } from './AqsJsonNodeWebModel';
+import type { EditDataSourceAqsStatisticsHeadersWebRequestModel } from './EditDataSourceAqsStatisticsHeadersWebRequestModel';
 import type { EditDataSourceAttributeWebRequestModelBase } from './EditDataSourceAttributeWebRequestModelBase';
 
 export type EditDataSourceAqsStatisticsWebRequestModelBase =
@@ -8,7 +9,11 @@ export type EditDataSourceAqsStatisticsWebRequestModelBase =
     /**
      * The default value to use for reports if no run time value is specified
      */
-    aqs?: AqsJsonNode | null;
+    aqs?: AqsJsonNodeWebModel | null;
+    /**
+     * Updates the headers on this data source
+     */
+    headers?: Array<EditDataSourceAqsStatisticsHeadersWebRequestModel> | null;
   };
 
 export namespace EditDataSourceAqsStatisticsWebRequestModelBase {

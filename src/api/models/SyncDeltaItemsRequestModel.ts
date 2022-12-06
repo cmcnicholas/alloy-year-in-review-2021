@@ -24,7 +24,7 @@ export type SyncDeltaItemsRequestModel = {
    */
   deltaDate: string;
   /**
-   * Maximum number of root items to return, or null to use the default of 10,000
+   * Maximum number of root items to return, or null to fetch all the results
    */
   maxRootItems?: number | null;
   /**

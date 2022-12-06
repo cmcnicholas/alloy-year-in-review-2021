@@ -17,13 +17,25 @@ export class TaskServiceDefault implements TaskService {
     this.config = config;
   }
 
-  public async taskGet(id: string): Promise<TaskGetWebResponseModel> {
-    const options = this.taskGetApiRequestOptions(id);
+  public async taskGet({
+    id,
+  }: {
+    /** The identifier of the task to get **/
+    id: string;
+  }): Promise<TaskGetWebResponseModel> {
+    const options = this.taskGetApiRequestOptions({
+      id,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public taskGetApiRequestOptions(id: string): ApiRequestOptions {
+  public taskGetApiRequestOptions({
+    id,
+  }: {
+    /** The identifier of the task to get **/
+    id: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',

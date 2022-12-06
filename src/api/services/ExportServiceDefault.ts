@@ -19,15 +19,25 @@ export class ExportServiceDefault implements ExportService {
     this.config = config;
   }
 
-  public async exportExport(
-    requestBody: ExportWebRequestModelBase,
-  ): Promise<ExportWebResponseModel> {
-    const options = this.exportExportApiRequestOptions(requestBody);
+  public async exportExport({
+    requestBody,
+  }: {
+    /** The request body containing a ExportWebRequestModelBase **/
+    requestBody: ExportWebRequestModelBase;
+  }): Promise<ExportWebResponseModel> {
+    const options = this.exportExportApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public exportExportApiRequestOptions(requestBody: ExportWebRequestModelBase): ApiRequestOptions {
+  public exportExportApiRequestOptions({
+    requestBody,
+  }: {
+    /** The request body containing a ExportWebRequestModelBase **/
+    requestBody: ExportWebRequestModelBase;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -37,13 +47,25 @@ export class ExportServiceDefault implements ExportService {
     };
   }
 
-  public async exportGetFileId(id: string): Promise<ExportGetFileWebResponseModel> {
-    const options = this.exportGetFileIdApiRequestOptions(id);
+  public async exportGetFileId({
+    id,
+  }: {
+    /** The id of the export task **/
+    id: string;
+  }): Promise<ExportGetFileWebResponseModel> {
+    const options = this.exportGetFileIdApiRequestOptions({
+      id,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public exportGetFileIdApiRequestOptions(id: string): ApiRequestOptions {
+  public exportGetFileIdApiRequestOptions({
+    id,
+  }: {
+    /** The id of the export task **/
+    id: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',

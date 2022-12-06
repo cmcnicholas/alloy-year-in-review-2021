@@ -16,12 +16,14 @@ export interface RouteService {
    * order so may not necessarily produce the overall fastest result.
    *
    * The coordinates are expected to be in lon lat EPSG:4326 and are returned in EPSG:4326 [longitude, latitude]
-   * @param requestBody The model containing the info about the route item to be created
    * @returns ItemCreateWebResponseModel
    */
-  routeCreateRouteItem(
-    requestBody: DrivingRouteCreateWebRequestModel,
-  ): Promise<ItemCreateWebResponseModel>;
+  routeCreateRouteItem({
+    requestBody,
+  }: {
+    /** The model containing the info about the route item to be created **/
+    requestBody: DrivingRouteCreateWebRequestModel;
+  }): Promise<ItemCreateWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
@@ -30,37 +32,45 @@ export interface RouteService {
    * order so may not necessarily produce the overall fastest result.
    *
    * The coordinates are expected to be in lon lat EPSG:4326 and are returned in EPSG:4326 [longitude, latitude]
-   * @param requestBody The model containing the info about the route item to be created
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  routeCreateRouteItemApiRequestOptions(
-    requestBody: DrivingRouteCreateWebRequestModel,
-  ): ApiRequestOptions;
+  routeCreateRouteItemApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the info about the route item to be created **/
+    requestBody: DrivingRouteCreateWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Edits route item
    * Creates the fastest driving route between coordinates in the supplied order, same as route create
-   * @param id The AId of the route item to edit
-   * @param requestBody The model containing the info to edit the route item
    * @returns ItemCreateWebResponseModel
    */
-  routeEditRouteItem(
-    id: string,
-    requestBody: DrivingRouteEditWebRequestModel,
-  ): Promise<ItemCreateWebResponseModel>;
+  routeEditRouteItem({
+    id,
+    requestBody,
+  }: {
+    /** The AId of the route item to edit **/
+    id: string;
+    /** The model containing the info to edit the route item **/
+    requestBody: DrivingRouteEditWebRequestModel;
+  }): Promise<ItemCreateWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Edits route item
    * Creates the fastest driving route between coordinates in the supplied order, same as route create
-   * @param id The AId of the route item to edit
-   * @param requestBody The model containing the info to edit the route item
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  routeEditRouteItemApiRequestOptions(
-    id: string,
-    requestBody: DrivingRouteEditWebRequestModel,
-  ): ApiRequestOptions;
+  routeEditRouteItemApiRequestOptions({
+    id,
+    requestBody,
+  }: {
+    /** The AId of the route item to edit **/
+    id: string;
+    /** The model containing the info to edit the route item **/
+    requestBody: DrivingRouteEditWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Adds trip (shortest route between start and end) to this route object
@@ -70,10 +80,9 @@ export interface RouteService {
    * will be stored in extra attributes.
    *
    * The coordinates are expected to be in lon lat EPSG:4326 and are returned in EPSG:4326 [longitude, latitude]
-   * @param id
    * @returns ItemCreateWebResponseModel
    */
-  routeCreateShortestTrip(id: string): Promise<ItemCreateWebResponseModel>;
+  routeCreateShortestTrip({ id }: { id: string }): Promise<ItemCreateWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
@@ -84,10 +93,9 @@ export interface RouteService {
    * will be stored in extra attributes.
    *
    * The coordinates are expected to be in lon lat EPSG:4326 and are returned in EPSG:4326 [longitude, latitude]
-   * @param id
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  routeCreateShortestTripApiRequestOptions(id: string): ApiRequestOptions;
+  routeCreateShortestTripApiRequestOptions({ id }: { id: string }): ApiRequestOptions;
 
   /**
    * Generates the fastest driving route between coordinates in the supplied order.
@@ -95,12 +103,14 @@ export interface RouteService {
    * It will attempt to find the fastest route but retain the order so may not necessarily produce the overall fastest result.
    *
    * The coordinates are expected to be in lon lat EPSG:4326 and are returned in EPSG:4326 [longitude, latitude]
-   * @param requestBody The model containing the info about the route to be generated
    * @returns GenerateFastestRouteWebResponseModel
    */
-  routeGenerateFastestRoute(
-    requestBody: GenerateFastestRouteWebRequestModel,
-  ): Promise<GenerateFastestRouteWebResponseModel>;
+  routeGenerateFastestRoute({
+    requestBody,
+  }: {
+    /** The model containing the info about the route to be generated **/
+    requestBody: GenerateFastestRouteWebRequestModel;
+  }): Promise<GenerateFastestRouteWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
@@ -109,12 +119,14 @@ export interface RouteService {
    * It will attempt to find the fastest route but retain the order so may not necessarily produce the overall fastest result.
    *
    * The coordinates are expected to be in lon lat EPSG:4326 and are returned in EPSG:4326 [longitude, latitude]
-   * @param requestBody The model containing the info about the route to be generated
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  routeGenerateFastestRouteApiRequestOptions(
-    requestBody: GenerateFastestRouteWebRequestModel,
-  ): ApiRequestOptions;
+  routeGenerateFastestRouteApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the info about the route to be generated **/
+    requestBody: GenerateFastestRouteWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Generates the trip (shortest route between start and end) for the provided route stops
@@ -122,12 +134,13 @@ export interface RouteService {
    * To get the order in which trip is visiting stops, look into WaypointIndex property.
    *
    * The coordinates are expected to be in lon lat EPSG:4326 and are returned in EPSG:4326 [longitude, latitude]
-   * @param requestBody
    * @returns GenerateShortestRouteWebResponseModel
    */
-  routeGenerateShortestRoute(
-    requestBody: GenerateShortestRouteWebRequestModel,
-  ): Promise<GenerateShortestRouteWebResponseModel>;
+  routeGenerateShortestRoute({
+    requestBody,
+  }: {
+    requestBody: GenerateShortestRouteWebRequestModel;
+  }): Promise<GenerateShortestRouteWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
@@ -136,10 +149,11 @@ export interface RouteService {
    * To get the order in which trip is visiting stops, look into WaypointIndex property.
    *
    * The coordinates are expected to be in lon lat EPSG:4326 and are returned in EPSG:4326 [longitude, latitude]
-   * @param requestBody
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  routeGenerateShortestRouteApiRequestOptions(
-    requestBody: GenerateShortestRouteWebRequestModel,
-  ): ApiRequestOptions;
+  routeGenerateShortestRouteApiRequestOptions({
+    requestBody,
+  }: {
+    requestBody: GenerateShortestRouteWebRequestModel;
+  }): ApiRequestOptions;
 }

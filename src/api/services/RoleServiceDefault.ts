@@ -27,13 +27,25 @@ export class RoleServiceDefault implements RoleService {
     this.config = config;
   }
 
-  public async roleGet(code: string): Promise<AlloyRoleGetWebResponseModel> {
-    const options = this.roleGetApiRequestOptions(code);
+  public async roleGet({
+    code,
+  }: {
+    /** The code of the user role to retrieve **/
+    code: string;
+  }): Promise<AlloyRoleGetWebResponseModel> {
+    const options = this.roleGetApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public roleGetApiRequestOptions(code: string): ApiRequestOptions {
+  public roleGetApiRequestOptions({
+    code,
+  }: {
+    /** The code of the user role to retrieve **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -41,19 +53,32 @@ export class RoleServiceDefault implements RoleService {
     };
   }
 
-  public async roleEdit(
-    code: string,
-    requestBody: AlloyRoleEditWebRequestModel,
-  ): Promise<AlloyRoleEditWebResponseModel> {
-    const options = this.roleEditApiRequestOptions(code, requestBody);
+  public async roleEdit({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the user role to edit **/
+    code: string;
+    /** The model containing the edit info **/
+    requestBody: AlloyRoleEditWebRequestModel;
+  }): Promise<AlloyRoleEditWebResponseModel> {
+    const options = this.roleEditApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public roleEditApiRequestOptions(
-    code: string,
-    requestBody: AlloyRoleEditWebRequestModel,
-  ): ApiRequestOptions {
+  public roleEditApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the user role to edit **/
+    code: string;
+    /** The model containing the edit info **/
+    requestBody: AlloyRoleEditWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -63,13 +88,25 @@ export class RoleServiceDefault implements RoleService {
     };
   }
 
-  public async roleDelete(code: string): Promise<void> {
-    const options = this.roleDeleteApiRequestOptions(code);
+  public async roleDelete({
+    code,
+  }: {
+    /** The Guc of the user role to delete **/
+    code: string;
+  }): Promise<void> {
+    const options = this.roleDeleteApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public roleDeleteApiRequestOptions(code: string): ApiRequestOptions {
+  public roleDeleteApiRequestOptions({
+    code,
+  }: {
+    /** The Guc of the user role to delete **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'DELETE',
@@ -77,34 +114,60 @@ export class RoleServiceDefault implements RoleService {
     };
   }
 
-  public async roleList(
-    query?: string | null,
-    context?: Context | null,
-    username?: string | null,
-    groupCode?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<AlloyRoleListWebResponseModel> {
-    const options = this.roleListApiRequestOptions(
+  public async roleList({
+    query,
+    context,
+    username,
+    groupCode,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the user roles by **/
+    query?: string | null;
+    /** Optional Context filter **/
+    context?: Context | null;
+    /** Optional username parameter to return only roles containing the correspondent user **/
+    username?: string | null;
+    /** Optional group code parameter to return only roles containing the correspondent user group **/
+    groupCode?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<AlloyRoleListWebResponseModel> {
+    const options = this.roleListApiRequestOptions({
       query,
       context,
       username,
       groupCode,
       page,
       pageSize,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public roleListApiRequestOptions(
-    query?: string | null,
-    context?: Context | null,
-    username?: string | null,
-    groupCode?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public roleListApiRequestOptions({
+    query,
+    context,
+    username,
+    groupCode,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the user roles by **/
+    query?: string | null;
+    /** Optional Context filter **/
+    context?: Context | null;
+    /** Optional username parameter to return only roles containing the correspondent user **/
+    username?: string | null;
+    /** Optional group code parameter to return only roles containing the correspondent user group **/
+    groupCode?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -120,17 +183,25 @@ export class RoleServiceDefault implements RoleService {
     };
   }
 
-  public async roleCreate(
-    requestBody: AlloyRoleCreateWebRequestModel,
-  ): Promise<AlloyRoleCreateWebResponseModel> {
-    const options = this.roleCreateApiRequestOptions(requestBody);
+  public async roleCreate({
+    requestBody,
+  }: {
+    /** The model containing the creation info **/
+    requestBody: AlloyRoleCreateWebRequestModel;
+  }): Promise<AlloyRoleCreateWebResponseModel> {
+    const options = this.roleCreateApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public roleCreateApiRequestOptions(
-    requestBody: AlloyRoleCreateWebRequestModel,
-  ): ApiRequestOptions {
+  public roleCreateApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the creation info **/
+    requestBody: AlloyRoleCreateWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -140,15 +211,25 @@ export class RoleServiceDefault implements RoleService {
     };
   }
 
-  public async roleAddUser(requestBody: AlloyRoleAddUserWebRequestModel): Promise<void> {
-    const options = this.roleAddUserApiRequestOptions(requestBody);
+  public async roleAddUser({
+    requestBody,
+  }: {
+    /** The model containing the info necessary to add a user to a role **/
+    requestBody: AlloyRoleAddUserWebRequestModel;
+  }): Promise<void> {
+    const options = this.roleAddUserApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public roleAddUserApiRequestOptions(
-    requestBody: AlloyRoleAddUserWebRequestModel,
-  ): ApiRequestOptions {
+  public roleAddUserApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the info necessary to add a user to a role **/
+    requestBody: AlloyRoleAddUserWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -158,15 +239,25 @@ export class RoleServiceDefault implements RoleService {
     };
   }
 
-  public async roleRemoveUser(requestBody: AlloyRoleRemoveUserWebRequestModel): Promise<void> {
-    const options = this.roleRemoveUserApiRequestOptions(requestBody);
+  public async roleRemoveUser({
+    requestBody,
+  }: {
+    /** The model containing the info necessary to remove a user from a role **/
+    requestBody: AlloyRoleRemoveUserWebRequestModel;
+  }): Promise<void> {
+    const options = this.roleRemoveUserApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public roleRemoveUserApiRequestOptions(
-    requestBody: AlloyRoleRemoveUserWebRequestModel,
-  ): ApiRequestOptions {
+  public roleRemoveUserApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the info necessary to remove a user from a role **/
+    requestBody: AlloyRoleRemoveUserWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -176,15 +267,25 @@ export class RoleServiceDefault implements RoleService {
     };
   }
 
-  public async roleAddGroup(requestBody: AlloyRoleAddGroupWebRequestModel): Promise<void> {
-    const options = this.roleAddGroupApiRequestOptions(requestBody);
+  public async roleAddGroup({
+    requestBody,
+  }: {
+    /** The model containing the info necessary to add a group to a role **/
+    requestBody: AlloyRoleAddGroupWebRequestModel;
+  }): Promise<void> {
+    const options = this.roleAddGroupApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public roleAddGroupApiRequestOptions(
-    requestBody: AlloyRoleAddGroupWebRequestModel,
-  ): ApiRequestOptions {
+  public roleAddGroupApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the info necessary to add a group to a role **/
+    requestBody: AlloyRoleAddGroupWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -194,15 +295,25 @@ export class RoleServiceDefault implements RoleService {
     };
   }
 
-  public async roleRemoveGroup(requestBody: AlloyRoleRemoveGroupWebRequestModel): Promise<void> {
-    const options = this.roleRemoveGroupApiRequestOptions(requestBody);
+  public async roleRemoveGroup({
+    requestBody,
+  }: {
+    /** The model containing the info necessary to remove a group from a role **/
+    requestBody: AlloyRoleRemoveGroupWebRequestModel;
+  }): Promise<void> {
+    const options = this.roleRemoveGroupApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public roleRemoveGroupApiRequestOptions(
-    requestBody: AlloyRoleRemoveGroupWebRequestModel,
-  ): ApiRequestOptions {
+  public roleRemoveGroupApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the info necessary to remove a group from a role **/
+    requestBody: AlloyRoleRemoveGroupWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',

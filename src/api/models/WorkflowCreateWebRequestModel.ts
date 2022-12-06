@@ -22,6 +22,10 @@ export type WorkflowCreateWebRequestModel = {
    */
   description?: string | null;
   /**
+   * The workflow tags
+   */
+  tags?: Array<string> | null;
+  /**
    * Optional precondition that places additional conditions on the triggering of the workflow.
    */
   preCondition?: WorkflowTimeConditionWebModel | null;

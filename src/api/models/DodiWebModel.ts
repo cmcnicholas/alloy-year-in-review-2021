@@ -8,10 +8,10 @@ import type { DodiGeometryAllowsWebModel } from './DodiGeometryAllowsWebModel';
 import type { DodiGeometryRequiredWebModel } from './DodiGeometryRequiredWebModel';
 import type { DodiIconWebModel } from './DodiIconWebModel';
 import type { DodiImplementsWebModel } from './DodiImplementsWebModel';
+import type { DodiItemLogsRetentionDaysWebModel } from './DodiItemLogsRetentionDaysWebModel';
 import type { DodiStencilWebModel } from './DodiStencilWebModel';
 import type { DodiSubtitleWebModel } from './DodiSubtitleWebModel';
 import type { DodiTitleWebModel } from './DodiTitleWebModel';
-import type { DodiVersionedWebModel } from './DodiVersionedWebModel';
 import type { MetadataWebModel } from './MetadataWebModel';
 
 /**
@@ -59,10 +59,6 @@ export type DodiWebModel = {
    */
   dodiIcon?: DodiIconWebModel | null;
   /**
-   * The optional dodi versioned details.
-   */
-  dodiVersioned?: DodiVersionedWebModel | null;
-  /**
    * The dodi geometry required details
    */
   geometryRequired?: DodiGeometryRequiredWebModel | null;
@@ -74,6 +70,11 @@ export type DodiWebModel = {
    * The collections associated to this design
    */
   dodiCollections?: DodiCollectionsWebModel | null;
+  /**
+   * The optional retention time in days of item logs for items of the design.
+   * If not set, item log retention time is taken from the customer setting
+   */
+  itemLogsRetentionDays?: DodiItemLogsRetentionDaysWebModel | null;
   /**
    * The stencil used by this dodi and the ones implementing it. Note that a stencil in a closer "dodi" overrides
    * any stencil in a "further away" dodi

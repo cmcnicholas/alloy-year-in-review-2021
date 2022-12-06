@@ -25,13 +25,25 @@ export class MeshServiceDefault implements MeshService {
     this.config = config;
   }
 
-  public async meshGet(code: string): Promise<MeshWithOperationsSummaryWebResponseModel> {
-    const options = this.meshGetApiRequestOptions(code);
+  public async meshGet({
+    code,
+  }: {
+    /** The Guc for the mesh being requested **/
+    code: string;
+  }): Promise<MeshWithOperationsSummaryWebResponseModel> {
+    const options = this.meshGetApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public meshGetApiRequestOptions(code: string): ApiRequestOptions {
+  public meshGetApiRequestOptions({
+    code,
+  }: {
+    /** The Guc for the mesh being requested **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -39,19 +51,32 @@ export class MeshServiceDefault implements MeshService {
     };
   }
 
-  public async meshEdit(
-    code: string,
-    requestBody: MeshEditWebRequestModel,
-  ): Promise<MeshWithOperationsSummaryWebResponseModel> {
-    const options = this.meshEditApiRequestOptions(code, requestBody);
+  public async meshEdit({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the mesh to edit **/
+    code: string;
+    /** Model containing the new mesh details **/
+    requestBody: MeshEditWebRequestModel;
+  }): Promise<MeshWithOperationsSummaryWebResponseModel> {
+    const options = this.meshEditApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public meshEditApiRequestOptions(
-    code: string,
-    requestBody: MeshEditWebRequestModel,
-  ): ApiRequestOptions {
+  public meshEditApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the mesh to edit **/
+    code: string;
+    /** Model containing the new mesh details **/
+    requestBody: MeshEditWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -61,25 +86,55 @@ export class MeshServiceDefault implements MeshService {
     };
   }
 
-  public async meshList(
-    query?: string | null,
-    userGroup?: string | null,
-    context?: Context | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<MeshListWebResponseModel> {
-    const options = this.meshListApiRequestOptions(query, userGroup, context, page, pageSize);
+  public async meshList({
+    query,
+    userGroup,
+    context,
+    page,
+    pageSize,
+  }: {
+    /** The optional mesh query string to filter on **/
+    query?: string | null;
+    /** Optional Guc to filter meshes by. If specified, only the meshes
+     * that have this user group code within their permissions are returned **/
+    userGroup?: string | null;
+    /** Optional mesh Context filter **/
+    context?: Context | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<MeshListWebResponseModel> {
+    const options = this.meshListApiRequestOptions({
+      query,
+      userGroup,
+      context,
+      page,
+      pageSize,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public meshListApiRequestOptions(
-    query?: string | null,
-    userGroup?: string | null,
-    context?: Context | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public meshListApiRequestOptions({
+    query,
+    userGroup,
+    context,
+    page,
+    pageSize,
+  }: {
+    /** The optional mesh query string to filter on **/
+    query?: string | null;
+    /** Optional Guc to filter meshes by. If specified, only the meshes
+     * that have this user group code within their permissions are returned **/
+    userGroup?: string | null;
+    /** Optional mesh Context filter **/
+    context?: Context | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -94,21 +149,43 @@ export class MeshServiceDefault implements MeshService {
     };
   }
 
-  public async meshGetPermissions(
-    code: string,
-    username?: string | null,
-    role?: string | null,
-  ): Promise<MeshPermissionsGetWebResponseModel> {
-    const options = this.meshGetPermissionsApiRequestOptions(code, username, role);
+  public async meshGetPermissions({
+    code,
+    username,
+    role,
+  }: {
+    /** The Guc for the mesh whose permissions are being requested **/
+    code: string;
+    /** Optional username to get permissions for the specific user.
+     * This value is mutually exclusive with Role. **/
+    username?: string | null;
+    /** Optional role to get permissions for the specific role.
+     * This value is mutually exclusive with Username. **/
+    role?: string | null;
+  }): Promise<MeshPermissionsGetWebResponseModel> {
+    const options = this.meshGetPermissionsApiRequestOptions({
+      code,
+      username,
+      role,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public meshGetPermissionsApiRequestOptions(
-    code: string,
-    username?: string | null,
-    role?: string | null,
-  ): ApiRequestOptions {
+  public meshGetPermissionsApiRequestOptions({
+    code,
+    username,
+    role,
+  }: {
+    /** The Guc for the mesh whose permissions are being requested **/
+    code: string;
+    /** Optional username to get permissions for the specific user.
+     * This value is mutually exclusive with Role. **/
+    username?: string | null;
+    /** Optional role to get permissions for the specific role.
+     * This value is mutually exclusive with Username. **/
+    role?: string | null;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -120,19 +197,32 @@ export class MeshServiceDefault implements MeshService {
     };
   }
 
-  public async meshEditPermissions(
-    code: string,
-    requestBody: MeshPermissionsEditWebRequestModel,
-  ): Promise<MeshWithPermissionsWebResponseModel> {
-    const options = this.meshEditPermissionsApiRequestOptions(code, requestBody);
+  public async meshEditPermissions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the mesh to edit the permissions of **/
+    code: string;
+    /** The model containing the info necessary to the edit permissions operation **/
+    requestBody: MeshPermissionsEditWebRequestModel;
+  }): Promise<MeshWithPermissionsWebResponseModel> {
+    const options = this.meshEditPermissionsApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public meshEditPermissionsApiRequestOptions(
-    code: string,
-    requestBody: MeshPermissionsEditWebRequestModel,
-  ): ApiRequestOptions {
+  public meshEditPermissionsApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the mesh to edit the permissions of **/
+    code: string;
+    /** The model containing the info necessary to the edit permissions operation **/
+    requestBody: MeshPermissionsEditWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -142,28 +232,46 @@ export class MeshServiceDefault implements MeshService {
     };
   }
 
-  public async meshMeshAccessAdvisorByUser(
-    username: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<MeshAccessAdvisorByUserListWebResponseModel> {
-    const options = this.meshMeshAccessAdvisorByUserApiRequestOptions(
+  public async meshMeshAccessAdvisorByUser({
+    username,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The name of the user to get mesh access advisor for **/
+    username: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<MeshAccessAdvisorByUserListWebResponseModel> {
+    const options = this.meshMeshAccessAdvisorByUserApiRequestOptions({
       username,
       query,
       page,
       pageSize,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public meshMeshAccessAdvisorByUserApiRequestOptions(
-    username: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public meshMeshAccessAdvisorByUserApiRequestOptions({
+    username,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The name of the user to get mesh access advisor for **/
+    username: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -176,23 +284,46 @@ export class MeshServiceDefault implements MeshService {
     };
   }
 
-  public async meshMeshAccessAdvisorByRole(
-    code: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<MeshAccessAdvisorByRoleListWebResponseModel> {
-    const options = this.meshMeshAccessAdvisorByRoleApiRequestOptions(code, query, page, pageSize);
+  public async meshMeshAccessAdvisorByRole({
+    code,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The code of the role to get mesh access advisor for **/
+    code: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<MeshAccessAdvisorByRoleListWebResponseModel> {
+    const options = this.meshMeshAccessAdvisorByRoleApiRequestOptions({
+      code,
+      query,
+      page,
+      pageSize,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public meshMeshAccessAdvisorByRoleApiRequestOptions(
-    code: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public meshMeshAccessAdvisorByRoleApiRequestOptions({
+    code,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The code of the role to get mesh access advisor for **/
+    code: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',

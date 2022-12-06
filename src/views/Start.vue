@@ -1,11 +1,11 @@
 <template>
   <div class="start">
-    <h1 class="start-title" aria-label="2021 Year in review - Alloy">2021 Year in review</h1>
+    <h1 class="start-title" aria-label="2022 Year in review - Alloy">2022 Year in review</h1>
     <img
       class="start-logo"
       src="../assets/alloy.svg"
-      alt="2021 Year in review - Alloy"
-      title="2021 Year in review - Alloy"
+      alt="2022 Year in review - Alloy"
+      title="2022 Year in review - Alloy"
       width="300"
     />
     <div class="start-bottom">

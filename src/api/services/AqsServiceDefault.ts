@@ -24,21 +24,39 @@ export class AqsServiceDefault implements AqsService {
     this.config = config;
   }
 
-  public async aqsQuery(
-    requestBody: AqsQueryWebRequestBodyModel,
-    page?: number,
-    pageSize?: number,
-  ): Promise<AqsQueryWebResponse> {
-    const options = this.aqsQueryApiRequestOptions(requestBody, page, pageSize);
+  public async aqsQuery({
+    requestBody,
+    page,
+    pageSize,
+  }: {
+    /** The request body containing a AqsJsonNode of the Aqs query **/
+    requestBody: AqsQueryWebRequestBodyModel;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<AqsQueryWebResponse> {
+    const options = this.aqsQueryApiRequestOptions({
+      requestBody,
+      page,
+      pageSize,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public aqsQueryApiRequestOptions(
-    requestBody: AqsQueryWebRequestBodyModel,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public aqsQueryApiRequestOptions({
+    requestBody,
+    page,
+    pageSize,
+  }: {
+    /** The request body containing a AqsJsonNode of the Aqs query **/
+    requestBody: AqsQueryWebRequestBodyModel;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -52,21 +70,39 @@ export class AqsServiceDefault implements AqsService {
     };
   }
 
-  public async aqsJoin(
-    requestBody: AqsJoinWebRequestBodyModel,
-    page?: number,
-    pageSize?: number,
-  ): Promise<AqsJoinWebResponse> {
-    const options = this.aqsJoinApiRequestOptions(requestBody, page, pageSize);
+  public async aqsJoin({
+    requestBody,
+    page,
+    pageSize,
+  }: {
+    /** The request body containing a AqsJsonNode of the Aqs query **/
+    requestBody: AqsJoinWebRequestBodyModel;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<AqsJoinWebResponse> {
+    const options = this.aqsJoinApiRequestOptions({
+      requestBody,
+      page,
+      pageSize,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public aqsJoinApiRequestOptions(
-    requestBody: AqsJoinWebRequestBodyModel,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public aqsJoinApiRequestOptions({
+    requestBody,
+    page,
+    pageSize,
+  }: {
+    /** The request body containing a AqsJsonNode of the Aqs query **/
+    requestBody: AqsJoinWebRequestBodyModel;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -80,21 +116,39 @@ export class AqsServiceDefault implements AqsService {
     };
   }
 
-  public async aqsStatisticsAggregation(
-    requestBody: AqsStatisticsWebRequestBodyModel,
-    page?: number,
-    pageSize?: number,
-  ): Promise<AqsStatisticsAggregationWebResponse> {
-    const options = this.aqsStatisticsAggregationApiRequestOptions(requestBody, page, pageSize);
+  public async aqsStatisticsAggregation({
+    requestBody,
+    page,
+    pageSize,
+  }: {
+    /** The request body containing a AqsJsonNode of the Aqs query **/
+    requestBody: AqsStatisticsWebRequestBodyModel;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<AqsStatisticsAggregationWebResponse> {
+    const options = this.aqsStatisticsAggregationApiRequestOptions({
+      requestBody,
+      page,
+      pageSize,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public aqsStatisticsAggregationApiRequestOptions(
-    requestBody: AqsStatisticsWebRequestBodyModel,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public aqsStatisticsAggregationApiRequestOptions({
+    requestBody,
+    page,
+    pageSize,
+  }: {
+    /** The request body containing a AqsJsonNode of the Aqs query **/
+    requestBody: AqsStatisticsWebRequestBodyModel;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -108,17 +162,25 @@ export class AqsServiceDefault implements AqsService {
     };
   }
 
-  public async aqsGetAqsPathInfo(
-    requestBody: AqsPathInfoGetWebRequestModel,
-  ): Promise<AqsPathInfoGetWebResponse> {
-    const options = this.aqsGetAqsPathInfoApiRequestOptions(requestBody);
+  public async aqsGetAqsPathInfo({
+    requestBody,
+  }: {
+    /** The model containing the info for the get Aqs path info operation **/
+    requestBody: AqsPathInfoGetWebRequestModel;
+  }): Promise<AqsPathInfoGetWebResponse> {
+    const options = this.aqsGetAqsPathInfoApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public aqsGetAqsPathInfoApiRequestOptions(
-    requestBody: AqsPathInfoGetWebRequestModel,
-  ): ApiRequestOptions {
+  public aqsGetAqsPathInfoApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the info for the get Aqs path info operation **/
+    requestBody: AqsPathInfoGetWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',

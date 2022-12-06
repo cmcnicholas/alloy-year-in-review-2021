@@ -1,14 +1,15 @@
 /* eslint-disable */
 
 import type { ItemFormAction } from './ItemFormAction';
-import type { ItemFormControlUpsertWebRequestModel } from './ItemFormControlUpsertWebRequestModel';
+import type { ItemFormControlWebModel } from './ItemFormControlWebModel';
+import type { ItemFormExpressionWebModel } from './ItemFormExpressionWebModel';
 
 /**
  * Web request model to create an item form
  */
 export type ItemFormCreateWebRequestModel = {
   /**
-   * The name of the import form
+   * The name of the item form
    */
   name: string;
   /**
@@ -18,7 +19,7 @@ export type ItemFormCreateWebRequestModel = {
   /**
    * The item form controls to have on the item form upon creation
    */
-  controls?: Array<ItemFormControlUpsertWebRequestModel> | null;
+  controls?: Array<ItemFormControlWebModel> | null;
   /**
    * The item form tags
    */
@@ -27,6 +28,10 @@ export type ItemFormCreateWebRequestModel = {
    * The item form actions
    */
   actions?: Array<ItemFormAction> | null;
+  /**
+   * The item form expressions to have on the item form upon creation
+   */
+  expressions?: Array<ItemFormExpressionWebModel> | null;
 };
 
 export namespace ItemFormCreateWebRequestModel {

@@ -7,9 +7,13 @@ import type { JObject } from './JObject';
  */
 export type ItemFormControlWebModel = {
   /**
-   * The control code
+   * The identifier of the control within the item form
    */
-  code: string;
+  id: string;
+  /**
+   * The code that represents which control type to display e.g.itemFormControls_textInput or itemFormControls_itemPicker
+   */
+  typeCode: string;
   /**
    * The properties to configure the control
    */

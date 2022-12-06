@@ -34,11 +34,14 @@ export type DesignEditWebRequestModel = {
    */
   subtitle?: string | null;
   /**
-   * The optional geometry required information to set for this design. If null value is deduced from implements or defaulted to false.
+   * Optionally set whether geometry is required for items of the design.
+   * When not set here or by any implemented interfaces, the default is false
    */
   geometryRequired?: boolean | null;
   /**
-   * The optional geometry allows information to set for this design. If null value is deduced from implements or defaulted to all geometry types.
+   * The optional set of allowed geometry types for items of the design.
+   * When not set here or by any implemented interfaces, the default set is
+   * (Point, LineString, Polygon, MultiPoint, MultiLineString, MultiPolygon and GeometryCollection)
    */
   geometryAllows?: Array<GeoJSONObjectType> | null;
   /**
@@ -51,6 +54,11 @@ export type DesignEditWebRequestModel = {
    * and if missing on both this dodi and all of its implements it will be defaulted to 'Live'.
    */
   collections?: Array<CollectionCode> | null;
+  /**
+   * The optional retention time in days of item logs for items of the design.
+   * If not set, item log retention time is taken from the implemented interfaces if set, or from the customer setting
+   */
+  itemLogsRetentionDays?: number | null;
   /**
    * The stencil used to render the item form
    */

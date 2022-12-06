@@ -23,19 +23,36 @@ export class FileServiceDefault implements FileService {
     this.config = config;
   }
 
-  public async fileDownload(
-    id: string,
-    applyContentDispositionHeader: boolean = true,
-  ): Promise<any> {
-    const options = this.fileDownloadApiRequestOptions(id, applyContentDispositionHeader);
+  public async fileDownload({
+    id,
+    applyContentDispositionHeader = true,
+  }: {
+    /** The AId of the file to download **/
+    id: string;
+    /** If true, the content disposition header will be returned and the
+     * download will be seen as a file download by the browser. If false, the header won't be returned and the image will be displayed as is
+     * If false, the header won't be returned and the image will be displayed as is **/
+    applyContentDispositionHeader?: boolean;
+  }): Promise<any> {
+    const options = this.fileDownloadApiRequestOptions({
+      id,
+      applyContentDispositionHeader,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public fileDownloadApiRequestOptions(
-    id: string,
-    applyContentDispositionHeader: boolean = true,
-  ): ApiRequestOptions {
+  public fileDownloadApiRequestOptions({
+    id,
+    applyContentDispositionHeader = true,
+  }: {
+    /** The AId of the file to download **/
+    id: string;
+    /** If true, the content disposition header will be returned and the
+     * download will be seen as a file download by the browser. If false, the header won't be returned and the image will be displayed as is
+     * If false, the header won't be returned and the image will be displayed as is **/
+    applyContentDispositionHeader?: boolean;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -46,13 +63,25 @@ export class FileServiceDefault implements FileService {
     };
   }
 
-  public async fileDelete(id: string): Promise<void> {
-    const options = this.fileDeleteApiRequestOptions(id);
+  public async fileDelete({
+    id,
+  }: {
+    /** The AId of the file to delete **/
+    id: string;
+  }): Promise<void> {
+    const options = this.fileDeleteApiRequestOptions({
+      id,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public fileDeleteApiRequestOptions(id: string): ApiRequestOptions {
+  public fileDeleteApiRequestOptions({
+    id,
+  }: {
+    /** The AId of the file to delete **/
+    id: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'DELETE',
@@ -60,31 +89,55 @@ export class FileServiceDefault implements FileService {
     };
   }
 
-  public async fileDownloadThumbnail(
-    id: string,
-    width?: number,
-    height?: number,
-    mode?: ResizeFitMode,
-    applyContentDispositionHeader?: boolean,
-  ): Promise<any> {
-    const options = this.fileDownloadThumbnailApiRequestOptions(
+  public async fileDownloadThumbnail({
+    id,
+    width,
+    height,
+    mode,
+    applyContentDispositionHeader,
+  }: {
+    /** The AId of the file to download a thumbnail of **/
+    id: string;
+    /** The height of the thumbnail **/
+    width?: number;
+    /** The height of the thumbnail **/
+    height?: number;
+    /** The mode to use to resize the image **/
+    mode?: ResizeFitMode;
+    /** If true, the content disposition header will be returned, triggering a file download from the browser.
+     * If false, the header won't be returned and the image will be displayed as is **/
+    applyContentDispositionHeader?: boolean;
+  }): Promise<any> {
+    const options = this.fileDownloadThumbnailApiRequestOptions({
       id,
       width,
       height,
       mode,
       applyContentDispositionHeader,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public fileDownloadThumbnailApiRequestOptions(
-    id: string,
-    width?: number,
-    height?: number,
-    mode?: ResizeFitMode,
-    applyContentDispositionHeader?: boolean,
-  ): ApiRequestOptions {
+  public fileDownloadThumbnailApiRequestOptions({
+    id,
+    width,
+    height,
+    mode,
+    applyContentDispositionHeader,
+  }: {
+    /** The AId of the file to download a thumbnail of **/
+    id: string;
+    /** The height of the thumbnail **/
+    width?: number;
+    /** The height of the thumbnail **/
+    height?: number;
+    /** The mode to use to resize the image **/
+    mode?: ResizeFitMode;
+    /** If true, the content disposition header will be returned, triggering a file download from the browser.
+     * If false, the header won't be returned and the image will be displayed as is **/
+    applyContentDispositionHeader?: boolean;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -98,13 +151,27 @@ export class FileServiceDefault implements FileService {
     };
   }
 
-  public async fileUpload(folderItemId?: string | null): Promise<FileCreateWebResponseModel> {
-    const options = this.fileUploadApiRequestOptions(folderItemId);
+  public async fileUpload({
+    folderItemId,
+  }: {
+    /** The AId of the item representing the folder to upload to
+     * If not specified, the file will be uploaded to the folder of the user that is uploading **/
+    folderItemId?: string | null;
+  }): Promise<FileCreateWebResponseModel> {
+    const options = this.fileUploadApiRequestOptions({
+      folderItemId,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public fileUploadApiRequestOptions(folderItemId?: string | null): ApiRequestOptions {
+  public fileUploadApiRequestOptions({
+    folderItemId,
+  }: {
+    /** The AId of the item representing the folder to upload to
+     * If not specified, the file will be uploaded to the folder of the user that is uploading **/
+    folderItemId?: string | null;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -115,19 +182,32 @@ export class FileServiceDefault implements FileService {
     };
   }
 
-  public async fileMove(
-    id: string,
-    requestBody: FileMoveWebRequestModel,
-  ): Promise<FileMoveWebResponseModel> {
-    const options = this.fileMoveApiRequestOptions(id, requestBody);
+  public async fileMove({
+    id,
+    requestBody,
+  }: {
+    /** The AId of the file to move **/
+    id: string;
+    /** The move file model **/
+    requestBody: FileMoveWebRequestModel;
+  }): Promise<FileMoveWebResponseModel> {
+    const options = this.fileMoveApiRequestOptions({
+      id,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public fileMoveApiRequestOptions(
-    id: string,
-    requestBody: FileMoveWebRequestModel,
-  ): ApiRequestOptions {
+  public fileMoveApiRequestOptions({
+    id,
+    requestBody,
+  }: {
+    /** The AId of the file to move **/
+    id: string;
+    /** The move file model **/
+    requestBody: FileMoveWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -137,17 +217,25 @@ export class FileServiceDefault implements FileService {
     };
   }
 
-  public async fileBulkFileDownload(
-    requestBody: FileBulkDownloadWebRequestModel,
-  ): Promise<FileBulkDownloadWebResponseModel> {
-    const options = this.fileBulkFileDownloadApiRequestOptions(requestBody);
+  public async fileBulkFileDownload({
+    requestBody,
+  }: {
+    /** The bulk file download model **/
+    requestBody: FileBulkDownloadWebRequestModel;
+  }): Promise<FileBulkDownloadWebResponseModel> {
+    const options = this.fileBulkFileDownloadApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public fileBulkFileDownloadApiRequestOptions(
-    requestBody: FileBulkDownloadWebRequestModel,
-  ): ApiRequestOptions {
+  public fileBulkFileDownloadApiRequestOptions({
+    requestBody,
+  }: {
+    /** The bulk file download model **/
+    requestBody: FileBulkDownloadWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -157,13 +245,25 @@ export class FileServiceDefault implements FileService {
     };
   }
 
-  public async fileGetFileId(id: string): Promise<BulkFileDownloadGetFileWebResponseModel> {
-    const options = this.fileGetFileIdApiRequestOptions(id);
+  public async fileGetFileId({
+    id,
+  }: {
+    /** The id of the bulk file download task **/
+    id: string;
+  }): Promise<BulkFileDownloadGetFileWebResponseModel> {
+    const options = this.fileGetFileIdApiRequestOptions({
+      id,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public fileGetFileIdApiRequestOptions(id: string): ApiRequestOptions {
+  public fileGetFileIdApiRequestOptions({
+    id,
+  }: {
+    /** The id of the bulk file download task **/
+    id: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',

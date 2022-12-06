@@ -2,7 +2,6 @@
 
 import type { ContainerWebModelOfBoolean } from './ContainerWebModelOfBoolean';
 import type { ContainerWebModelOfCollectionCode } from './ContainerWebModelOfCollectionCode';
-import type { ContainerWebModelOfDateTime } from './ContainerWebModelOfDateTime';
 import type { ContainerWebModelOfString } from './ContainerWebModelOfString';
 import type { ItemAttributeWebModel } from './ItemAttributeWebModel';
 
@@ -18,14 +17,6 @@ export type ReconstructedItemDeltaWebModel = {
    * The collection, if it was changed
    */
   collection?: ContainerWebModelOfCollectionCode | null;
-  /**
-   * The start date, if it was changed
-   */
-  start?: ContainerWebModelOfDateTime | null;
-  /**
-   * The end date, if it was changed
-   */
-  end?: ContainerWebModelOfDateTime | null;
   /**
    * The icon, if it was changed
    */

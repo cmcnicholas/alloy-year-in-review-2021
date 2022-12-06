@@ -26,13 +26,25 @@ export class BasemapServiceDefault implements BasemapService {
     this.config = config;
   }
 
-  public async basemapGet(code: string): Promise<BasemapWithOperationsSummaryWebResponseModel> {
-    const options = this.basemapGetApiRequestOptions(code);
+  public async basemapGet({
+    code,
+  }: {
+    /** The Guc for the basemap being requested **/
+    code: string;
+  }): Promise<BasemapWithOperationsSummaryWebResponseModel> {
+    const options = this.basemapGetApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public basemapGetApiRequestOptions(code: string): ApiRequestOptions {
+  public basemapGetApiRequestOptions({
+    code,
+  }: {
+    /** The Guc for the basemap being requested **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -40,19 +52,32 @@ export class BasemapServiceDefault implements BasemapService {
     };
   }
 
-  public async basemapEdit(
-    code: string,
-    requestBody: BasemapEditWebRequestModel,
-  ): Promise<BasemapWithOperationsSummaryWebResponseModel> {
-    const options = this.basemapEditApiRequestOptions(code, requestBody);
+  public async basemapEdit({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the basemap to edit **/
+    code: string;
+    /** Model containing the new basemap details **/
+    requestBody: BasemapEditWebRequestModel;
+  }): Promise<BasemapWithOperationsSummaryWebResponseModel> {
+    const options = this.basemapEditApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public basemapEditApiRequestOptions(
-    code: string,
-    requestBody: BasemapEditWebRequestModel,
-  ): ApiRequestOptions {
+  public basemapEditApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the basemap to edit **/
+    code: string;
+    /** Model containing the new basemap details **/
+    requestBody: BasemapEditWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -62,13 +87,25 @@ export class BasemapServiceDefault implements BasemapService {
     };
   }
 
-  public async basemapDelete(code: string): Promise<void> {
-    const options = this.basemapDeleteApiRequestOptions(code);
+  public async basemapDelete({
+    code,
+  }: {
+    /** The Guc of the basemap to delete **/
+    code: string;
+  }): Promise<void> {
+    const options = this.basemapDeleteApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public basemapDeleteApiRequestOptions(code: string): ApiRequestOptions {
+  public basemapDeleteApiRequestOptions({
+    code,
+  }: {
+    /** The Guc of the basemap to delete **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'DELETE',
@@ -76,25 +113,55 @@ export class BasemapServiceDefault implements BasemapService {
     };
   }
 
-  public async basemapList(
-    query?: string | null,
-    userGroup?: string | null,
-    context?: Context | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<BasemapListWebResponseModel> {
-    const options = this.basemapListApiRequestOptions(query, userGroup, context, page, pageSize);
+  public async basemapList({
+    query,
+    userGroup,
+    context,
+    page,
+    pageSize,
+  }: {
+    /** Optional Name query to filter the basemaps by **/
+    query?: string | null;
+    /** Optional Guc to filter basemaps by. If specified, only the basemaps
+     * that have this user group code within their permissions are returned **/
+    userGroup?: string | null;
+    /** The optional basemaps context to filter on **/
+    context?: Context | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<BasemapListWebResponseModel> {
+    const options = this.basemapListApiRequestOptions({
+      query,
+      userGroup,
+      context,
+      page,
+      pageSize,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public basemapListApiRequestOptions(
-    query?: string | null,
-    userGroup?: string | null,
-    context?: Context | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public basemapListApiRequestOptions({
+    query,
+    userGroup,
+    context,
+    page,
+    pageSize,
+  }: {
+    /** Optional Name query to filter the basemaps by **/
+    query?: string | null;
+    /** Optional Guc to filter basemaps by. If specified, only the basemaps
+     * that have this user group code within their permissions are returned **/
+    userGroup?: string | null;
+    /** The optional basemaps context to filter on **/
+    context?: Context | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -109,17 +176,25 @@ export class BasemapServiceDefault implements BasemapService {
     };
   }
 
-  public async basemapCreate(
-    requestBody: BasemapCreateWebRequestModel,
-  ): Promise<BasemapWithOperationsSummaryWebResponseModel> {
-    const options = this.basemapCreateApiRequestOptions(requestBody);
+  public async basemapCreate({
+    requestBody,
+  }: {
+    /** Model containing the new basemap details **/
+    requestBody: BasemapCreateWebRequestModel;
+  }): Promise<BasemapWithOperationsSummaryWebResponseModel> {
+    const options = this.basemapCreateApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public basemapCreateApiRequestOptions(
-    requestBody: BasemapCreateWebRequestModel,
-  ): ApiRequestOptions {
+  public basemapCreateApiRequestOptions({
+    requestBody,
+  }: {
+    /** Model containing the new basemap details **/
+    requestBody: BasemapCreateWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -129,21 +204,43 @@ export class BasemapServiceDefault implements BasemapService {
     };
   }
 
-  public async basemapGetPermissions(
-    code: string,
-    username?: string | null,
-    role?: string | null,
-  ): Promise<BasemapPermissionsGetWebResponseModel> {
-    const options = this.basemapGetPermissionsApiRequestOptions(code, username, role);
+  public async basemapGetPermissions({
+    code,
+    username,
+    role,
+  }: {
+    /** The Guc for the basemap whose permissions are being requested **/
+    code: string;
+    /** Optional username to get permissions for the specific user.
+     * This value is mutually exclusive with Role. **/
+    username?: string | null;
+    /** Optional role to get permissions for the specific role.
+     * This value is mutually exclusive with Username. **/
+    role?: string | null;
+  }): Promise<BasemapPermissionsGetWebResponseModel> {
+    const options = this.basemapGetPermissionsApiRequestOptions({
+      code,
+      username,
+      role,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public basemapGetPermissionsApiRequestOptions(
-    code: string,
-    username?: string | null,
-    role?: string | null,
-  ): ApiRequestOptions {
+  public basemapGetPermissionsApiRequestOptions({
+    code,
+    username,
+    role,
+  }: {
+    /** The Guc for the basemap whose permissions are being requested **/
+    code: string;
+    /** Optional username to get permissions for the specific user.
+     * This value is mutually exclusive with Role. **/
+    username?: string | null;
+    /** Optional role to get permissions for the specific role.
+     * This value is mutually exclusive with Username. **/
+    role?: string | null;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -155,19 +252,32 @@ export class BasemapServiceDefault implements BasemapService {
     };
   }
 
-  public async basemapEditPermissions(
-    code: string,
-    requestBody: BasemapPermissionsEditWebRequestModel,
-  ): Promise<BasemapWithPermissionsWebResponseModel> {
-    const options = this.basemapEditPermissionsApiRequestOptions(code, requestBody);
+  public async basemapEditPermissions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the basemap to edit the permissions of **/
+    code: string;
+    /** The model containing the info necessary to the edit permissions operation **/
+    requestBody: BasemapPermissionsEditWebRequestModel;
+  }): Promise<BasemapWithPermissionsWebResponseModel> {
+    const options = this.basemapEditPermissionsApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public basemapEditPermissionsApiRequestOptions(
-    code: string,
-    requestBody: BasemapPermissionsEditWebRequestModel,
-  ): ApiRequestOptions {
+  public basemapEditPermissionsApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the basemap to edit the permissions of **/
+    code: string;
+    /** The model containing the info necessary to the edit permissions operation **/
+    requestBody: BasemapPermissionsEditWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -177,28 +287,46 @@ export class BasemapServiceDefault implements BasemapService {
     };
   }
 
-  public async basemapBasemapAccessAdvisorByUser(
-    username: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<BasemapAccessAdvisorByUserListWebResponseModel> {
-    const options = this.basemapBasemapAccessAdvisorByUserApiRequestOptions(
+  public async basemapBasemapAccessAdvisorByUser({
+    username,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The name of the user to get basemap access advisor for **/
+    username: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<BasemapAccessAdvisorByUserListWebResponseModel> {
+    const options = this.basemapBasemapAccessAdvisorByUserApiRequestOptions({
       username,
       query,
       page,
       pageSize,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public basemapBasemapAccessAdvisorByUserApiRequestOptions(
-    username: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public basemapBasemapAccessAdvisorByUserApiRequestOptions({
+    username,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The name of the user to get basemap access advisor for **/
+    username: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -211,28 +339,46 @@ export class BasemapServiceDefault implements BasemapService {
     };
   }
 
-  public async basemapBasemapAccessAdvisorByRole(
-    code: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<BasemapAccessAdvisorByRoleListWebResponseModel> {
-    const options = this.basemapBasemapAccessAdvisorByRoleApiRequestOptions(
+  public async basemapBasemapAccessAdvisorByRole({
+    code,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The code of the role to get basemap access advisor for **/
+    code: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<BasemapAccessAdvisorByRoleListWebResponseModel> {
+    const options = this.basemapBasemapAccessAdvisorByRoleApiRequestOptions({
       code,
       query,
       page,
       pageSize,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public basemapBasemapAccessAdvisorByRoleApiRequestOptions(
-    code: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public basemapBasemapAccessAdvisorByRoleApiRequestOptions({
+    code,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The code of the role to get basemap access advisor for **/
+    code: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',

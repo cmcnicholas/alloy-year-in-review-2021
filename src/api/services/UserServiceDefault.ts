@@ -8,6 +8,8 @@ import type { AlloyUserGetCurrentWebResponseModel } from '../models/AlloyUserGet
 import type { AlloyUserGetWebResponseModel } from '../models/AlloyUserGetWebResponseModel';
 import type { AlloyUserListWebResponseModel } from '../models/AlloyUserListWebResponseModel';
 import type { ChangePasswordWebRequestModel } from '../models/ChangePasswordWebRequestModel';
+import type { CustomerUserEditWebRequestModel } from '../models/CustomerUserEditWebRequestModel';
+import type { CustomerUserEditWebResponseModel } from '../models/CustomerUserEditWebResponseModel';
 import type { ForgotPasswordWebRequestModel } from '../models/ForgotPasswordWebRequestModel';
 import type { SubmitPasswordResetWebRequestModel } from '../models/SubmitPasswordResetWebRequestModel';
 import type { UserService } from './UserService';
@@ -26,13 +28,25 @@ export class UserServiceDefault implements UserService {
     this.config = config;
   }
 
-  public async userGet(username: string): Promise<AlloyUserGetWebResponseModel> {
-    const options = this.userGetApiRequestOptions(username);
+  public async userGet({
+    username,
+  }: {
+    /** The username of the user to retrieve **/
+    username: string;
+  }): Promise<AlloyUserGetWebResponseModel> {
+    const options = this.userGetApiRequestOptions({
+      username,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public userGetApiRequestOptions(username: string): ApiRequestOptions {
+  public userGetApiRequestOptions({
+    username,
+  }: {
+    /** The username of the user to retrieve **/
+    username: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -40,13 +54,25 @@ export class UserServiceDefault implements UserService {
     };
   }
 
-  public async userRemove(username: string): Promise<void> {
-    const options = this.userRemoveApiRequestOptions(username);
+  public async userRemove({
+    username,
+  }: {
+    /** The username of the user to remove from the customer **/
+    username: string;
+  }): Promise<void> {
+    const options = this.userRemoveApiRequestOptions({
+      username,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public userRemoveApiRequestOptions(username: string): ApiRequestOptions {
+  public userRemoveApiRequestOptions({
+    username,
+  }: {
+    /** The username of the user to remove from the customer **/
+    username: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'DELETE',
@@ -54,13 +80,56 @@ export class UserServiceDefault implements UserService {
     };
   }
 
-  public async userGetByUserId(userId: string): Promise<AlloyUserGetWebResponseModel> {
-    const options = this.userGetByUserIdApiRequestOptions(userId);
+  public async userEditCustomerUser({
+    username,
+    requestBody,
+  }: {
+    username: string;
+    requestBody: CustomerUserEditWebRequestModel;
+  }): Promise<CustomerUserEditWebResponseModel> {
+    const options = this.userEditCustomerUserApiRequestOptions({
+      username,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public userGetByUserIdApiRequestOptions(userId: string): ApiRequestOptions {
+  public userEditCustomerUserApiRequestOptions({
+    username,
+    requestBody,
+  }: {
+    username: string;
+    requestBody: CustomerUserEditWebRequestModel;
+  }): ApiRequestOptions {
+    return {
+      ...this.config,
+      method: 'PUT',
+      path: `/api/user/${username}`,
+      body: requestBody,
+      mediaType: 'application/json',
+    };
+  }
+
+  public async userGetByUserId({
+    userId,
+  }: {
+    /** The user id of the user to retrieve **/
+    userId: string;
+  }): Promise<AlloyUserGetWebResponseModel> {
+    const options = this.userGetByUserIdApiRequestOptions({
+      userId,
+    });
+    const result = await __request(options);
+    return result.body;
+  }
+
+  public userGetByUserIdApiRequestOptions({
+    userId,
+  }: {
+    /** The user id of the user to retrieve **/
+    userId: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -82,17 +151,25 @@ export class UserServiceDefault implements UserService {
     };
   }
 
-  public async userEditCurrentUser(
-    requestBody: AlloyUserEditCurrentWebRequestModel,
-  ): Promise<AlloyUserEditCurrentWebResponseModel> {
-    const options = this.userEditCurrentUserApiRequestOptions(requestBody);
+  public async userEditCurrentUser({
+    requestBody,
+  }: {
+    /** The model containing the information of the user to edit **/
+    requestBody: AlloyUserEditCurrentWebRequestModel;
+  }): Promise<AlloyUserEditCurrentWebResponseModel> {
+    const options = this.userEditCurrentUserApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public userEditCurrentUserApiRequestOptions(
-    requestBody: AlloyUserEditCurrentWebRequestModel,
-  ): ApiRequestOptions {
+  public userEditCurrentUserApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the information of the user to edit **/
+    requestBody: AlloyUserEditCurrentWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -102,25 +179,53 @@ export class UserServiceDefault implements UserService {
     };
   }
 
-  public async userList(
-    query?: string | null,
-    userGroup?: string | null,
-    role?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<AlloyUserListWebResponseModel> {
-    const options = this.userListApiRequestOptions(query, userGroup, role, page, pageSize);
+  public async userList({
+    query,
+    userGroup,
+    role,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the user groups by which is applied to first name, last name, username and email **/
+    query?: string | null;
+    /** Optional user group code to filter users by the user group they belong to **/
+    userGroup?: string | null;
+    /** Optional role code to filter users by the role they belong to **/
+    role?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<AlloyUserListWebResponseModel> {
+    const options = this.userListApiRequestOptions({
+      query,
+      userGroup,
+      role,
+      page,
+      pageSize,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public userListApiRequestOptions(
-    query?: string | null,
-    userGroup?: string | null,
-    role?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public userListApiRequestOptions({
+    query,
+    userGroup,
+    role,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the user groups by which is applied to first name, last name, username and email **/
+    query?: string | null;
+    /** Optional user group code to filter users by the user group they belong to **/
+    userGroup?: string | null;
+    /** Optional role code to filter users by the role they belong to **/
+    role?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -135,17 +240,25 @@ export class UserServiceDefault implements UserService {
     };
   }
 
-  public async userCreate(
-    requestBody: AlloyUserCreateWebRequestModel,
-  ): Promise<AlloyUserCreateWebResponseModel> {
-    const options = this.userCreateApiRequestOptions(requestBody);
+  public async userCreate({
+    requestBody,
+  }: {
+    /** The model containing the information of the user to create **/
+    requestBody: AlloyUserCreateWebRequestModel;
+  }): Promise<AlloyUserCreateWebResponseModel> {
+    const options = this.userCreateApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public userCreateApiRequestOptions(
-    requestBody: AlloyUserCreateWebRequestModel,
-  ): ApiRequestOptions {
+  public userCreateApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the information of the user to create **/
+    requestBody: AlloyUserCreateWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -155,15 +268,25 @@ export class UserServiceDefault implements UserService {
     };
   }
 
-  public async userForgotPasswordReset(requestBody: ForgotPasswordWebRequestModel): Promise<void> {
-    const options = this.userForgotPasswordResetApiRequestOptions(requestBody);
+  public async userForgotPasswordReset({
+    requestBody,
+  }: {
+    /** The model containing the information necessary to the process **/
+    requestBody: ForgotPasswordWebRequestModel;
+  }): Promise<void> {
+    const options = this.userForgotPasswordResetApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public userForgotPasswordResetApiRequestOptions(
-    requestBody: ForgotPasswordWebRequestModel,
-  ): ApiRequestOptions {
+  public userForgotPasswordResetApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the information necessary to the process **/
+    requestBody: ForgotPasswordWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -173,19 +296,32 @@ export class UserServiceDefault implements UserService {
     };
   }
 
-  public async userSubmitPasswordReset(
-    resetToken: string,
-    requestBody: SubmitPasswordResetWebRequestModel,
-  ): Promise<void> {
-    const options = this.userSubmitPasswordResetApiRequestOptions(resetToken, requestBody);
+  public async userSubmitPasswordReset({
+    resetToken,
+    requestBody,
+  }: {
+    /** The password reset token **/
+    resetToken: string;
+    /** The model containing the details necessary to submit a password reset **/
+    requestBody: SubmitPasswordResetWebRequestModel;
+  }): Promise<void> {
+    const options = this.userSubmitPasswordResetApiRequestOptions({
+      resetToken,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public userSubmitPasswordResetApiRequestOptions(
-    resetToken: string,
-    requestBody: SubmitPasswordResetWebRequestModel,
-  ): ApiRequestOptions {
+  public userSubmitPasswordResetApiRequestOptions({
+    resetToken,
+    requestBody,
+  }: {
+    /** The password reset token **/
+    resetToken: string;
+    /** The model containing the details necessary to submit a password reset **/
+    requestBody: SubmitPasswordResetWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -195,15 +331,25 @@ export class UserServiceDefault implements UserService {
     };
   }
 
-  public async userChangePassword(requestBody: ChangePasswordWebRequestModel): Promise<void> {
-    const options = this.userChangePasswordApiRequestOptions(requestBody);
+  public async userChangePassword({
+    requestBody,
+  }: {
+    /** The model containing the details for changing password **/
+    requestBody: ChangePasswordWebRequestModel;
+  }): Promise<void> {
+    const options = this.userChangePasswordApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public userChangePasswordApiRequestOptions(
-    requestBody: ChangePasswordWebRequestModel,
-  ): ApiRequestOptions {
+  public userChangePasswordApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the details for changing password **/
+    requestBody: ChangePasswordWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',

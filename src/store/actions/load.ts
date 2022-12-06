@@ -10,8 +10,8 @@ import { getApiUrl } from '@/utils/getApiUrl';
 import { ActionContext } from 'vuex';
 import { State } from '../State';
 
-const StartOfYearObjectId = '5fee66000000000000000000';
-const EndOfYearObjectId = '61cf99800000000000000000';
+const StartOfYearObjectId = '61cf99800000000000000000';
+const EndOfYearObjectId = '63b0cd000000000000000000';
 
 export async function load(context: ActionContext<State, State>): Promise<void> {
   await loadAssets(context);
@@ -240,7 +240,10 @@ async function loadWorkflows(context: ActionContext<State, State>): Promise<void
         token: context.state.token ?? 'unknown',
       },
     });
-    const result = await service.workflowList(undefined, undefined, undefined, 1, 0);
+    const result = await service.workflowList({
+      page: 1,
+      pageSize: 0,
+    });
     context.state.workflowsActive = result.totalResults;
   } catch (e) {
     console.error('failed to get count of workflows');
@@ -256,7 +259,10 @@ async function loadImports(context: ActionContext<State, State>): Promise<void> 
         token: context.state.token ?? 'unknown',
       },
     });
-    const result = await service.importList(undefined, 1, 0);
+    const result = await service.importList({
+      page: 1,
+      pageSize: 0,
+    });
     context.state.importsProcessed = result.totalResults;
   } catch (e) {
     console.error('failed to get count of imports');
@@ -272,17 +278,10 @@ async function loadLayers(context: ActionContext<State, State>): Promise<void> {
         token: context.state.token ?? 'unknown',
       },
     });
-    const result = await service.layerList(
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      1,
-      0,
-    );
+    const result = await service.layerList({
+      page: 1,
+      pageSize: 0,
+    });
     context.state.layersManaged = result.totalResults;
   } catch (e) {
     console.error('failed to get count of layers');
@@ -297,7 +296,9 @@ async function getAqsCountResult(
   try {
     const service = getAqsService(context);
     const result = await service.aqsStatisticsAggregation({
-      aqs,
+      requestBody: {
+        aqs,
+      },
     });
     if (result.results.length === 1) {
       if (typeof result.results[0].value.value === 'number') {

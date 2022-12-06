@@ -24,292 +24,376 @@ export interface CustomReportService {
   /**
    * Get a Custom Report by its code
    * Fetches a Custom Report by its globally unique code (Guc).
-   * @param code The Guc for the Custom Report being requested
    * @returns CustomReportGetWebResponseModel
    */
-  customReportGet(code: string): Promise<CustomReportGetWebResponseModel>;
+  customReportGet({
+    code,
+  }: {
+    /** The Guc for the Custom Report being requested **/
+    code: string;
+  }): Promise<CustomReportGetWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Get a Custom Report by its code
    * Fetches a Custom Report by its globally unique code (Guc).
-   * @param code The Guc for the Custom Report being requested
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  customReportGetApiRequestOptions(code: string): ApiRequestOptions;
+  customReportGetApiRequestOptions({
+    code,
+  }: {
+    /** The Guc for the Custom Report being requested **/
+    code: string;
+  }): ApiRequestOptions;
 
   /**
    * Edit a Custom Report
    * Creates a Custom Report based on the information sent in the model
-   * @param code The Guc of the custom report to edit/&gt;
-   * @param requestBody Model containing the new Custom Report details
    * @returns CustomReportEditWebResponseModel
    */
-  customReportEdit(
-    code: string,
-    requestBody: CustomReportEditWebRequestModel,
-  ): Promise<CustomReportEditWebResponseModel>;
+  customReportEdit({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the custom report to edit/> **/
+    code: string;
+    /** Model containing the new Custom Report details **/
+    requestBody: CustomReportEditWebRequestModel;
+  }): Promise<CustomReportEditWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Edit a Custom Report
    * Creates a Custom Report based on the information sent in the model
-   * @param code The Guc of the custom report to edit/&gt;
-   * @param requestBody Model containing the new Custom Report details
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  customReportEditApiRequestOptions(
-    code: string,
-    requestBody: CustomReportEditWebRequestModel,
-  ): ApiRequestOptions;
+  customReportEditApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the custom report to edit/> **/
+    code: string;
+    /** Model containing the new Custom Report details **/
+    requestBody: CustomReportEditWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Delete a Custom Report
    * Deletes a Custom Report based on the information sent in the model
-   * @param code The Guc of the Custom Report to delete
    * @returns void
    */
-  customReportDelete(code: string): Promise<void>;
+  customReportDelete({
+    code,
+  }: {
+    /** The Guc of the Custom Report to delete **/
+    code: string;
+  }): Promise<void>;
 
   /**
    * **used to get the request options without making a http request**
    * Delete a Custom Report
    * Deletes a Custom Report based on the information sent in the model
-   * @param code The Guc of the Custom Report to delete
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  customReportDeleteApiRequestOptions(code: string): ApiRequestOptions;
+  customReportDeleteApiRequestOptions({
+    code,
+  }: {
+    /** The Guc of the Custom Report to delete **/
+    code: string;
+  }): ApiRequestOptions;
 
   /**
    * List Custom Reports
    * Lists the custom reports matching the parameters specified
-   * @param query Optional query to filter the designs by
-   * @param page The page number to fetch (1 based)
-   * @param pageSize The number of results to return per page
    * @returns CustomReportListWebResponseModel
    */
-  customReportList(
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<CustomReportListWebResponseModel>;
+  customReportList({
+    query,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the designs by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<CustomReportListWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * List Custom Reports
    * Lists the custom reports matching the parameters specified
-   * @param query Optional query to filter the designs by
-   * @param page The page number to fetch (1 based)
-   * @param pageSize The number of results to return per page
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  customReportListApiRequestOptions(
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions;
+  customReportListApiRequestOptions({
+    query,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the designs by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions;
 
   /**
    * Create a Custom Report
    * Creates a Custom Report based on the information sent in the model
-   * @param requestBody Model containing the new Custom Report details
    * @returns CustomReportCreateWebResponseModel
    */
-  customReportCreate(
-    requestBody: CustomReportCreateWebRequestModel,
-  ): Promise<CustomReportCreateWebResponseModel>;
+  customReportCreate({
+    requestBody,
+  }: {
+    /** Model containing the new Custom Report details **/
+    requestBody: CustomReportCreateWebRequestModel;
+  }): Promise<CustomReportCreateWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Create a Custom Report
    * Creates a Custom Report based on the information sent in the model
-   * @param requestBody Model containing the new Custom Report details
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  customReportCreateApiRequestOptions(
-    requestBody: CustomReportCreateWebRequestModel,
-  ): ApiRequestOptions;
+  customReportCreateApiRequestOptions({
+    requestBody,
+  }: {
+    /** Model containing the new Custom Report details **/
+    requestBody: CustomReportCreateWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Clone a Custom Report.
    * Creates an exact copy of a Custom Report with a few values overridden.
-   * @param code The Guc of the report to clone.
-   * @param requestBody Model containing the Custom Report details we can override from the original report.
    * @returns CustomReportCloneWebResponseModel
    */
-  customReportClone(
-    code: string,
-    requestBody: CustomReportCloneWebRequestModel,
-  ): Promise<CustomReportCloneWebResponseModel>;
+  customReportClone({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the report to clone. **/
+    code: string;
+    /** Model containing the Custom Report details we can override from the original report. **/
+    requestBody: CustomReportCloneWebRequestModel;
+  }): Promise<CustomReportCloneWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Clone a Custom Report.
    * Creates an exact copy of a Custom Report with a few values overridden.
-   * @param code The Guc of the report to clone.
-   * @param requestBody Model containing the Custom Report details we can override from the original report.
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  customReportCloneApiRequestOptions(
-    code: string,
-    requestBody: CustomReportCloneWebRequestModel,
-  ): ApiRequestOptions;
+  customReportCloneApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the report to clone. **/
+    code: string;
+    /** Model containing the Custom Report details we can override from the original report. **/
+    requestBody: CustomReportCloneWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Add a data source to a custom report
-   * @param customReportCode The Guc of the report to add the data source to
-   * @param requestBody The model containing the info about the data source to add
    * @returns AddDataSourceWebResponseModel
    */
-  customReportAddDataSource(
-    customReportCode: string,
-    requestBody: AddDataSourceWebRequestModelBase,
-  ): Promise<AddDataSourceWebResponseModel>;
+  customReportAddDataSource({
+    customReportCode,
+    requestBody,
+  }: {
+    /** The Guc of the report to add the data source to **/
+    customReportCode: string;
+    /** The model containing the info about the data source to add **/
+    requestBody: AddDataSourceWebRequestModelBase;
+  }): Promise<AddDataSourceWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Add a data source to a custom report
-   * @param customReportCode The Guc of the report to add the data source to
-   * @param requestBody The model containing the info about the data source to add
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  customReportAddDataSourceApiRequestOptions(
-    customReportCode: string,
-    requestBody: AddDataSourceWebRequestModelBase,
-  ): ApiRequestOptions;
+  customReportAddDataSourceApiRequestOptions({
+    customReportCode,
+    requestBody,
+  }: {
+    /** The Guc of the report to add the data source to **/
+    customReportCode: string;
+    /** The model containing the info about the data source to add **/
+    requestBody: AddDataSourceWebRequestModelBase;
+  }): ApiRequestOptions;
 
   /**
    * Edit a data source in a custom report
-   * @param customReportCode The Guc of the report containing the data source to edit
-   * @param code The Guc of the data source to edit
-   * @param requestBody The model containing the info about the data source to edit
    * @returns EditDataSourceWebResponseModel
    */
-  customReportEditDataSource(
-    customReportCode: string,
-    code: string,
-    requestBody: EditDataSourceWebRequestModelBase,
-  ): Promise<EditDataSourceWebResponseModel>;
+  customReportEditDataSource({
+    customReportCode,
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the report containing the data source to edit **/
+    customReportCode: string;
+    /** The Guc of the data source to edit **/
+    code: string;
+    /** The model containing the info about the data source to edit **/
+    requestBody: EditDataSourceWebRequestModelBase;
+  }): Promise<EditDataSourceWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Edit a data source in a custom report
-   * @param customReportCode The Guc of the report containing the data source to edit
-   * @param code The Guc of the data source to edit
-   * @param requestBody The model containing the info about the data source to edit
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  customReportEditDataSourceApiRequestOptions(
-    customReportCode: string,
-    code: string,
-    requestBody: EditDataSourceWebRequestModelBase,
-  ): ApiRequestOptions;
+  customReportEditDataSourceApiRequestOptions({
+    customReportCode,
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the report containing the data source to edit **/
+    customReportCode: string;
+    /** The Guc of the data source to edit **/
+    code: string;
+    /** The model containing the info about the data source to edit **/
+    requestBody: EditDataSourceWebRequestModelBase;
+  }): ApiRequestOptions;
 
   /**
    * Remove a data source from a custom report
-   * @param customReportCode The Guc of the report containing the data source to remove
-   * @param code The Guc of the data source to remove
-   * @param signature The signature is used to ensure that the custom report being edited is actually the one provided to the system.
-   * This is enforced in order to avoid applying possibly invalid edits after another user has edited the same custom report
    * @returns RemoveDataSourceWebResponseModel
    */
-  customReportRemoveDataSource(
-    customReportCode: string,
-    code: string,
-    signature?: string | null,
-  ): Promise<RemoveDataSourceWebResponseModel>;
+  customReportRemoveDataSource({
+    customReportCode,
+    code,
+    signature,
+  }: {
+    /** The Guc of the report containing the data source to remove **/
+    customReportCode: string;
+    /** The Guc of the data source to remove **/
+    code: string;
+    /** The signature is used to ensure that the custom report being edited is actually the one provided to the system.
+     * This is enforced in order to avoid applying possibly invalid edits after another user has edited the same custom report **/
+    signature: string | null;
+  }): Promise<RemoveDataSourceWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Remove a data source from a custom report
-   * @param customReportCode The Guc of the report containing the data source to remove
-   * @param code The Guc of the data source to remove
-   * @param signature The signature is used to ensure that the custom report being edited is actually the one provided to the system.
-   * This is enforced in order to avoid applying possibly invalid edits after another user has edited the same custom report
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  customReportRemoveDataSourceApiRequestOptions(
-    customReportCode: string,
-    code: string,
-    signature?: string | null,
-  ): ApiRequestOptions;
+  customReportRemoveDataSourceApiRequestOptions({
+    customReportCode,
+    code,
+    signature,
+  }: {
+    /** The Guc of the report containing the data source to remove **/
+    customReportCode: string;
+    /** The Guc of the data source to remove **/
+    code: string;
+    /** The signature is used to ensure that the custom report being edited is actually the one provided to the system.
+     * This is enforced in order to avoid applying possibly invalid edits after another user has edited the same custom report **/
+    signature: string | null;
+  }): ApiRequestOptions;
 
   /**
    * Add a document definition to a custom report
-   * @param customReportCode The Guc of the report to add the document definition to
-   * @param requestBody The model containing the info about the document definition to add
    * @returns AddDocumentDefinitionWebResponseModel
    */
-  customReportAddDocumentDefinition(
-    customReportCode: string,
-    requestBody: AddDocumentDefinitionWebRequestModel,
-  ): Promise<AddDocumentDefinitionWebResponseModel>;
+  customReportAddDocumentDefinition({
+    customReportCode,
+    requestBody,
+  }: {
+    /** The Guc of the report to add the document definition to **/
+    customReportCode: string;
+    /** The model containing the info about the document definition to add **/
+    requestBody: AddDocumentDefinitionWebRequestModel;
+  }): Promise<AddDocumentDefinitionWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Add a document definition to a custom report
-   * @param customReportCode The Guc of the report to add the document definition to
-   * @param requestBody The model containing the info about the document definition to add
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  customReportAddDocumentDefinitionApiRequestOptions(
-    customReportCode: string,
-    requestBody: AddDocumentDefinitionWebRequestModel,
-  ): ApiRequestOptions;
+  customReportAddDocumentDefinitionApiRequestOptions({
+    customReportCode,
+    requestBody,
+  }: {
+    /** The Guc of the report to add the document definition to **/
+    customReportCode: string;
+    /** The model containing the info about the document definition to add **/
+    requestBody: AddDocumentDefinitionWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Edit a document definition in a custom report
-   * @param customReportCode The Guc of the report containing the document definition to edit
-   * @param id The AId of the document definition to edit
-   * @param requestBody The model containing the info about the document definition to edit
    * @returns EditDocumentDefinitionWebResponseModel
    */
-  customReportEditDocumentDefinition(
-    customReportCode: string,
-    id: string,
-    requestBody: EditDocumentDefinitionWebRequestModel,
-  ): Promise<EditDocumentDefinitionWebResponseModel>;
+  customReportEditDocumentDefinition({
+    customReportCode,
+    id,
+    requestBody,
+  }: {
+    /** The Guc of the report containing the document definition to edit **/
+    customReportCode: string;
+    /** The AId of the document definition to edit **/
+    id: string;
+    /** The model containing the info about the document definition to edit **/
+    requestBody: EditDocumentDefinitionWebRequestModel;
+  }): Promise<EditDocumentDefinitionWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Edit a document definition in a custom report
-   * @param customReportCode The Guc of the report containing the document definition to edit
-   * @param id The AId of the document definition to edit
-   * @param requestBody The model containing the info about the document definition to edit
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  customReportEditDocumentDefinitionApiRequestOptions(
-    customReportCode: string,
-    id: string,
-    requestBody: EditDocumentDefinitionWebRequestModel,
-  ): ApiRequestOptions;
+  customReportEditDocumentDefinitionApiRequestOptions({
+    customReportCode,
+    id,
+    requestBody,
+  }: {
+    /** The Guc of the report containing the document definition to edit **/
+    customReportCode: string;
+    /** The AId of the document definition to edit **/
+    id: string;
+    /** The model containing the info about the document definition to edit **/
+    requestBody: EditDocumentDefinitionWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Remove a document definition from a custom report
-   * @param customReportCode The Guc of the report containing the document definition to remove
-   * @param id The AId of the document definition to remove
-   * @param signature The signature is used to ensure that the custom report being edited is actually the one provided to the system.
-   * This is enforced in order to avoid applying possibly invalid edits after another user has edited the same custom report
    * @returns RemoveDocumentDefinitionWebResponseModel
    */
-  customReportRemoveDocumentDefinition(
-    customReportCode: string,
-    id: string,
-    signature?: string | null,
-  ): Promise<RemoveDocumentDefinitionWebResponseModel>;
+  customReportRemoveDocumentDefinition({
+    customReportCode,
+    id,
+    signature,
+  }: {
+    /** The Guc of the report containing the document definition to remove **/
+    customReportCode: string;
+    /** The AId of the document definition to remove **/
+    id: string;
+    /** The signature is used to ensure that the custom report being edited is actually the one provided to the system.
+     * This is enforced in order to avoid applying possibly invalid edits after another user has edited the same custom report **/
+    signature: string | null;
+  }): Promise<RemoveDocumentDefinitionWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Remove a document definition from a custom report
-   * @param customReportCode The Guc of the report containing the document definition to remove
-   * @param id The AId of the document definition to remove
-   * @param signature The signature is used to ensure that the custom report being edited is actually the one provided to the system.
-   * This is enforced in order to avoid applying possibly invalid edits after another user has edited the same custom report
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  customReportRemoveDocumentDefinitionApiRequestOptions(
-    customReportCode: string,
-    id: string,
-    signature?: string | null,
-  ): ApiRequestOptions;
+  customReportRemoveDocumentDefinitionApiRequestOptions({
+    customReportCode,
+    id,
+    signature,
+  }: {
+    /** The Guc of the report containing the document definition to remove **/
+    customReportCode: string;
+    /** The AId of the document definition to remove **/
+    id: string;
+    /** The signature is used to ensure that the custom report being edited is actually the one provided to the system.
+     * This is enforced in order to avoid applying possibly invalid edits after another user has edited the same custom report **/
+    signature: string | null;
+  }): ApiRequestOptions;
 }

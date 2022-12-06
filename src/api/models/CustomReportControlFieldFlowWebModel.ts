@@ -2,7 +2,7 @@
 
 import type { CustomReportControlFlowWebModelBase } from './CustomReportControlFlowWebModelBase';
 import type { CustomReportControlPropertyWebModelOfNullableBoolean } from './CustomReportControlPropertyWebModelOfNullableBoolean';
-import type { CustomReportControlPropertyWebModelOfNullableHeaderType } from './CustomReportControlPropertyWebModelOfNullableHeaderType';
+import type { CustomReportControlPropertyWebModelOfNullableCustomReportHeaderTypeWebModel } from './CustomReportControlPropertyWebModelOfNullableCustomReportHeaderTypeWebModel';
 import type { CustomReportControlPropertyWebModelOfString } from './CustomReportControlPropertyWebModelOfString';
 
 export type CustomReportControlFieldFlowWebModel = CustomReportControlFlowWebModelBase & {
@@ -21,7 +21,7 @@ export type CustomReportControlFieldFlowWebModel = CustomReportControlFlowWebMod
   /**
    * The type of header to use for default data source column names
    */
-  headerType?: CustomReportControlPropertyWebModelOfNullableHeaderType | null;
+  headerType?: CustomReportControlPropertyWebModelOfNullableCustomReportHeaderTypeWebModel | null;
 };
 
 export namespace CustomReportControlFieldFlowWebModel {

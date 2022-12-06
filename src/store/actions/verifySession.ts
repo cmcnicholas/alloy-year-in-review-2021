@@ -35,7 +35,9 @@ export async function verifySession(
   }
 
   try {
-    const response = await customerService.customerGet(customerCode);
+    const response = await customerService.customerGet({
+      code: customerCode,
+    });
 
     context.state.customerCode = customerCode;
     context.state.token = token;

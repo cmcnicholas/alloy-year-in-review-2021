@@ -12,6 +12,10 @@ export type DodiImplementsWebModel = {
    * The parent dodi Guc, i.e. the dodi that defines that this should be implemented
    */
   parent: string;
+  /**
+   * The Context of the implemented design interface
+   */
+  context: string;
 };
 
 export namespace DodiImplementsWebModel {

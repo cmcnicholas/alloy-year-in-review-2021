@@ -13,128 +13,170 @@ export interface ImportService {
   /**
    * Get an import by its Guc
    * Finds an import with the specified code
-   * @param code The Guc to use to fetch the required import
    * @returns ImportGetWebResponseModel
    */
-  importGet(code: string): Promise<ImportGetWebResponseModel>;
+  importGet({
+    code,
+  }: {
+    /** The Guc to use to fetch the required import **/
+    code: string;
+  }): Promise<ImportGetWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Get an import by its Guc
    * Finds an import with the specified code
-   * @param code The Guc to use to fetch the required import
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  importGetApiRequestOptions(code: string): ApiRequestOptions;
+  importGetApiRequestOptions({
+    code,
+  }: {
+    /** The Guc to use to fetch the required import **/
+    code: string;
+  }): ApiRequestOptions;
 
   /**
    * Delete the import
    * Deletes the import matching the specified code
-   * @param code The Guc of the import to delete
    * @returns void
    */
-  importDelete(code: string): Promise<void>;
+  importDelete({
+    code,
+  }: {
+    /** The Guc of the import to delete **/
+    code: string;
+  }): Promise<void>;
 
   /**
    * **used to get the request options without making a http request**
    * Delete the import
    * Deletes the import matching the specified code
-   * @param code The Guc of the import to delete
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  importDeleteApiRequestOptions(code: string): ApiRequestOptions;
+  importDeleteApiRequestOptions({
+    code,
+  }: {
+    /** The Guc of the import to delete **/
+    code: string;
+  }): ApiRequestOptions;
 
   /**
    * List imports
    * List imports
-   * @param query Optional query to filter the imports by
-   * @param page The page number to fetch (1 based)
-   * @param pageSize The number of results to return per page
    * @returns ImportListWebResponseModel
    */
-  importList(
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<ImportListWebResponseModel>;
+  importList({
+    query,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the imports by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<ImportListWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * List imports
    * List imports
-   * @param query Optional query to filter the imports by
-   * @param page The page number to fetch (1 based)
-   * @param pageSize The number of results to return per page
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  importListApiRequestOptions(
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions;
+  importListApiRequestOptions({
+    query,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the imports by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions;
 
   /**
    * Creates import with given name/type and new task for reading data from files.
    * Creates task for import initialisation request.
-   * @param requestBody The model containing all necessary data to initialise import
    * @returns ImportInitialiseWebResponseModel
    */
-  importImportInitialise(
-    requestBody: ImportInitialiseWebRequestModel,
-  ): Promise<ImportInitialiseWebResponseModel>;
+  importImportInitialise({
+    requestBody,
+  }: {
+    /** The model containing all necessary data to initialise import **/
+    requestBody: ImportInitialiseWebRequestModel;
+  }): Promise<ImportInitialiseWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Creates import with given name/type and new task for reading data from files.
    * Creates task for import initialisation request.
-   * @param requestBody The model containing all necessary data to initialise import
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  importImportInitialiseApiRequestOptions(
-    requestBody: ImportInitialiseWebRequestModel,
-  ): ApiRequestOptions;
+  importImportInitialiseApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing all necessary data to initialise import **/
+    requestBody: ImportInitialiseWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Validates import after mode is set and settings populated with matched attributes.
    * User can specify (optional) destination design and collection.
    * Creates task for import validation request.
-   * @param code The code of the import to validate
-   * @param requestBody The model containing all necessary data to validate import
    * @returns ImportValidateWebResponseModel
    */
-  importImportValidate(
-    code: string,
-    requestBody: ImportValidateWebRequestModel,
-  ): Promise<ImportValidateWebResponseModel>;
+  importImportValidate({
+    code,
+    requestBody,
+  }: {
+    /** The code of the import to validate **/
+    code: string;
+    /** The model containing all necessary data to validate import **/
+    requestBody: ImportValidateWebRequestModel;
+  }): Promise<ImportValidateWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Validates import after mode is set and settings populated with matched attributes.
    * User can specify (optional) destination design and collection.
    * Creates task for import validation request.
-   * @param code The code of the import to validate
-   * @param requestBody The model containing all necessary data to validate import
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  importImportValidateApiRequestOptions(
-    code: string,
-    requestBody: ImportValidateWebRequestModel,
-  ): ApiRequestOptions;
+  importImportValidateApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The code of the import to validate **/
+    code: string;
+    /** The model containing all necessary data to validate import **/
+    requestBody: ImportValidateWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Commits the valid import items.
    * Creates task for import commit request.
-   * @param code The code of the import to validate
    * @returns ImportCommitWebResponseModel
    */
-  importImportCommit(code: string): Promise<ImportCommitWebResponseModel>;
+  importImportCommit({
+    code,
+  }: {
+    /** The code of the import to validate **/
+    code: string;
+  }): Promise<ImportCommitWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Commits the valid import items.
    * Creates task for import commit request.
-   * @param code The code of the import to validate
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  importImportCommitApiRequestOptions(code: string): ApiRequestOptions;
+  importImportCommitApiRequestOptions({
+    code,
+  }: {
+    /** The code of the import to validate **/
+    code: string;
+  }): ApiRequestOptions;
 }

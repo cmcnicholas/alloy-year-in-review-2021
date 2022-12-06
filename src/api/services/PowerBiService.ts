@@ -33,46 +33,56 @@ export interface PowerBiService {
 
   /**
    * Get the embed token to edit a power bi report
-   * @param reportKey
    * @returns GetEmbedTokenWebResponseModel
    */
-  powerBiGetEmbedTokenReportEdit(reportKey: string): Promise<GetEmbedTokenWebResponseModel>;
+  powerBiGetEmbedTokenReportEdit({
+    reportKey,
+  }: {
+    reportKey: string;
+  }): Promise<GetEmbedTokenWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Get the embed token to edit a power bi report
-   * @param reportKey
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  powerBiGetEmbedTokenReportEditApiRequestOptions(reportKey: string): ApiRequestOptions;
+  powerBiGetEmbedTokenReportEditApiRequestOptions({
+    reportKey,
+  }: {
+    reportKey: string;
+  }): ApiRequestOptions;
 
   /**
    * Get the embed token to view a power bi report
-   * @param reportKey
    * @returns GetEmbedTokenWebResponseModel
    */
-  powerBiGetEmbedTokenReportView(reportKey: string): Promise<GetEmbedTokenWebResponseModel>;
+  powerBiGetEmbedTokenReportView({
+    reportKey,
+  }: {
+    reportKey: string;
+  }): Promise<GetEmbedTokenWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Get the embed token to view a power bi report
-   * @param reportKey
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  powerBiGetEmbedTokenReportViewApiRequestOptions(reportKey: string): ApiRequestOptions;
+  powerBiGetEmbedTokenReportViewApiRequestOptions({
+    reportKey,
+  }: {
+    reportKey: string;
+  }): ApiRequestOptions;
 
   /**
    * Delete a power bi report
-   * @param reportKey
    * @returns void
    */
-  powerBiDeleteReport(reportKey: string): Promise<void>;
+  powerBiDeleteReport({ reportKey }: { reportKey: string }): Promise<void>;
 
   /**
    * **used to get the request options without making a http request**
    * Delete a power bi report
-   * @param reportKey
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  powerBiDeleteReportApiRequestOptions(reportKey: string): ApiRequestOptions;
+  powerBiDeleteReportApiRequestOptions({ reportKey }: { reportKey: string }): ApiRequestOptions;
 }

@@ -24,13 +24,25 @@ export class BulkServiceDefault implements BulkService {
     this.config = config;
   }
 
-  public async bulkGet(id: string): Promise<GetBulkActionWebResponseModel> {
-    const options = this.bulkGetApiRequestOptions(id);
+  public async bulkGet({
+    id,
+  }: {
+    /** The id for the bulk action **/
+    id: string;
+  }): Promise<GetBulkActionWebResponseModel> {
+    const options = this.bulkGetApiRequestOptions({
+      id,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public bulkGetApiRequestOptions(id: string): ApiRequestOptions {
+  public bulkGetApiRequestOptions({
+    id,
+  }: {
+    /** The id for the bulk action **/
+    id: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -38,21 +50,39 @@ export class BulkServiceDefault implements BulkService {
     };
   }
 
-  public async bulkListErrors(
-    id: string,
-    page?: number,
-    pageSize?: number,
-  ): Promise<ListBulkActionErrorsWebResponseModel> {
-    const options = this.bulkListErrorsApiRequestOptions(id, page, pageSize);
+  public async bulkListErrors({
+    id,
+    page,
+    pageSize,
+  }: {
+    /** The AId for the bulk action **/
+    id: string;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<ListBulkActionErrorsWebResponseModel> {
+    const options = this.bulkListErrorsApiRequestOptions({
+      id,
+      page,
+      pageSize,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public bulkListErrorsApiRequestOptions(
-    id: string,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public bulkListErrorsApiRequestOptions({
+    id,
+    page,
+    pageSize,
+  }: {
+    /** The AId for the bulk action **/
+    id: string;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -64,17 +94,25 @@ export class BulkServiceDefault implements BulkService {
     };
   }
 
-  public async bulkDeleteItems(
-    requestBody: DeleteItemsBulkActionWebRequestModel,
-  ): Promise<BulkActionSubmittedWebResponseModel> {
-    const options = this.bulkDeleteItemsApiRequestOptions(requestBody);
+  public async bulkDeleteItems({
+    requestBody,
+  }: {
+    /** The model containing the info needed for the delete items bulk operation **/
+    requestBody: DeleteItemsBulkActionWebRequestModel;
+  }): Promise<BulkActionSubmittedWebResponseModel> {
+    const options = this.bulkDeleteItemsApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public bulkDeleteItemsApiRequestOptions(
-    requestBody: DeleteItemsBulkActionWebRequestModel,
-  ): ApiRequestOptions {
+  public bulkDeleteItemsApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the info needed for the delete items bulk operation **/
+    requestBody: DeleteItemsBulkActionWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -84,17 +122,25 @@ export class BulkServiceDefault implements BulkService {
     };
   }
 
-  public async bulkTouchItems(
-    requestBody: TouchItemsBulkActionWebRequestModel,
-  ): Promise<BulkActionSubmittedWebResponseModel> {
-    const options = this.bulkTouchItemsApiRequestOptions(requestBody);
+  public async bulkTouchItems({
+    requestBody,
+  }: {
+    /** The model containing the info needed for the touch items bulk operation **/
+    requestBody: TouchItemsBulkActionWebRequestModel;
+  }): Promise<BulkActionSubmittedWebResponseModel> {
+    const options = this.bulkTouchItemsApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public bulkTouchItemsApiRequestOptions(
-    requestBody: TouchItemsBulkActionWebRequestModel,
-  ): ApiRequestOptions {
+  public bulkTouchItemsApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the info needed for the touch items bulk operation **/
+    requestBody: TouchItemsBulkActionWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -104,17 +150,25 @@ export class BulkServiceDefault implements BulkService {
     };
   }
 
-  public async bulkEditItems(
-    requestBody: EditItemsBulkActionWebRequestModel,
-  ): Promise<BulkActionSubmittedWebResponseModel> {
-    const options = this.bulkEditItemsApiRequestOptions(requestBody);
+  public async bulkEditItems({
+    requestBody,
+  }: {
+    /** The model containing the info needed for the edit items bulk operation **/
+    requestBody: EditItemsBulkActionWebRequestModel;
+  }): Promise<BulkActionSubmittedWebResponseModel> {
+    const options = this.bulkEditItemsApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public bulkEditItemsApiRequestOptions(
-    requestBody: EditItemsBulkActionWebRequestModel,
-  ): ApiRequestOptions {
+  public bulkEditItemsApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the info needed for the edit items bulk operation **/
+    requestBody: EditItemsBulkActionWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -124,15 +178,23 @@ export class BulkServiceDefault implements BulkService {
     };
   }
 
-  public async bulkGeneric(
-    requestBody: ItemBulkWebRequestModel,
-  ): Promise<ItemBulkWebResponseModel> {
-    const options = this.bulkGenericApiRequestOptions(requestBody);
+  public async bulkGeneric({
+    requestBody,
+  }: {
+    requestBody: ItemBulkWebRequestModel;
+  }): Promise<ItemBulkWebResponseModel> {
+    const options = this.bulkGenericApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public bulkGenericApiRequestOptions(requestBody: ItemBulkWebRequestModel): ApiRequestOptions {
+  public bulkGenericApiRequestOptions({
+    requestBody,
+  }: {
+    requestBody: ItemBulkWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',

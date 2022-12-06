@@ -23,13 +23,25 @@ export class ImportServiceDefault implements ImportService {
     this.config = config;
   }
 
-  public async importGet(code: string): Promise<ImportGetWebResponseModel> {
-    const options = this.importGetApiRequestOptions(code);
+  public async importGet({
+    code,
+  }: {
+    /** The Guc to use to fetch the required import **/
+    code: string;
+  }): Promise<ImportGetWebResponseModel> {
+    const options = this.importGetApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public importGetApiRequestOptions(code: string): ApiRequestOptions {
+  public importGetApiRequestOptions({
+    code,
+  }: {
+    /** The Guc to use to fetch the required import **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -37,13 +49,25 @@ export class ImportServiceDefault implements ImportService {
     };
   }
 
-  public async importDelete(code: string): Promise<void> {
-    const options = this.importDeleteApiRequestOptions(code);
+  public async importDelete({
+    code,
+  }: {
+    /** The Guc of the import to delete **/
+    code: string;
+  }): Promise<void> {
+    const options = this.importDeleteApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public importDeleteApiRequestOptions(code: string): ApiRequestOptions {
+  public importDeleteApiRequestOptions({
+    code,
+  }: {
+    /** The Guc of the import to delete **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'DELETE',
@@ -51,21 +75,39 @@ export class ImportServiceDefault implements ImportService {
     };
   }
 
-  public async importList(
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<ImportListWebResponseModel> {
-    const options = this.importListApiRequestOptions(query, page, pageSize);
+  public async importList({
+    query,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the imports by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<ImportListWebResponseModel> {
+    const options = this.importListApiRequestOptions({
+      query,
+      page,
+      pageSize,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public importListApiRequestOptions(
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public importListApiRequestOptions({
+    query,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the imports by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -78,17 +120,25 @@ export class ImportServiceDefault implements ImportService {
     };
   }
 
-  public async importImportInitialise(
-    requestBody: ImportInitialiseWebRequestModel,
-  ): Promise<ImportInitialiseWebResponseModel> {
-    const options = this.importImportInitialiseApiRequestOptions(requestBody);
+  public async importImportInitialise({
+    requestBody,
+  }: {
+    /** The model containing all necessary data to initialise import **/
+    requestBody: ImportInitialiseWebRequestModel;
+  }): Promise<ImportInitialiseWebResponseModel> {
+    const options = this.importImportInitialiseApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public importImportInitialiseApiRequestOptions(
-    requestBody: ImportInitialiseWebRequestModel,
-  ): ApiRequestOptions {
+  public importImportInitialiseApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing all necessary data to initialise import **/
+    requestBody: ImportInitialiseWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -98,19 +148,32 @@ export class ImportServiceDefault implements ImportService {
     };
   }
 
-  public async importImportValidate(
-    code: string,
-    requestBody: ImportValidateWebRequestModel,
-  ): Promise<ImportValidateWebResponseModel> {
-    const options = this.importImportValidateApiRequestOptions(code, requestBody);
+  public async importImportValidate({
+    code,
+    requestBody,
+  }: {
+    /** The code of the import to validate **/
+    code: string;
+    /** The model containing all necessary data to validate import **/
+    requestBody: ImportValidateWebRequestModel;
+  }): Promise<ImportValidateWebResponseModel> {
+    const options = this.importImportValidateApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public importImportValidateApiRequestOptions(
-    code: string,
-    requestBody: ImportValidateWebRequestModel,
-  ): ApiRequestOptions {
+  public importImportValidateApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The code of the import to validate **/
+    code: string;
+    /** The model containing all necessary data to validate import **/
+    requestBody: ImportValidateWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -120,13 +183,25 @@ export class ImportServiceDefault implements ImportService {
     };
   }
 
-  public async importImportCommit(code: string): Promise<ImportCommitWebResponseModel> {
-    const options = this.importImportCommitApiRequestOptions(code);
+  public async importImportCommit({
+    code,
+  }: {
+    /** The code of the import to validate **/
+    code: string;
+  }): Promise<ImportCommitWebResponseModel> {
+    const options = this.importImportCommitApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public importImportCommitApiRequestOptions(code: string): ApiRequestOptions {
+  public importImportCommitApiRequestOptions({
+    code,
+  }: {
+    /** The code of the import to validate **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',

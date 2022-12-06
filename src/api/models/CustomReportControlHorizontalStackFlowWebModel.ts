@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import type { CustomReportControlPropertyWebModelOfNullableBoolean } from './CustomReportControlPropertyWebModelOfNullableBoolean';
-import type { CustomReportControlPropertyWebModelOfNullableHorizontalStackAlign } from './CustomReportControlPropertyWebModelOfNullableHorizontalStackAlign';
+import type { CustomReportControlPropertyWebModelOfNullableCustomReportHorizontalStackAlignWebModel } from './CustomReportControlPropertyWebModelOfNullableCustomReportHorizontalStackAlignWebModel';
 import type { CustomReportControlWithControlsWebModel } from './CustomReportControlWithControlsWebModel';
 
 export type CustomReportControlHorizontalStackFlowWebModel =
@@ -9,7 +9,7 @@ export type CustomReportControlHorizontalStackFlowWebModel =
     /**
      * Optional alignment for the horizontal stack, will default to left aligned
      */
-    align?: CustomReportControlPropertyWebModelOfNullableHorizontalStackAlign | null;
+    align?: CustomReportControlPropertyWebModelOfNullableCustomReportHorizontalStackAlignWebModel | null;
     /**
      * Optional property to allow wrapping, by default content will not wrap and be forced onto the same line
      */

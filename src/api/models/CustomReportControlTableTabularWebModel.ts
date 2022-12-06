@@ -1,7 +1,8 @@
 /* eslint-disable */
 
-import type { CustomReportControlPropertyWebModelOfNullableHeaderType } from './CustomReportControlPropertyWebModelOfNullableHeaderType';
+import type { CustomReportControlPropertyWebModelOfNullableCustomReportHeaderTypeWebModel } from './CustomReportControlPropertyWebModelOfNullableCustomReportHeaderTypeWebModel';
 import type { CustomReportControlTableHeaderTabularWebModel } from './CustomReportControlTableHeaderTabularWebModel';
+import type { CustomReportControlTableTabularSummaryWebModel } from './CustomReportControlTableTabularSummaryWebModel';
 import type { CustomReportControlTabularWebModelBase } from './CustomReportControlTabularWebModelBase';
 
 export type CustomReportControlTableTabularWebModel = CustomReportControlTabularWebModelBase & {
@@ -14,9 +15,13 @@ export type CustomReportControlTableTabularWebModel = CustomReportControlTabular
    */
   headers?: Array<CustomReportControlTableHeaderTabularWebModel> | null;
   /**
+   * Summary data regarding on what mathematical operations to apply to headers
+   */
+  summary?: CustomReportControlTableTabularSummaryWebModel | null;
+  /**
    * The type of header to use for default data source column names
    */
-  headerType?: CustomReportControlPropertyWebModelOfNullableHeaderType | null;
+  headerType?: CustomReportControlPropertyWebModelOfNullableCustomReportHeaderTypeWebModel | null;
 };
 
 export namespace CustomReportControlTableTabularWebModel {

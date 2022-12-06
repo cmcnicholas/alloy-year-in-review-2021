@@ -22,13 +22,25 @@ export class AccessPolicyServiceDefault implements AccessPolicyService {
     this.config = config;
   }
 
-  public async accessPolicyGet(code: string): Promise<AccessPolicyWebModel> {
-    const options = this.accessPolicyGetApiRequestOptions(code);
+  public async accessPolicyGet({
+    code,
+  }: {
+    /** The Guc for the Access Policy being requested **/
+    code: string;
+  }): Promise<AccessPolicyWebModel> {
+    const options = this.accessPolicyGetApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public accessPolicyGetApiRequestOptions(code: string): ApiRequestOptions {
+  public accessPolicyGetApiRequestOptions({
+    code,
+  }: {
+    /** The Guc for the Access Policy being requested **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -36,19 +48,32 @@ export class AccessPolicyServiceDefault implements AccessPolicyService {
     };
   }
 
-  public async accessPolicyEdit(
-    code: string,
-    requestBody: AccessPolicyEditWebRequestModel,
-  ): Promise<AccessPolicyWebModel> {
-    const options = this.accessPolicyEditApiRequestOptions(code, requestBody);
+  public async accessPolicyEdit({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the Access Policy to edit **/
+    code: string;
+    /** Model containing the new Access Policy details **/
+    requestBody: AccessPolicyEditWebRequestModel;
+  }): Promise<AccessPolicyWebModel> {
+    const options = this.accessPolicyEditApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public accessPolicyEditApiRequestOptions(
-    code: string,
-    requestBody: AccessPolicyEditWebRequestModel,
-  ): ApiRequestOptions {
+  public accessPolicyEditApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the Access Policy to edit **/
+    code: string;
+    /** Model containing the new Access Policy details **/
+    requestBody: AccessPolicyEditWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -58,13 +83,25 @@ export class AccessPolicyServiceDefault implements AccessPolicyService {
     };
   }
 
-  public async accessPolicyDelete(code: string): Promise<void> {
-    const options = this.accessPolicyDeleteApiRequestOptions(code);
+  public async accessPolicyDelete({
+    code,
+  }: {
+    /** The Guc of the Access Policy to delete **/
+    code: string;
+  }): Promise<void> {
+    const options = this.accessPolicyDeleteApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public accessPolicyDeleteApiRequestOptions(code: string): ApiRequestOptions {
+  public accessPolicyDeleteApiRequestOptions({
+    code,
+  }: {
+    /** The Guc of the Access Policy to delete **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'DELETE',
@@ -72,23 +109,48 @@ export class AccessPolicyServiceDefault implements AccessPolicyService {
     };
   }
 
-  public async accessPolicyList(
-    query?: string | null,
-    appliesTo?: Array<string> | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<AccessPolicyListWebResponseModel> {
-    const options = this.accessPolicyListApiRequestOptions(query, appliesTo, page, pageSize);
+  public async accessPolicyList({
+    query,
+    appliesTo,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the access policies by **/
+    query?: string | null;
+    /** The optional dodi code Guc, if specified, only the designs
+     * implementing that interface will be returned **/
+    appliesTo?: Array<string> | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<AccessPolicyListWebResponseModel> {
+    const options = this.accessPolicyListApiRequestOptions({
+      query,
+      appliesTo,
+      page,
+      pageSize,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public accessPolicyListApiRequestOptions(
-    query?: string | null,
-    appliesTo?: Array<string> | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public accessPolicyListApiRequestOptions({
+    query,
+    appliesTo,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the access policies by **/
+    query?: string | null;
+    /** The optional dodi code Guc, if specified, only the designs
+     * implementing that interface will be returned **/
+    appliesTo?: Array<string> | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -102,17 +164,25 @@ export class AccessPolicyServiceDefault implements AccessPolicyService {
     };
   }
 
-  public async accessPolicyCreate(
-    requestBody: AccessPolicyCreateWebRequestModel,
-  ): Promise<AccessPolicyWebModel> {
-    const options = this.accessPolicyCreateApiRequestOptions(requestBody);
+  public async accessPolicyCreate({
+    requestBody,
+  }: {
+    /** Model containing the new Access Policy details **/
+    requestBody: AccessPolicyCreateWebRequestModel;
+  }): Promise<AccessPolicyWebModel> {
+    const options = this.accessPolicyCreateApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public accessPolicyCreateApiRequestOptions(
-    requestBody: AccessPolicyCreateWebRequestModel,
-  ): ApiRequestOptions {
+  public accessPolicyCreateApiRequestOptions({
+    requestBody,
+  }: {
+    /** Model containing the new Access Policy details **/
+    requestBody: AccessPolicyCreateWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -122,19 +192,32 @@ export class AccessPolicyServiceDefault implements AccessPolicyService {
     };
   }
 
-  public async accessPolicyCreateRule(
-    code: string,
-    requestBody: AccessPolicyRuleCreateWebRequestModel,
-  ): Promise<AccessPolicyWebModel> {
-    const options = this.accessPolicyCreateRuleApiRequestOptions(code, requestBody);
+  public async accessPolicyCreateRule({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the Access Policy to add a rule to **/
+    code: string;
+    /** Model containing the information of the rule to be added **/
+    requestBody: AccessPolicyRuleCreateWebRequestModel;
+  }): Promise<AccessPolicyWebModel> {
+    const options = this.accessPolicyCreateRuleApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public accessPolicyCreateRuleApiRequestOptions(
-    code: string,
-    requestBody: AccessPolicyRuleCreateWebRequestModel,
-  ): ApiRequestOptions {
+  public accessPolicyCreateRuleApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the Access Policy to add a rule to **/
+    code: string;
+    /** Model containing the information of the rule to be added **/
+    requestBody: AccessPolicyRuleCreateWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -144,21 +227,39 @@ export class AccessPolicyServiceDefault implements AccessPolicyService {
     };
   }
 
-  public async accessPolicyEditRule(
-    code: string,
-    id: string,
-    requestBody: AccessPolicyRuleEditWebRequestModel,
-  ): Promise<AccessPolicyWebModel> {
-    const options = this.accessPolicyEditRuleApiRequestOptions(code, id, requestBody);
+  public async accessPolicyEditRule({
+    code,
+    id,
+    requestBody,
+  }: {
+    /** The Guc of the Access Policy to edit a rule on **/
+    code: string;
+    /** The AId of the rule to edit **/
+    id: string;
+    /** The model containing the info necessary to edit a rule on the Access Policy **/
+    requestBody: AccessPolicyRuleEditWebRequestModel;
+  }): Promise<AccessPolicyWebModel> {
+    const options = this.accessPolicyEditRuleApiRequestOptions({
+      code,
+      id,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public accessPolicyEditRuleApiRequestOptions(
-    code: string,
-    id: string,
-    requestBody: AccessPolicyRuleEditWebRequestModel,
-  ): ApiRequestOptions {
+  public accessPolicyEditRuleApiRequestOptions({
+    code,
+    id,
+    requestBody,
+  }: {
+    /** The Guc of the Access Policy to edit a rule on **/
+    code: string;
+    /** The AId of the rule to edit **/
+    id: string;
+    /** The model containing the info necessary to edit a rule on the Access Policy **/
+    requestBody: AccessPolicyRuleEditWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -168,21 +269,41 @@ export class AccessPolicyServiceDefault implements AccessPolicyService {
     };
   }
 
-  public async accessPolicyDeleteRule(
-    code: string,
-    id: string,
-    signature?: string | null,
-  ): Promise<AccessPolicyWebModel> {
-    const options = this.accessPolicyDeleteRuleApiRequestOptions(code, id, signature);
+  public async accessPolicyDeleteRule({
+    code,
+    id,
+    signature,
+  }: {
+    /** The Guc of the Access Policy to remove a rule from **/
+    code: string;
+    /** The AId of the rule to remove **/
+    id: string;
+    /** The signature is used to ensure that the access policy being edited is actually the one provided to the system.
+     * This is enforced in order to avoid applying possibly invalid edits after another user has edited the same access policy **/
+    signature: string | null;
+  }): Promise<AccessPolicyWebModel> {
+    const options = this.accessPolicyDeleteRuleApiRequestOptions({
+      code,
+      id,
+      signature,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public accessPolicyDeleteRuleApiRequestOptions(
-    code: string,
-    id: string,
-    signature?: string | null,
-  ): ApiRequestOptions {
+  public accessPolicyDeleteRuleApiRequestOptions({
+    code,
+    id,
+    signature,
+  }: {
+    /** The Guc of the Access Policy to remove a rule from **/
+    code: string;
+    /** The AId of the rule to remove **/
+    id: string;
+    /** The signature is used to ensure that the access policy being edited is actually the one provided to the system.
+     * This is enforced in order to avoid applying possibly invalid edits after another user has edited the same access policy **/
+    signature: string | null;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'DELETE',

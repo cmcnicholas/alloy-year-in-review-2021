@@ -2,6 +2,7 @@
 
 import type { CollectionCode } from './CollectionCode';
 import type { ItemChangeType } from './ItemChangeType';
+import type { WorkflowEventTriggerOutputMode } from './WorkflowEventTriggerOutputMode';
 import type { WorkflowTriggerWebModelBase } from './WorkflowTriggerWebModelBase';
 
 export type EventTrigger = WorkflowTriggerWebModelBase & {
@@ -25,6 +26,11 @@ export type EventTrigger = WorkflowTriggerWebModelBase & {
    * are affected.
    */
   attributesListeningFor?: Array<string> | null;
+  /**
+   * If the workflow should trigger once per event, or many events
+   * with 1 to many items output by and referenceable from the trigger
+   */
+  outputMode?: WorkflowEventTriggerOutputMode;
 };
 
 export namespace EventTrigger {

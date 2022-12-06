@@ -19,19 +19,32 @@ export class CustomerServiceDefault implements CustomerService {
     this.config = config;
   }
 
-  public async customerGet(
-    code: string,
-    retrieveLastSeenDate: boolean = false,
-  ): Promise<CustomerGetWebResponseModel> {
-    const options = this.customerGetApiRequestOptions(code, retrieveLastSeenDate);
+  public async customerGet({
+    code,
+    retrieveLastSeenDate = false,
+  }: {
+    /** The Guc of the customer to retrieve **/
+    code: string;
+    /** If true, the returned CustomerWebModel is going to contain the date at which the current user last logged in **/
+    retrieveLastSeenDate?: boolean;
+  }): Promise<CustomerGetWebResponseModel> {
+    const options = this.customerGetApiRequestOptions({
+      code,
+      retrieveLastSeenDate,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public customerGetApiRequestOptions(
-    code: string,
-    retrieveLastSeenDate: boolean = false,
-  ): ApiRequestOptions {
+  public customerGetApiRequestOptions({
+    code,
+    retrieveLastSeenDate = false,
+  }: {
+    /** The Guc of the customer to retrieve **/
+    code: string;
+    /** If true, the returned CustomerWebModel is going to contain the date at which the current user last logged in **/
+    retrieveLastSeenDate?: boolean;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -42,23 +55,46 @@ export class CustomerServiceDefault implements CustomerService {
     };
   }
 
-  public async customerList(
-    query?: string | null,
-    retrieveLastSeenDate?: boolean,
-    page?: number,
-    pageSize?: number,
-  ): Promise<CustomerListWebResponseModel> {
-    const options = this.customerListApiRequestOptions(query, retrieveLastSeenDate, page, pageSize);
+  public async customerList({
+    query,
+    retrieveLastSeenDate,
+    page,
+    pageSize,
+  }: {
+    /** The optional query string to filter customers on **/
+    query?: string | null;
+    /** If true, the returned CustomerWebModel is going to contain the date at which the current user last logged in **/
+    retrieveLastSeenDate?: boolean;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<CustomerListWebResponseModel> {
+    const options = this.customerListApiRequestOptions({
+      query,
+      retrieveLastSeenDate,
+      page,
+      pageSize,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public customerListApiRequestOptions(
-    query?: string | null,
-    retrieveLastSeenDate?: boolean,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public customerListApiRequestOptions({
+    query,
+    retrieveLastSeenDate,
+    page,
+    pageSize,
+  }: {
+    /** The optional query string to filter customers on **/
+    query?: string | null;
+    /** If true, the returned CustomerWebModel is going to contain the date at which the current user last logged in **/
+    retrieveLastSeenDate?: boolean;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -72,13 +108,25 @@ export class CustomerServiceDefault implements CustomerService {
     };
   }
 
-  public async customerGetMetrics(code: string): Promise<CustomerGetMetricsWebResponseModel> {
-    const options = this.customerGetMetricsApiRequestOptions(code);
+  public async customerGetMetrics({
+    code,
+  }: {
+    /** The Guc of the customer to retrieve metrics **/
+    code: string;
+  }): Promise<CustomerGetMetricsWebResponseModel> {
+    const options = this.customerGetMetricsApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public customerGetMetricsApiRequestOptions(code: string): ApiRequestOptions {
+  public customerGetMetricsApiRequestOptions({
+    code,
+  }: {
+    /** The Guc of the customer to retrieve metrics **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',

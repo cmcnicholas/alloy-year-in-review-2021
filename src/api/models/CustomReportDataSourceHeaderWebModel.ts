@@ -1,7 +1,7 @@
 /* eslint-disable */
 
-import type { CustomReportAggregationType } from './CustomReportAggregationType';
-import type { DodiAttributeType } from './DodiAttributeType';
+import type { CustomReportAggregationTypeWebModel } from './CustomReportAggregationTypeWebModel';
+import type { DodiAttributeTypeWebModel } from './DodiAttributeTypeWebModel';
 
 /**
  * Header web model
@@ -13,18 +13,21 @@ export type CustomReportDataSourceHeaderWebModel = {
   id: string;
   /**
    * The data source header title
-   *
    */
   title: string;
   /**
    * The data source header type
    *
    */
-  headerType: DodiAttributeType;
+  headerType: DodiAttributeTypeWebModel;
   /**
    * The data source aggregation type.
    */
-  aggregationType?: CustomReportAggregationType | null;
+  aggregationType?: CustomReportAggregationTypeWebModel | null;
+  /**
+   * Provides a custom way of describing the header
+   */
+  overrideTitle?: string | null;
 };
 
 export namespace CustomReportDataSourceHeaderWebModel {

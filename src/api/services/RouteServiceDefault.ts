@@ -23,17 +23,25 @@ export class RouteServiceDefault implements RouteService {
     this.config = config;
   }
 
-  public async routeCreateRouteItem(
-    requestBody: DrivingRouteCreateWebRequestModel,
-  ): Promise<ItemCreateWebResponseModel> {
-    const options = this.routeCreateRouteItemApiRequestOptions(requestBody);
+  public async routeCreateRouteItem({
+    requestBody,
+  }: {
+    /** The model containing the info about the route item to be created **/
+    requestBody: DrivingRouteCreateWebRequestModel;
+  }): Promise<ItemCreateWebResponseModel> {
+    const options = this.routeCreateRouteItemApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public routeCreateRouteItemApiRequestOptions(
-    requestBody: DrivingRouteCreateWebRequestModel,
-  ): ApiRequestOptions {
+  public routeCreateRouteItemApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the info about the route item to be created **/
+    requestBody: DrivingRouteCreateWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -43,19 +51,32 @@ export class RouteServiceDefault implements RouteService {
     };
   }
 
-  public async routeEditRouteItem(
-    id: string,
-    requestBody: DrivingRouteEditWebRequestModel,
-  ): Promise<ItemCreateWebResponseModel> {
-    const options = this.routeEditRouteItemApiRequestOptions(id, requestBody);
+  public async routeEditRouteItem({
+    id,
+    requestBody,
+  }: {
+    /** The AId of the route item to edit **/
+    id: string;
+    /** The model containing the info to edit the route item **/
+    requestBody: DrivingRouteEditWebRequestModel;
+  }): Promise<ItemCreateWebResponseModel> {
+    const options = this.routeEditRouteItemApiRequestOptions({
+      id,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public routeEditRouteItemApiRequestOptions(
-    id: string,
-    requestBody: DrivingRouteEditWebRequestModel,
-  ): ApiRequestOptions {
+  public routeEditRouteItemApiRequestOptions({
+    id,
+    requestBody,
+  }: {
+    /** The AId of the route item to edit **/
+    id: string;
+    /** The model containing the info to edit the route item **/
+    requestBody: DrivingRouteEditWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -65,13 +86,19 @@ export class RouteServiceDefault implements RouteService {
     };
   }
 
-  public async routeCreateShortestTrip(id: string): Promise<ItemCreateWebResponseModel> {
-    const options = this.routeCreateShortestTripApiRequestOptions(id);
+  public async routeCreateShortestTrip({
+    id,
+  }: {
+    id: string;
+  }): Promise<ItemCreateWebResponseModel> {
+    const options = this.routeCreateShortestTripApiRequestOptions({
+      id,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public routeCreateShortestTripApiRequestOptions(id: string): ApiRequestOptions {
+  public routeCreateShortestTripApiRequestOptions({ id }: { id: string }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -79,17 +106,25 @@ export class RouteServiceDefault implements RouteService {
     };
   }
 
-  public async routeGenerateFastestRoute(
-    requestBody: GenerateFastestRouteWebRequestModel,
-  ): Promise<GenerateFastestRouteWebResponseModel> {
-    const options = this.routeGenerateFastestRouteApiRequestOptions(requestBody);
+  public async routeGenerateFastestRoute({
+    requestBody,
+  }: {
+    /** The model containing the info about the route to be generated **/
+    requestBody: GenerateFastestRouteWebRequestModel;
+  }): Promise<GenerateFastestRouteWebResponseModel> {
+    const options = this.routeGenerateFastestRouteApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public routeGenerateFastestRouteApiRequestOptions(
-    requestBody: GenerateFastestRouteWebRequestModel,
-  ): ApiRequestOptions {
+  public routeGenerateFastestRouteApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the info about the route to be generated **/
+    requestBody: GenerateFastestRouteWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -99,17 +134,23 @@ export class RouteServiceDefault implements RouteService {
     };
   }
 
-  public async routeGenerateShortestRoute(
-    requestBody: GenerateShortestRouteWebRequestModel,
-  ): Promise<GenerateShortestRouteWebResponseModel> {
-    const options = this.routeGenerateShortestRouteApiRequestOptions(requestBody);
+  public async routeGenerateShortestRoute({
+    requestBody,
+  }: {
+    requestBody: GenerateShortestRouteWebRequestModel;
+  }): Promise<GenerateShortestRouteWebResponseModel> {
+    const options = this.routeGenerateShortestRouteApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public routeGenerateShortestRouteApiRequestOptions(
-    requestBody: GenerateShortestRouteWebRequestModel,
-  ): ApiRequestOptions {
+  public routeGenerateShortestRouteApiRequestOptions({
+    requestBody,
+  }: {
+    requestBody: GenerateShortestRouteWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',

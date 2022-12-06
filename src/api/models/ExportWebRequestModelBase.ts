@@ -16,6 +16,12 @@ export type ExportWebRequestModelBase = {
    */
   parameterValues?: Array<AqsJsonParameterValue> | null;
   /**
+   * Optional Proj4 projection definition for coordinate conversion from WGS84 (Longitude, Latitude).
+   *
+   * If not set, coordinates are exported as (Longitude, Latitude) by default
+   */
+  proj4?: string | null;
+  /**
    * The optional filename to use for the export.
    *
    * If this isn't provided, a default name will be used
