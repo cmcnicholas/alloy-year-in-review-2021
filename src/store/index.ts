@@ -27,6 +27,8 @@ export default createStore<State>({
     layersManaged: 0,
     projectsCreated: 0,
     workflowsActive: 0,
+    workflowSeconds: 0,
+    designsCustom: 0,
   },
   mutations: {
     setFailed,

@@ -21,6 +21,8 @@ export function deserialise(
     layersManaged: safeGetNumber(json, 'layersManaged'),
     projectsCreated: safeGetNumber(json, 'projectsCreated'),
     workflowsActive: safeGetNumber(json, 'workflowsActive'),
+    workflowSeconds: safeGetNumber(json, 'workflowSeconds'),
+    designsCustom: safeGetNumber(json, 'designsCustom'),
   };
 
   return model;

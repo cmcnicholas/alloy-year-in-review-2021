@@ -68,6 +68,7 @@ import { computed, defineComponent, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { Store, useStore } from 'vuex';
 import confetti from 'canvas-confetti';
+import { roundNumber } from '@/utils/roundNumber';
 
 export default defineComponent({
   name: 'YearInReview',
@@ -122,11 +123,13 @@ export default defineComponent({
 
     const cards = computed(() => {
       const data = [
-        layerCardInfo(store),
+        workflowSecondsCardInfo(store),
+        designsCardInfo(store),
         assetCardInfo(store),
         jobCardInfo(store),
         inspectionCardInfo(store),
         defectCardInfo(store),
+        layerCardInfo(store),
         workflowCardInfo(store),
         projectCardInfo(store),
         importCardInfo(store),
@@ -232,6 +235,11 @@ const quotes = [
     foreground: 'left-big-smile',
     background: '',
   },
+  {
+    quote: 'Did you know only two mammals like spicy food? Us and the humble Tree Shrew 🐁',
+    foreground: 'right-big-smile',
+    background: '',
+  },
 ];
 
 function assetCardInfo(store: Store<State>): CardInfo | null {
@@ -295,6 +303,48 @@ function workflowCardInfo(store: Store<State>): CardInfo | null {
     color: '#99cf22',
     header: `Workflows are automating your day to day tasks, what a timesaver!`,
     value: store.state.workflowsActive,
+  };
+}
+
+function designsCardInfo(store: Store<State>): CardInfo | null {
+  if (store.state.designsCustom === 0) {
+    return null;
+  }
+
+  return {
+    icon: 'icon-system-designer',
+    color: '#70C5BC',
+    header: `You've made <strong>${store.state.designsCustom}</strong> custom designs to model your data! Great stuff 🦾`,
+  };
+}
+
+function workflowSecondsCardInfo(store: Store<State>): CardInfo | null {
+  const OneHour = 60 * 60;
+  const OneDay = 24 * OneHour;
+  const OneWeek = 7 * OneDay;
+
+  if (store.state.workflowSeconds < OneHour * 2.5) {
+    return null;
+  }
+
+  let value = roundNumber(store.state.workflowSeconds / OneHour, 1);
+  let comparison = roundNumber(store.state.workflowSeconds / (121 * 60), 1);
+  let header = `Our robots spent <strong>${value} hours</strong> running your Workflows! That's like watching RoboCop ${comparison} times 🤖`;
+
+  if (store.state.workflowSeconds >= OneWeek * 2.5) {
+    value = roundNumber(store.state.workflowSeconds / OneWeek, 2);
+    comparison = roundNumber(store.state.workflowSeconds / ((15 * 24 + 22) * 60 * 60), 1);
+    header = `Our robots spent <strong>${value} weeks</strong> running your Workflows! That's like Titan orbiting Saturn ${comparison} times 🌖`;
+  } else if (store.state.workflowSeconds >= OneDay * 2.5) {
+    value = roundNumber(store.state.workflowSeconds / OneDay, 2);
+    comparison = roundNumber(store.state.workflowSeconds / (2.5 * 24 * 60 * 60), 1);
+    header = `Our robots spent <strong>${value} days</strong> running your Workflows! That's like travelling to the moon ${comparison} times 🚀`;
+  }
+
+  return {
+    icon: 'icon-system-workflow',
+    color: '#4955A5',
+    header,
   };
 }
 
