@@ -403,7 +403,7 @@ function jobCardInfo(store: Store<State>): CardInfo | null {
 
   let header = '';
   if (store.state.jobsCreated === 0) {
-    header = `Looks like you didn't start any new jobs this year, but you managed <strong>${formatNumber(
+    header = `Looks like you didn't start any new jobs this year, but you closed <strong>${formatNumber(
       store.state.jobsCompleted,
     )}</strong>, 👏`;
   } else if (store.state.jobsCompleted === 0) {
@@ -413,7 +413,7 @@ function jobCardInfo(store: Store<State>): CardInfo | null {
   } else {
     header = `You created more than <strong>${formatNumber(
       store.state.jobsCreated,
-    )}</strong> jobs this year and managed a total of <strong>${formatNumber(
+    )}</strong> jobs this year and closed a total of <strong>${formatNumber(
       store.state.jobsCompleted,
     )}</strong>, 👏`;
   }
