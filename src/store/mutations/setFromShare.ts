@@ -19,6 +19,7 @@ export function setFromShare(state: State, share: string): void {
   state.workflowsActive = model.workflowsActive;
   state.workflowSeconds = model.workflowSeconds;
   state.designsCustom = model.designsCustom;
+  state.reportsRan = model.reportsRan;
 
   state.token = 'xxx';
   state.loaded = true;

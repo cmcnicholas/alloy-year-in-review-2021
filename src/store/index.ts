@@ -29,6 +29,7 @@ export default createStore<State>({
     workflowsActive: 0,
     workflowSeconds: 0,
     designsCustom: 0,
+    reportsRan: 0,
   },
   mutations: {
     setFailed,

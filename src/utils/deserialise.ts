@@ -23,6 +23,7 @@ export function deserialise(
     workflowsActive: safeGetNumber(json, 'workflowsActive'),
     workflowSeconds: safeGetNumber(json, 'workflowSeconds'),
     designsCustom: safeGetNumber(json, 'designsCustom'),
+    reportsRan: safeGetNumber(json, 'reportsRan'),
   };
 
   return model;

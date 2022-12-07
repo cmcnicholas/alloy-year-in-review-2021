@@ -47,6 +47,7 @@ export async function load(context: ActionContext<State, State>): Promise<void> 
   await loadWorkflowSeconds(context);
 
   await loadDesignsCustom(context);
+  await loadReportsRan(context);
 
   // we're done!
   context.state.loaded = true;
@@ -345,6 +346,18 @@ async function loadWorkflowSeconds(context: ActionContext<State, State>): Promis
     console.error('failed to get workflow seconds');
     context.state.workflowSeconds = 0;
   }
+}
+
+async function loadReportsRan(context: ActionContext<State, State>): Promise<void> {
+  context.state.reportsRan = await getAqsCountResult(context, {
+    type: AqsItemType.StatisticsAggregation,
+    properties: {
+      dodiCode: 'designInterfaces_reports',
+      collectionCode: 'All',
+      aggregationType: 'Count',
+    },
+    children: [aqsDateRange()],
+  });
 }
 
 async function loadQuotaUsage(

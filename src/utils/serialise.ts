@@ -17,6 +17,7 @@ export function serialise(state: State): string {
     workflowsActive: state.workflowsActive,
     workflowSeconds: state.workflowSeconds,
     designsCustom: state.designsCustom,
+    reportsRan: state.reportsRan,
   };
 
   return btoa(unescape(encodeURIComponent(JSON.stringify(model))));

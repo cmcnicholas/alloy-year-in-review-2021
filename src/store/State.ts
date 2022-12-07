@@ -23,4 +23,5 @@ export interface State {
   workflowsActive: number;
   workflowSeconds: number;
   designsCustom: number;
+  reportsRan: number;
 }

@@ -125,6 +125,7 @@ export default defineComponent({
       const data = [
         workflowSecondsCardInfo(store),
         designsCardInfo(store),
+        reportsRanCardInfo(store),
         assetCardInfo(store),
         jobCardInfo(store),
         inspectionCardInfo(store),
@@ -431,6 +432,22 @@ function defectCardInfo(store: Store<State>): CardInfo | null {
   return {
     icon: 'icon-defect',
     color: '#e74444',
+    header,
+  };
+}
+
+function reportsRanCardInfo(store: Store<State>): CardInfo | null {
+  if (store.state.reportsRan > 100) {
+    return null;
+  }
+
+  const header = `Albot built <strong>${formatNumber(
+    store.state.reportsRan,
+  )}</strong> reports for you this year 🤯`;
+
+  return {
+    icon: 'icon-reports',
+    color: '#ED592A',
     header,
   };
 }
