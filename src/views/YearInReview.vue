@@ -216,6 +216,11 @@ const quotes = [
     background: '',
   },
   {
+    quote: 'Did you know only two mammals like spicy food? Us and the humble Tree Shrew 🐁',
+    foreground: 'right-big-smile',
+    background: '',
+  },
+  {
     quote: '"Wherever you go, go with all your heart." - Botfucius',
     foreground: 'right-big-smile',
     background: 'buildings',
@@ -237,8 +242,8 @@ const quotes = [
     background: '',
   },
   {
-    quote: 'Did you know only two mammals like spicy food? Us and the humble Tree Shrew 🐁',
-    foreground: 'right-big-smile',
+    quote: '"sic mundus creatus est" - Jonas Botwald',
+    foreground: 'front-smile',
     background: '',
   },
 ];
@@ -437,7 +442,7 @@ function defectCardInfo(store: Store<State>): CardInfo | null {
 }
 
 function reportsRanCardInfo(store: Store<State>): CardInfo | null {
-  if (store.state.reportsRan > 100) {
+  if (store.state.reportsRan < 100) {
     return null;
   }
 
