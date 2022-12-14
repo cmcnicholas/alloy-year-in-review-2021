@@ -79,20 +79,23 @@ export default defineComponent({
         router.push({
           path: '/failed',
         });
+        return;
       }
 
       // if we have 1 customer then go ahead
       if (result.customers.length === 1) {
         try {
+          const customer = result.customers[0];
           const payload: LoginCustomerPayload = {
-            customerName: result.customers[0].name,
-            customerCode: result.customers[0].name,
+            customerName: customer.name,
+            customerCode: customer.code,
             token: result.token,
           };
           await store.dispatch('loginCustomer', payload);
           router.push({
             path: '/calculating',
           });
+          return;
         } catch (e) {
           store.commit(
             'setFailed',
