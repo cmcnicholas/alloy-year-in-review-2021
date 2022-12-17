@@ -8,6 +8,8 @@ import type { AlloyUserGetCurrentWebResponseModel } from '../models/AlloyUserGet
 import type { AlloyUserGetWebResponseModel } from '../models/AlloyUserGetWebResponseModel';
 import type { AlloyUserListWebResponseModel } from '../models/AlloyUserListWebResponseModel';
 import type { ChangePasswordWebRequestModel } from '../models/ChangePasswordWebRequestModel';
+import type { CustomerUserEditWebRequestModel } from '../models/CustomerUserEditWebRequestModel';
+import type { CustomerUserEditWebResponseModel } from '../models/CustomerUserEditWebResponseModel';
 import type { ForgotPasswordWebRequestModel } from '../models/ForgotPasswordWebRequestModel';
 import type { SubmitPasswordResetWebRequestModel } from '../models/SubmitPasswordResetWebRequestModel';
 import type { ApiRequestOptions } from '../core/ApiRequestOptions';
@@ -16,55 +18,106 @@ export interface UserService {
   /**
    * Gets a user by username
    * Retrieves the user matching the username
-   * @param username The username of the user to retrieve
    * @returns AlloyUserGetWebResponseModel
    */
-  userGet(username: string): Promise<AlloyUserGetWebResponseModel>;
+  userGet({
+    username,
+  }: {
+    /** The username of the user to retrieve **/
+    username: string;
+  }): Promise<AlloyUserGetWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Gets a user by username
    * Retrieves the user matching the username
-   * @param username The username of the user to retrieve
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  userGetApiRequestOptions(username: string): ApiRequestOptions;
+  userGetApiRequestOptions({
+    username,
+  }: {
+    /** The username of the user to retrieve **/
+    username: string;
+  }): ApiRequestOptions;
 
   /**
    * Remove a user
    * This call will remove a user from the current sessions customer. This does not delete the user from an Alloy
    * region but, instead, deletes the user for this customer.
-   * @param username The username of the user to remove from the customer
    * @returns void
    */
-  userRemove(username: string): Promise<void>;
+  userRemove({
+    username,
+  }: {
+    /** The username of the user to remove from the customer **/
+    username: string;
+  }): Promise<void>;
 
   /**
    * **used to get the request options without making a http request**
    * Remove a user
    * This call will remove a user from the current sessions customer. This does not delete the user from an Alloy
    * region but, instead, deletes the user for this customer.
-   * @param username The username of the user to remove from the customer
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  userRemoveApiRequestOptions(username: string): ApiRequestOptions;
+  userRemoveApiRequestOptions({
+    username,
+  }: {
+    /** The username of the user to remove from the customer **/
+    username: string;
+  }): ApiRequestOptions;
+
+  /**
+   * Edit a user
+   * Enable or disable the user
+   * @returns CustomerUserEditWebResponseModel
+   */
+  userEditCustomerUser({
+    username,
+    requestBody,
+  }: {
+    username: string;
+    requestBody: CustomerUserEditWebRequestModel;
+  }): Promise<CustomerUserEditWebResponseModel>;
+
+  /**
+   * **used to get the request options without making a http request**
+   * Edit a user
+   * Enable or disable the user
+   * @returns ApiRequestOptions the request options to fulfill a http request
+   */
+  userEditCustomerUserApiRequestOptions({
+    username,
+    requestBody,
+  }: {
+    username: string;
+    requestBody: CustomerUserEditWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Gets a user by its unique user id
    * Retrieves the user matching the use id
-   * @param userId The user id of the user to retrieve
    * @returns AlloyUserGetWebResponseModel
    */
-  userGetByUserId(userId: string): Promise<AlloyUserGetWebResponseModel>;
+  userGetByUserId({
+    userId,
+  }: {
+    /** The user id of the user to retrieve **/
+    userId: string;
+  }): Promise<AlloyUserGetWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Gets a user by its unique user id
    * Retrieves the user matching the use id
-   * @param userId The user id of the user to retrieve
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  userGetByUserIdApiRequestOptions(userId: string): ApiRequestOptions;
+  userGetByUserIdApiRequestOptions({
+    userId,
+  }: {
+    /** The user id of the user to retrieve **/
+    userId: string;
+  }): ApiRequestOptions;
 
   /**
    * Get the logged in user
@@ -85,143 +138,185 @@ export interface UserService {
    * Edit the logged in user
    * This call will allow editing on the current user session. Only person owning the user
    * account may alter their details through this api.
-   * @param requestBody The model containing the information of the user to edit
    * @returns AlloyUserEditCurrentWebResponseModel
    */
-  userEditCurrentUser(
-    requestBody: AlloyUserEditCurrentWebRequestModel,
-  ): Promise<AlloyUserEditCurrentWebResponseModel>;
+  userEditCurrentUser({
+    requestBody,
+  }: {
+    /** The model containing the information of the user to edit **/
+    requestBody: AlloyUserEditCurrentWebRequestModel;
+  }): Promise<AlloyUserEditCurrentWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Edit the logged in user
    * This call will allow editing on the current user session. Only person owning the user
    * account may alter their details through this api.
-   * @param requestBody The model containing the information of the user to edit
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  userEditCurrentUserApiRequestOptions(
-    requestBody: AlloyUserEditCurrentWebRequestModel,
-  ): ApiRequestOptions;
+  userEditCurrentUserApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the information of the user to edit **/
+    requestBody: AlloyUserEditCurrentWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * List users
    * Retrieves the users belonging to the current customer and that match the information specified
-   * @param query Optional query to filter the user groups by which is applied to first name, last name, username and email
-   * @param userGroup Optional user group code to filter users by the user group they belong to
-   * @param role Optional role code to filter users by the role they belong to
-   * @param page The page number to fetch (1 based)
-   * @param pageSize The number of results to return per page
    * @returns AlloyUserListWebResponseModel
    */
-  userList(
-    query?: string | null,
-    userGroup?: string | null,
-    role?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<AlloyUserListWebResponseModel>;
+  userList({
+    query,
+    userGroup,
+    role,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the user groups by which is applied to first name, last name, username and email **/
+    query?: string | null;
+    /** Optional user group code to filter users by the user group they belong to **/
+    userGroup?: string | null;
+    /** Optional role code to filter users by the role they belong to **/
+    role?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<AlloyUserListWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * List users
    * Retrieves the users belonging to the current customer and that match the information specified
-   * @param query Optional query to filter the user groups by which is applied to first name, last name, username and email
-   * @param userGroup Optional user group code to filter users by the user group they belong to
-   * @param role Optional role code to filter users by the role they belong to
-   * @param page The page number to fetch (1 based)
-   * @param pageSize The number of results to return per page
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  userListApiRequestOptions(
-    query?: string | null,
-    userGroup?: string | null,
-    role?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions;
+  userListApiRequestOptions({
+    query,
+    userGroup,
+    role,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the user groups by which is applied to first name, last name, username and email **/
+    query?: string | null;
+    /** Optional user group code to filter users by the user group they belong to **/
+    userGroup?: string | null;
+    /** Optional role code to filter users by the role they belong to **/
+    role?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions;
 
   /**
    * Create a user
    * This call will allow to create a user on a specific customer. As a result of this operation the user will be sent an email
    * containing the link necessary to set a new password
-   * @param requestBody The model containing the information of the user to create
    * @returns AlloyUserCreateWebResponseModel
    */
-  userCreate(requestBody: AlloyUserCreateWebRequestModel): Promise<AlloyUserCreateWebResponseModel>;
+  userCreate({
+    requestBody,
+  }: {
+    /** The model containing the information of the user to create **/
+    requestBody: AlloyUserCreateWebRequestModel;
+  }): Promise<AlloyUserCreateWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Create a user
    * This call will allow to create a user on a specific customer. As a result of this operation the user will be sent an email
    * containing the link necessary to set a new password
-   * @param requestBody The model containing the information of the user to create
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  userCreateApiRequestOptions(requestBody: AlloyUserCreateWebRequestModel): ApiRequestOptions;
+  userCreateApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the information of the user to create **/
+    requestBody: AlloyUserCreateWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Trigger the forgotten password process
    * This endpoint is used when a user forgets a password and is thus unable to log into the system.
    * An email will be sent to the specified address giving the user the possibility to reset their own password
-   * @param requestBody The model containing the information necessary to the process
    * @returns void
    */
-  userForgotPasswordReset(requestBody: ForgotPasswordWebRequestModel): Promise<void>;
+  userForgotPasswordReset({
+    requestBody,
+  }: {
+    /** The model containing the information necessary to the process **/
+    requestBody: ForgotPasswordWebRequestModel;
+  }): Promise<void>;
 
   /**
    * **used to get the request options without making a http request**
    * Trigger the forgotten password process
    * This endpoint is used when a user forgets a password and is thus unable to log into the system.
    * An email will be sent to the specified address giving the user the possibility to reset their own password
-   * @param requestBody The model containing the information necessary to the process
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  userForgotPasswordResetApiRequestOptions(
-    requestBody: ForgotPasswordWebRequestModel,
-  ): ApiRequestOptions;
+  userForgotPasswordResetApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the information necessary to the process **/
+    requestBody: ForgotPasswordWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Submit password reset
    * Sets a new password for the user that matches the reset password token
-   * @param resetToken The password reset token
-   * @param requestBody The model containing the details necessary to submit a password reset
    * @returns void
    */
-  userSubmitPasswordReset(
-    resetToken: string,
-    requestBody: SubmitPasswordResetWebRequestModel,
-  ): Promise<void>;
+  userSubmitPasswordReset({
+    resetToken,
+    requestBody,
+  }: {
+    /** The password reset token **/
+    resetToken: string;
+    /** The model containing the details necessary to submit a password reset **/
+    requestBody: SubmitPasswordResetWebRequestModel;
+  }): Promise<void>;
 
   /**
    * **used to get the request options without making a http request**
    * Submit password reset
    * Sets a new password for the user that matches the reset password token
-   * @param resetToken The password reset token
-   * @param requestBody The model containing the details necessary to submit a password reset
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  userSubmitPasswordResetApiRequestOptions(
-    resetToken: string,
-    requestBody: SubmitPasswordResetWebRequestModel,
-  ): ApiRequestOptions;
+  userSubmitPasswordResetApiRequestOptions({
+    resetToken,
+    requestBody,
+  }: {
+    /** The password reset token **/
+    resetToken: string;
+    /** The model containing the details necessary to submit a password reset **/
+    requestBody: SubmitPasswordResetWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Change the password for the current user
    * Changes the user's current password. Checks that the old password given is valid for the current user
-   * @param requestBody The model containing the details for changing password
    * @returns void
    */
-  userChangePassword(requestBody: ChangePasswordWebRequestModel): Promise<void>;
+  userChangePassword({
+    requestBody,
+  }: {
+    /** The model containing the details for changing password **/
+    requestBody: ChangePasswordWebRequestModel;
+  }): Promise<void>;
 
   /**
    * **used to get the request options without making a http request**
    * Change the password for the current user
    * Changes the user's current password. Checks that the old password given is valid for the current user
-   * @param requestBody The model containing the details for changing password
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  userChangePasswordApiRequestOptions(
-    requestBody: ChangePasswordWebRequestModel,
-  ): ApiRequestOptions;
+  userChangePasswordApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the details for changing password **/
+    requestBody: ChangePasswordWebRequestModel;
+  }): ApiRequestOptions;
 }

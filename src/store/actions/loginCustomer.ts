@@ -27,7 +27,9 @@ export async function loginCustomer(
   let token: string;
 
   try {
-    const response = await sessionService.sessionCreate2(payload.customerCode);
+    const response = await sessionService.sessionCreate2({
+      customerCode: payload.customerCode,
+    });
     token = response.token;
   } catch (e) {
     console.error(e);

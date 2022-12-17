@@ -7,7 +7,6 @@ export enum BackgroundTaskType {
   ImportValidate = 'ImportValidate',
   ImportCommit = 'ImportCommit',
   ReportRunner = 'ReportRunner',
-  ConfigChanger = 'ConfigChanger',
   Export = 'Export',
   BulkFileDownload = 'BulkFileDownload',
   CardCacher = 'CardCacher',
@@ -19,9 +18,6 @@ export enum BackgroundTaskType {
   LayerClusterBuilder = 'LayerClusterBuilder',
   LayerBasicBuilder = 'LayerBasicBuilder',
   LayerNetworkBuilder = 'LayerNetworkBuilder',
-  LayerClusterCleaner = 'LayerClusterCleaner',
-  LayerBasicCleaner = 'LayerBasicCleaner',
-  LayerNetworkCleaner = 'LayerNetworkCleaner',
   Scheduler = 'Scheduler',
   QuotaCalculator = 'QuotaCalculator',
 }

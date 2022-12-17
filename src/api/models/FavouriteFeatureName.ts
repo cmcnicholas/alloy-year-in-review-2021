@@ -13,4 +13,5 @@ export enum FavouriteFeatureName {
   Basemaps = 'Basemaps',
   Roles = 'Roles',
   CustomReports = 'CustomReports',
+  ItemForms = 'ItemForms',
 }

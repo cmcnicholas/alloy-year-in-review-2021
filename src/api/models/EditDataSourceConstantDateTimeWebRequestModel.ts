@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import type { EditDataSourceAttributeWebRequestModelBase } from './EditDataSourceAttributeWebRequestModelBase';
+import type { EditDataSourceConstantDateTimeHeadersWebRequestModel } from './EditDataSourceConstantDateTimeHeadersWebRequestModel';
 
 export type EditDataSourceConstantDateTimeWebRequestModel =
   EditDataSourceAttributeWebRequestModelBase & {
@@ -8,6 +9,10 @@ export type EditDataSourceConstantDateTimeWebRequestModel =
      * The datetime used as the value for this data source
      */
     valueDateTime?: string | null;
+    /**
+     * Updates the headers on this data source
+     */
+    headers?: Array<EditDataSourceConstantDateTimeHeadersWebRequestModel> | null;
   };
 
 export namespace EditDataSourceConstantDateTimeWebRequestModel {

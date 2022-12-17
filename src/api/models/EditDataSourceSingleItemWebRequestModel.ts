@@ -1,8 +1,9 @@
 /* eslint-disable */
 
-import type { CollectionCode } from './CollectionCode';
+import type { CollectionCodeWebModel } from './CollectionCodeWebModel';
+import type { CustomReportLinkBehaviourWebModel } from './CustomReportLinkBehaviourWebModel';
 import type { EditDataSourceAttributeWebRequestModelBase } from './EditDataSourceAttributeWebRequestModelBase';
-import type { LinkBehaviour } from './LinkBehaviour';
+import type { EditDataSourceSingleItemHeadersWebRequestModel } from './EditDataSourceSingleItemHeadersWebRequestModel';
 
 export type EditDataSourceSingleItemWebRequestModel = EditDataSourceAttributeWebRequestModelBase & {
   /**
@@ -12,11 +13,15 @@ export type EditDataSourceSingleItemWebRequestModel = EditDataSourceAttributeWeb
   /**
    * The linking behaviour for the single item to generated reports
    */
-  linkBehaviour: LinkBehaviour;
+  linkBehaviour: CustomReportLinkBehaviourWebModel;
   /**
    * The optional list of collections the item can belong to
    */
-  collectionCodes?: Array<CollectionCode> | null;
+  collectionCodes?: Array<CollectionCodeWebModel> | null;
+  /**
+   * Updates the headers on this data source
+   */
+  headers?: Array<EditDataSourceSingleItemHeadersWebRequestModel> | null;
 };
 
 export namespace EditDataSourceSingleItemWebRequestModel {

@@ -21,4 +21,7 @@ export interface State {
   assetsManaged: number;
   importsProcessed: number;
   workflowsActive: number;
+  workflowSeconds: number;
+  designsCustom: number;
+  reportsRan: number;
 }

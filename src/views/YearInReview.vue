@@ -4,13 +4,13 @@
       <img
         class="year-in-review__logo"
         src="../assets/alloy.png"
-        alt="2021 Year in review - Alloy"
-        title="2021 Year in review - Alloy"
+        alt="2022 Year in review - Alloy"
+        title="2022 Year in review - Alloy"
         width="300"
       />
-      <h1 class="year-in-review__customer-header">{{ customerName }}, 2021 Alloy Year In Review</h1>
+      <h1 class="year-in-review__customer-header">{{ customerName }}, 2022 Alloy Year In Review</h1>
       <p class="year-in-review__customer-text">
-        Here it is, your personalised review of 2021 using Alloy, scroll down and enjoy!<br />Don't
+        Here it is, your personalised review of 2022 using Alloy, scroll down and enjoy!<br />Don't
         forget you can share this page with the url:
         <a class="year-in-review__customer-share" :href="shareUrl" title="Share">{{ shareUrl }}</a>
         <br />or
@@ -35,14 +35,14 @@
       />
     </section>
     <div v-if="cards.length === 0" class="year-in-review__not-found">
-      Sorry, it doesn't look like you've used Alloy much during 2021, but you can do better for
+      Sorry, it doesn't look like you've used Alloy much during 2022, but you can do better for
       2022!
     </div>
     <div class="year-in-review__footer">
       <div class="year-in-review__footer-container">
         <Botty />
         <h3 class="year-in-review__footer-header">
-          That's all for the Alloy 2021 Year in Review {{ customerName }}, Thanks for taking part
+          That's all for the Alloy 2022 Year in Review {{ customerName }}, Thanks for taking part
           and have a happy new year! 👋👋👋
         </h3>
       </div>
@@ -68,6 +68,7 @@ import { computed, defineComponent, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { Store, useStore } from 'vuex';
 import confetti from 'canvas-confetti';
+import { roundNumber } from '@/utils/roundNumber';
 
 export default defineComponent({
   name: 'YearInReview',
@@ -122,11 +123,14 @@ export default defineComponent({
 
     const cards = computed(() => {
       const data = [
-        layerCardInfo(store),
+        workflowSecondsCardInfo(store),
+        designsCardInfo(store),
+        reportsRanCardInfo(store),
         assetCardInfo(store),
         jobCardInfo(store),
         inspectionCardInfo(store),
         defectCardInfo(store),
+        layerCardInfo(store),
         workflowCardInfo(store),
         projectCardInfo(store),
         importCardInfo(store),
@@ -187,6 +191,11 @@ interface CardInfo {
 
 const quotes = [
   {
+    quote: '"You can do anything you set your mind to." - Benjabot Franklin',
+    foreground: 'front-smile',
+    background: 'buildings',
+  },
+  {
     quote: `Did you know the Babylonians invented "New Years"? Yet they didn't build Alloy!`,
     foreground: 'right-smile',
     background: '',
@@ -197,9 +206,24 @@ const quotes = [
     background: 'buildings',
   },
   {
+    quote: '"I\'m going to make him an offer he can\'t refuse." - The Botfather',
+    foreground: 'left-smirk',
+    background: '',
+  },
+  {
     quote: '"The only way to do great work is to love what you do." - Steve Bots',
     foreground: 'right-smile',
     background: '',
+  },
+  {
+    quote: 'Did you know only two mammals like spicy food? Us and the humble Tree Shrew 🐁',
+    foreground: 'right-big-smile',
+    background: '',
+  },
+  {
+    quote: '"Wherever you go, go with all your heart." - Botfucius',
+    foreground: 'right-big-smile',
+    background: 'buildings',
   },
   {
     quote:
@@ -208,13 +232,18 @@ const quotes = [
     background: '',
   },
   {
-    quote: '"Time toooo, say goodbyeee" (to 2021) - Andrea Botcelli',
+    quote: '"Time toooo, say goodbyeee" (to 2022) - Andrea Botcelli',
     foreground: 'right-smirk',
     background: 'buildings',
   },
   {
     quote: '"I know some things, I can, you know, do math and stuff." - Harry Botter',
     foreground: 'left-big-smile',
+    background: '',
+  },
+  {
+    quote: '"sic mundus creatus est" - Jonas Botwald',
+    foreground: 'front-smile',
     background: '',
   },
 ];
@@ -283,6 +312,48 @@ function workflowCardInfo(store: Store<State>): CardInfo | null {
   };
 }
 
+function designsCardInfo(store: Store<State>): CardInfo | null {
+  if (store.state.designsCustom === 0) {
+    return null;
+  }
+
+  return {
+    icon: 'icon-system-designer',
+    color: '#70C5BC',
+    header: `You've made <strong>${store.state.designsCustom}</strong> custom designs to model your data! Great stuff 🦾`,
+  };
+}
+
+function workflowSecondsCardInfo(store: Store<State>): CardInfo | null {
+  const OneHour = 60 * 60;
+  const OneDay = 24 * OneHour;
+  const OneWeek = 7 * OneDay;
+
+  if (store.state.workflowSeconds < OneHour * 2.5) {
+    return null;
+  }
+
+  let value = roundNumber(store.state.workflowSeconds / OneHour, 1);
+  let comparison = roundNumber(store.state.workflowSeconds / (121 * 60), 1);
+  let header = `Our robots spent <strong>${value} hours</strong> running your Workflows! That's like watching RoboCop ${comparison} times 🤖`;
+
+  if (store.state.workflowSeconds >= OneWeek * 2.5) {
+    value = roundNumber(store.state.workflowSeconds / OneWeek, 2);
+    comparison = roundNumber(store.state.workflowSeconds / ((15 * 24 + 22) * 60 * 60), 1);
+    header = `Our robots spent <strong>${value} weeks</strong> running your Workflows! That's like Titan orbiting Saturn ${comparison} times 🌖`;
+  } else if (store.state.workflowSeconds >= OneDay * 2.5) {
+    value = roundNumber(store.state.workflowSeconds / OneDay, 2);
+    comparison = roundNumber(store.state.workflowSeconds / (2.5 * 24 * 60 * 60), 1);
+    header = `Our robots spent <strong>${value} days</strong> running your Workflows! That's like travelling to the moon ${comparison} times 🚀`;
+  }
+
+  return {
+    icon: 'icon-system-workflow',
+    color: '#4955A5',
+    header,
+  };
+}
+
 function layerCardInfo(store: Store<State>): CardInfo | null {
   if (store.state.layersManaged === 0) {
     return null;
@@ -332,7 +403,7 @@ function jobCardInfo(store: Store<State>): CardInfo | null {
 
   let header = '';
   if (store.state.jobsCreated === 0) {
-    header = `Looks like you didn't start any new jobs this year, but you managed <strong>${formatNumber(
+    header = `Looks like you didn't start any new jobs this year, but you closed <strong>${formatNumber(
       store.state.jobsCompleted,
     )}</strong>, 👏`;
   } else if (store.state.jobsCompleted === 0) {
@@ -342,7 +413,7 @@ function jobCardInfo(store: Store<State>): CardInfo | null {
   } else {
     header = `You created more than <strong>${formatNumber(
       store.state.jobsCreated,
-    )}</strong> jobs this year and managed a total of <strong>${formatNumber(
+    )}</strong> jobs this year and closed a total of <strong>${formatNumber(
       store.state.jobsCompleted,
     )}</strong>, 👏`;
   }
@@ -370,6 +441,22 @@ function defectCardInfo(store: Store<State>): CardInfo | null {
   };
 }
 
+function reportsRanCardInfo(store: Store<State>): CardInfo | null {
+  if (store.state.reportsRan < 100) {
+    return null;
+  }
+
+  const header = `Albot built <strong>${formatNumber(
+    store.state.reportsRan,
+  )}</strong> reports for you this year 🤯`;
+
+  return {
+    icon: 'icon-reports',
+    color: '#ED592A',
+    header,
+  };
+}
+
 function downloadCanvasAsImage(canvas: HTMLCanvasElement) {
   let canvasImage = canvas.toDataURL('image/png');
 
@@ -379,7 +466,7 @@ function downloadCanvasAsImage(canvas: HTMLCanvasElement) {
   xhr.onload = function () {
     let a = document.createElement('a');
     a.href = window.URL.createObjectURL(xhr.response);
-    a.download = 'alloy-2021-year-in-review.png';
+    a.download = 'alloy-2022-year-in-review.png';
     a.style.display = 'none';
     document.body.appendChild(a);
     a.click();

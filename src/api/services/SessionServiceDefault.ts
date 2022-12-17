@@ -36,17 +36,25 @@ export class SessionServiceDefault implements SessionService {
     };
   }
 
-  public async sessionCreate(
-    requestBody: SessionMasterCreateWebRequestModel,
-  ): Promise<SessionCreateWebResponseModel> {
-    const options = this.sessionCreateApiRequestOptions(requestBody);
+  public async sessionCreate({
+    requestBody,
+  }: {
+    /** The model containing the information about the master session to be created **/
+    requestBody: SessionMasterCreateWebRequestModel;
+  }): Promise<SessionCreateWebResponseModel> {
+    const options = this.sessionCreateApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public sessionCreateApiRequestOptions(
-    requestBody: SessionMasterCreateWebRequestModel,
-  ): ApiRequestOptions {
+  public sessionCreateApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the information about the master session to be created **/
+    requestBody: SessionMasterCreateWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -70,13 +78,25 @@ export class SessionServiceDefault implements SessionService {
     };
   }
 
-  public async sessionCreate2(customerCode: string): Promise<SessionCreateWebResponseModel> {
-    const options = this.sessionCreate2ApiRequestOptions(customerCode);
+  public async sessionCreate2({
+    customerCode,
+  }: {
+    /** The Guc of the customer to log into **/
+    customerCode: string;
+  }): Promise<SessionCreateWebResponseModel> {
+    const options = this.sessionCreate2ApiRequestOptions({
+      customerCode,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public sessionCreate2ApiRequestOptions(customerCode: string): ApiRequestOptions {
+  public sessionCreate2ApiRequestOptions({
+    customerCode,
+  }: {
+    /** The Guc of the customer to log into **/
+    customerCode: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -84,17 +104,25 @@ export class SessionServiceDefault implements SessionService {
     };
   }
 
-  public async sessionCreateOAuthUrl(
-    requestBody: SessionCreateOAuthUrlWebRequest,
-  ): Promise<SessionCreateOAuthUrlWebResponse> {
-    const options = this.sessionCreateOAuthUrlApiRequestOptions(requestBody);
+  public async sessionCreateOAuthUrl({
+    requestBody,
+  }: {
+    /** The model gives the OAuth provider and the success and failure URLs **/
+    requestBody: SessionCreateOAuthUrlWebRequest;
+  }): Promise<SessionCreateOAuthUrlWebResponse> {
+    const options = this.sessionCreateOAuthUrlApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public sessionCreateOAuthUrlApiRequestOptions(
-    requestBody: SessionCreateOAuthUrlWebRequest,
-  ): ApiRequestOptions {
+  public sessionCreateOAuthUrlApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model gives the OAuth provider and the success and failure URLs **/
+    requestBody: SessionCreateOAuthUrlWebRequest;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -104,17 +132,25 @@ export class SessionServiceDefault implements SessionService {
     };
   }
 
-  public async sessionCreateSessionFromIdToken(
-    requestBody: CreateSessionFromIdTokenWebRequest,
-  ): Promise<SessionCreateWebResponseModel> {
-    const options = this.sessionCreateSessionFromIdTokenApiRequestOptions(requestBody);
+  public async sessionCreateSessionFromIdToken({
+    requestBody,
+  }: {
+    /** The model giving the OAuth provider and the id token **/
+    requestBody: CreateSessionFromIdTokenWebRequest;
+  }): Promise<SessionCreateWebResponseModel> {
+    const options = this.sessionCreateSessionFromIdTokenApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public sessionCreateSessionFromIdTokenApiRequestOptions(
-    requestBody: CreateSessionFromIdTokenWebRequest,
-  ): ApiRequestOptions {
+  public sessionCreateSessionFromIdTokenApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model giving the OAuth provider and the id token **/
+    requestBody: CreateSessionFromIdTokenWebRequest;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',

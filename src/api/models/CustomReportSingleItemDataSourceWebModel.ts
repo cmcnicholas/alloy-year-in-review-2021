@@ -1,8 +1,8 @@
 /* eslint-disable */
 
-import type { CollectionCode } from './CollectionCode';
+import type { CollectionCodeWebModel } from './CollectionCodeWebModel';
 import type { CustomReportAttributeDataSourceWebModelBase } from './CustomReportAttributeDataSourceWebModelBase';
-import type { LinkBehaviour } from './LinkBehaviour';
+import type { CustomReportLinkBehaviourWebModel } from './CustomReportLinkBehaviourWebModel';
 
 export type CustomReportSingleItemDataSourceWebModel =
   CustomReportAttributeDataSourceWebModelBase & {
@@ -17,11 +17,11 @@ export type CustomReportSingleItemDataSourceWebModel =
     /**
      * The optional list of collections the item can belong to
      */
-    collectionCodes?: Array<CollectionCode> | null;
+    collectionCodes?: Array<CollectionCodeWebModel> | null;
     /**
      * The link behaviour of this single item data source (whether to link this report to the item in this data source).
      */
-    linkBehaviour?: LinkBehaviour;
+    linkBehaviour?: CustomReportLinkBehaviourWebModel;
   };
 
 export namespace CustomReportSingleItemDataSourceWebModel {

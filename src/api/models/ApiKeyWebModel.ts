@@ -7,7 +7,7 @@ import type { MetadataWebModel } from './MetadataWebModel';
  */
 export type ApiKeyWebModel = {
   /**
-   * The AId of this Api key&gt;
+   * The AId of this Api key>
    */
   id?: string | null;
   /**

@@ -17,7 +17,6 @@ import type { WorkflowGetActionParametersWebResponseModel } from '../models/Work
 import type { WorkflowGetAllowedActionsWebRequestModel } from '../models/WorkflowGetAllowedActionsWebRequestModel';
 import type { WorkflowGetAllowedActionsWebResponseModel } from '../models/WorkflowGetAllowedActionsWebResponseModel';
 import type { WorkflowGetWebResponseModel } from '../models/WorkflowGetWebResponseModel';
-import type { WorkflowListApplicableWebResponseModel } from '../models/WorkflowListApplicableWebResponseModel';
 import type { WorkflowListCloningItemWebResponseModel } from '../models/WorkflowListCloningItemWebResponseModel';
 import type { WorkflowListNextDateTimesWebRequestModel } from '../models/WorkflowListNextDateTimesWebRequestModel';
 import type { WorkflowListNextDateTimesWebResponseModel } from '../models/WorkflowListNextDateTimesWebResponseModel';
@@ -27,6 +26,8 @@ import type { WorkflowLogTriggerListWebResponseModel } from '../models/WorkflowL
 import type { WorkflowPermissionsEditWebRequestModel } from '../models/WorkflowPermissionsEditWebRequestModel';
 import type { WorkflowPermissionsGetWebResponseModel } from '../models/WorkflowPermissionsGetWebResponseModel';
 import type { WorkflowRemoveActionWebResponseModel } from '../models/WorkflowRemoveActionWebResponseModel';
+import type { WorkflowTagsListWebResponseModel } from '../models/WorkflowTagsListWebResponseModel';
+import type { WorkflowTriggerType } from '../models/WorkflowTriggerType';
 import type { WorkflowWithOperationsSummaryWebResponseModel } from '../models/WorkflowWithOperationsSummaryWebResponseModel';
 import type { WorkflowWithPermissionsWebResponseModel } from '../models/WorkflowWithPermissionsWebResponseModel';
 import type { WorkflowService } from './WorkflowService';
@@ -45,13 +46,25 @@ export class WorkflowServiceDefault implements WorkflowService {
     this.config = config;
   }
 
-  public async workflowGet(code: string): Promise<WorkflowGetWebResponseModel> {
-    const options = this.workflowGetApiRequestOptions(code);
+  public async workflowGet({
+    code,
+  }: {
+    /** The Guc of the workflow to retrieve **/
+    code: string;
+  }): Promise<WorkflowGetWebResponseModel> {
+    const options = this.workflowGetApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public workflowGetApiRequestOptions(code: string): ApiRequestOptions {
+  public workflowGetApiRequestOptions({
+    code,
+  }: {
+    /** The Guc of the workflow to retrieve **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -59,19 +72,32 @@ export class WorkflowServiceDefault implements WorkflowService {
     };
   }
 
-  public async workflowEdit(
-    code: string,
-    requestBody: WorkflowEditWebRequestModel,
-  ): Promise<WorkflowWithOperationsSummaryWebResponseModel> {
-    const options = this.workflowEditApiRequestOptions(code, requestBody);
+  public async workflowEdit({
+    code,
+    requestBody,
+  }: {
+    /** The code of the workflow to edit **/
+    code: string;
+    /** The model containing all the edit operation details **/
+    requestBody: WorkflowEditWebRequestModel;
+  }): Promise<WorkflowWithOperationsSummaryWebResponseModel> {
+    const options = this.workflowEditApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public workflowEditApiRequestOptions(
-    code: string,
-    requestBody: WorkflowEditWebRequestModel,
-  ): ApiRequestOptions {
+  public workflowEditApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The code of the workflow to edit **/
+    code: string;
+    /** The model containing all the edit operation details **/
+    requestBody: WorkflowEditWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -81,13 +107,25 @@ export class WorkflowServiceDefault implements WorkflowService {
     };
   }
 
-  public async workflowDelete(code: string): Promise<void> {
-    const options = this.workflowDeleteApiRequestOptions(code);
+  public async workflowDelete({
+    code,
+  }: {
+    /** The code of the workflow to delete **/
+    code: string;
+  }): Promise<void> {
+    const options = this.workflowDeleteApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public workflowDeleteApiRequestOptions(code: string): ApiRequestOptions {
+  public workflowDeleteApiRequestOptions({
+    code,
+  }: {
+    /** The code of the workflow to delete **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'DELETE',
@@ -95,25 +133,107 @@ export class WorkflowServiceDefault implements WorkflowService {
     };
   }
 
-  public async workflowList(
-    name?: string | null,
-    context?: Context | null,
-    userGroup?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<WorkflowListWebResponseModel> {
-    const options = this.workflowListApiRequestOptions(name, context, userGroup, page, pageSize);
+  public async workflowList({
+    name,
+    context,
+    andTags,
+    orTags,
+    notTags,
+    userGroup,
+    dodiCodeTriggeringOn,
+    triggerTypes,
+    enabled,
+    page,
+    pageSize,
+  }: {
+    /** The optional workflow name (full or partial) to filter on **/
+    name?: string | null;
+    /** The optional workflow context to filter on **/
+    context?: Context | null;
+    /** If this parameter is passed, only the workflows with ALL of the specified tags will be returned
+     * It is possible to use this in conjunction with the other tags conditions **/
+    andTags?: Array<string> | null;
+    /** If this parameter is passed, only the workflows with AT LEAST one of the specified tags will be returned
+     * It is possible to use this in conjunction with the other tags conditions **/
+    orTags?: Array<string> | null;
+    /** If this parameter is passed, only the workflows with NONE of the specified tags will be returned
+     * It is possible to use this in conjunction with the other tags conditions **/
+    notTags?: Array<string> | null;
+    /** Optional Guc to filter workflows by. If specified, only the workflows
+     * that have this user group code within their permissions are returned **/
+    userGroup?: string | null;
+    /** Optional Guc to filter workflows by. If specified, the endpoint will only return the workflows
+     * whose trigger has the specified dodi code (or a dodi implementing it) as an output **/
+    dodiCodeTriggeringOn?: string | null;
+    /** Optional trigger type enumeration. If specified, the endpoint will only return the workflows with a
+     * trigger of the specified type **/
+    triggerTypes?: Array<WorkflowTriggerType> | null;
+    /** The optional workflow enabled property to filter on **/
+    enabled?: boolean | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<WorkflowListWebResponseModel> {
+    const options = this.workflowListApiRequestOptions({
+      name,
+      context,
+      andTags,
+      orTags,
+      notTags,
+      userGroup,
+      dodiCodeTriggeringOn,
+      triggerTypes,
+      enabled,
+      page,
+      pageSize,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public workflowListApiRequestOptions(
-    name?: string | null,
-    context?: Context | null,
-    userGroup?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public workflowListApiRequestOptions({
+    name,
+    context,
+    andTags,
+    orTags,
+    notTags,
+    userGroup,
+    dodiCodeTriggeringOn,
+    triggerTypes,
+    enabled,
+    page,
+    pageSize,
+  }: {
+    /** The optional workflow name (full or partial) to filter on **/
+    name?: string | null;
+    /** The optional workflow context to filter on **/
+    context?: Context | null;
+    /** If this parameter is passed, only the workflows with ALL of the specified tags will be returned
+     * It is possible to use this in conjunction with the other tags conditions **/
+    andTags?: Array<string> | null;
+    /** If this parameter is passed, only the workflows with AT LEAST one of the specified tags will be returned
+     * It is possible to use this in conjunction with the other tags conditions **/
+    orTags?: Array<string> | null;
+    /** If this parameter is passed, only the workflows with NONE of the specified tags will be returned
+     * It is possible to use this in conjunction with the other tags conditions **/
+    notTags?: Array<string> | null;
+    /** Optional Guc to filter workflows by. If specified, only the workflows
+     * that have this user group code within their permissions are returned **/
+    userGroup?: string | null;
+    /** Optional Guc to filter workflows by. If specified, the endpoint will only return the workflows
+     * whose trigger has the specified dodi code (or a dodi implementing it) as an output **/
+    dodiCodeTriggeringOn?: string | null;
+    /** Optional trigger type enumeration. If specified, the endpoint will only return the workflows with a
+     * trigger of the specified type **/
+    triggerTypes?: Array<WorkflowTriggerType> | null;
+    /** The optional workflow enabled property to filter on **/
+    enabled?: boolean | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -121,24 +241,38 @@ export class WorkflowServiceDefault implements WorkflowService {
       query: {
         Name: name,
         Context: context,
+        AndTags: andTags,
+        OrTags: orTags,
+        NotTags: notTags,
         UserGroup: userGroup,
+        DodiCodeTriggeringOn: dodiCodeTriggeringOn,
+        TriggerTypes: triggerTypes,
+        Enabled: enabled,
         Page: page,
         PageSize: pageSize,
       },
     };
   }
 
-  public async workflowCreate(
-    requestBody: WorkflowCreateWebRequestModel,
-  ): Promise<WorkflowWithOperationsSummaryWebResponseModel> {
-    const options = this.workflowCreateApiRequestOptions(requestBody);
+  public async workflowCreate({
+    requestBody,
+  }: {
+    /** The model containing all the create operation details **/
+    requestBody: WorkflowCreateWebRequestModel;
+  }): Promise<WorkflowWithOperationsSummaryWebResponseModel> {
+    const options = this.workflowCreateApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public workflowCreateApiRequestOptions(
-    requestBody: WorkflowCreateWebRequestModel,
-  ): ApiRequestOptions {
+  public workflowCreateApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing all the create operation details **/
+    requestBody: WorkflowCreateWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -148,19 +282,32 @@ export class WorkflowServiceDefault implements WorkflowService {
     };
   }
 
-  public async workflowClone(
-    code: string,
-    requestBody: WorkflowCloneWebRequestModel,
-  ): Promise<WorkflowWithOperationsSummaryWebResponseModel> {
-    const options = this.workflowCloneApiRequestOptions(code, requestBody);
+  public async workflowClone({
+    code,
+    requestBody,
+  }: {
+    /** The code of the workflow to clone **/
+    code: string;
+    /** The model containing all the clone operation details **/
+    requestBody: WorkflowCloneWebRequestModel;
+  }): Promise<WorkflowWithOperationsSummaryWebResponseModel> {
+    const options = this.workflowCloneApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public workflowCloneApiRequestOptions(
-    code: string,
-    requestBody: WorkflowCloneWebRequestModel,
-  ): ApiRequestOptions {
+  public workflowCloneApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The code of the workflow to clone **/
+    code: string;
+    /** The model containing all the clone operation details **/
+    requestBody: WorkflowCloneWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -170,19 +317,32 @@ export class WorkflowServiceDefault implements WorkflowService {
     };
   }
 
-  public async workflowGetActionParameters(
-    code: string,
-    requestBody: WorkflowGetActionParametersWebRequestModel,
-  ): Promise<WorkflowGetActionParametersWebResponseModel> {
-    const options = this.workflowGetActionParametersApiRequestOptions(code, requestBody);
+  public async workflowGetActionParameters({
+    code,
+    requestBody,
+  }: {
+    /** The code of the workflow being queried **/
+    code: string;
+    /** Model containing the details of the get parameters request **/
+    requestBody: WorkflowGetActionParametersWebRequestModel;
+  }): Promise<WorkflowGetActionParametersWebResponseModel> {
+    const options = this.workflowGetActionParametersApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public workflowGetActionParametersApiRequestOptions(
-    code: string,
-    requestBody: WorkflowGetActionParametersWebRequestModel,
-  ): ApiRequestOptions {
+  public workflowGetActionParametersApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The code of the workflow being queried **/
+    code: string;
+    /** Model containing the details of the get parameters request **/
+    requestBody: WorkflowGetActionParametersWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -192,19 +352,32 @@ export class WorkflowServiceDefault implements WorkflowService {
     };
   }
 
-  public async workflowGetAllowedActions(
-    code: string,
-    requestBody: WorkflowGetAllowedActionsWebRequestModel,
-  ): Promise<WorkflowGetAllowedActionsWebResponseModel> {
-    const options = this.workflowGetAllowedActionsApiRequestOptions(code, requestBody);
+  public async workflowGetAllowedActions({
+    code,
+    requestBody,
+  }: {
+    /** The code of the workflow being queried **/
+    code: string;
+    /** Model containing the details of the get allowed actions request **/
+    requestBody: WorkflowGetAllowedActionsWebRequestModel;
+  }): Promise<WorkflowGetAllowedActionsWebResponseModel> {
+    const options = this.workflowGetAllowedActionsApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public workflowGetAllowedActionsApiRequestOptions(
-    code: string,
-    requestBody: WorkflowGetAllowedActionsWebRequestModel,
-  ): ApiRequestOptions {
+  public workflowGetAllowedActionsApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The code of the workflow being queried **/
+    code: string;
+    /** Model containing the details of the get allowed actions request **/
+    requestBody: WorkflowGetAllowedActionsWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -214,19 +387,32 @@ export class WorkflowServiceDefault implements WorkflowService {
     };
   }
 
-  public async workflowAddAction(
-    code: string,
-    requestBody: WorkflowAddActionWebRequestModel,
-  ): Promise<WorkflowAddActionWebResponseModel> {
-    const options = this.workflowAddActionApiRequestOptions(code, requestBody);
+  public async workflowAddAction({
+    code,
+    requestBody,
+  }: {
+    /** The code of the workflow to add the action to **/
+    code: string;
+    /** The model containing all the add action operation details **/
+    requestBody: WorkflowAddActionWebRequestModel;
+  }): Promise<WorkflowAddActionWebResponseModel> {
+    const options = this.workflowAddActionApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public workflowAddActionApiRequestOptions(
-    code: string,
-    requestBody: WorkflowAddActionWebRequestModel,
-  ): ApiRequestOptions {
+  public workflowAddActionApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The code of the workflow to add the action to **/
+    code: string;
+    /** The model containing all the add action operation details **/
+    requestBody: WorkflowAddActionWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -236,21 +422,39 @@ export class WorkflowServiceDefault implements WorkflowService {
     };
   }
 
-  public async workflowEditAction(
-    code: string,
-    id: string,
-    requestBody: WorkflowEditActionWebRequestModel,
-  ): Promise<WorkflowEditActionWebResponseModel> {
-    const options = this.workflowEditActionApiRequestOptions(code, id, requestBody);
+  public async workflowEditAction({
+    code,
+    id,
+    requestBody,
+  }: {
+    /** The code of the workflow to edit the action on **/
+    code: string;
+    /** The id of the action to edit **/
+    id: string;
+    /** The model containing all the edit action operation details **/
+    requestBody: WorkflowEditActionWebRequestModel;
+  }): Promise<WorkflowEditActionWebResponseModel> {
+    const options = this.workflowEditActionApiRequestOptions({
+      code,
+      id,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public workflowEditActionApiRequestOptions(
-    code: string,
-    id: string,
-    requestBody: WorkflowEditActionWebRequestModel,
-  ): ApiRequestOptions {
+  public workflowEditActionApiRequestOptions({
+    code,
+    id,
+    requestBody,
+  }: {
+    /** The code of the workflow to edit the action on **/
+    code: string;
+    /** The id of the action to edit **/
+    id: string;
+    /** The model containing all the edit action operation details **/
+    requestBody: WorkflowEditActionWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -260,21 +464,41 @@ export class WorkflowServiceDefault implements WorkflowService {
     };
   }
 
-  public async workflowRemoveAction(
-    code: string,
-    id: string,
-    signature?: string | null,
-  ): Promise<WorkflowRemoveActionWebResponseModel> {
-    const options = this.workflowRemoveActionApiRequestOptions(code, id, signature);
+  public async workflowRemoveAction({
+    code,
+    id,
+    signature,
+  }: {
+    /** The code of the workflow to remove the action from **/
+    code: string;
+    /** The id of the action to remove **/
+    id: string;
+    /** The signature is used to ensure that the workflow being edited is actually the one provided to the system.
+     * This is enforced in order to avoid applying possibly invalid edits after another user has edited the same workflow **/
+    signature: string | null;
+  }): Promise<WorkflowRemoveActionWebResponseModel> {
+    const options = this.workflowRemoveActionApiRequestOptions({
+      code,
+      id,
+      signature,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public workflowRemoveActionApiRequestOptions(
-    code: string,
-    id: string,
-    signature?: string | null,
-  ): ApiRequestOptions {
+  public workflowRemoveActionApiRequestOptions({
+    code,
+    id,
+    signature,
+  }: {
+    /** The code of the workflow to remove the action from **/
+    code: string;
+    /** The id of the action to remove **/
+    id: string;
+    /** The signature is used to ensure that the workflow being edited is actually the one provided to the system.
+     * This is enforced in order to avoid applying possibly invalid edits after another user has edited the same workflow **/
+    signature: string | null;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'DELETE',
@@ -285,21 +509,43 @@ export class WorkflowServiceDefault implements WorkflowService {
     };
   }
 
-  public async workflowGetPermissions(
-    code: string,
-    username?: string | null,
-    role?: string | null,
-  ): Promise<WorkflowPermissionsGetWebResponseModel> {
-    const options = this.workflowGetPermissionsApiRequestOptions(code, username, role);
+  public async workflowGetPermissions({
+    code,
+    username,
+    role,
+  }: {
+    /** The Guc for the workflow whose permissions are being requested **/
+    code: string;
+    /** Optional username to get permissions for the specific user.
+     * This value is mutually exclusive with Role. **/
+    username?: string | null;
+    /** Optional role to get permissions for the specific role.
+     * This value is mutually exclusive with Username. **/
+    role?: string | null;
+  }): Promise<WorkflowPermissionsGetWebResponseModel> {
+    const options = this.workflowGetPermissionsApiRequestOptions({
+      code,
+      username,
+      role,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public workflowGetPermissionsApiRequestOptions(
-    code: string,
-    username?: string | null,
-    role?: string | null,
-  ): ApiRequestOptions {
+  public workflowGetPermissionsApiRequestOptions({
+    code,
+    username,
+    role,
+  }: {
+    /** The Guc for the workflow whose permissions are being requested **/
+    code: string;
+    /** Optional username to get permissions for the specific user.
+     * This value is mutually exclusive with Role. **/
+    username?: string | null;
+    /** Optional role to get permissions for the specific role.
+     * This value is mutually exclusive with Username. **/
+    role?: string | null;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -311,19 +557,32 @@ export class WorkflowServiceDefault implements WorkflowService {
     };
   }
 
-  public async workflowEditPermissions(
-    code: string,
-    requestBody: WorkflowPermissionsEditWebRequestModel,
-  ): Promise<WorkflowWithPermissionsWebResponseModel> {
-    const options = this.workflowEditPermissionsApiRequestOptions(code, requestBody);
+  public async workflowEditPermissions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the workflow to edit the permissions of **/
+    code: string;
+    /** The model containing the info necessary to the edit permissions operation **/
+    requestBody: WorkflowPermissionsEditWebRequestModel;
+  }): Promise<WorkflowWithPermissionsWebResponseModel> {
+    const options = this.workflowEditPermissionsApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public workflowEditPermissionsApiRequestOptions(
-    code: string,
-    requestBody: WorkflowPermissionsEditWebRequestModel,
-  ): ApiRequestOptions {
+  public workflowEditPermissionsApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the workflow to edit the permissions of **/
+    code: string;
+    /** The model containing the info necessary to the edit permissions operation **/
+    requestBody: WorkflowPermissionsEditWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -333,13 +592,39 @@ export class WorkflowServiceDefault implements WorkflowService {
     };
   }
 
-  public async workflowGetLogs(runId?: string | null): Promise<WorkflowLogsGetWebResponseModel> {
-    const options = this.workflowGetLogsApiRequestOptions(runId);
+  public async workflowListTags(): Promise<WorkflowTagsListWebResponseModel> {
+    const options = this.workflowListTagsApiRequestOptions();
     const result = await __request(options);
     return result.body;
   }
 
-  public workflowGetLogsApiRequestOptions(runId?: string | null): ApiRequestOptions {
+  public workflowListTagsApiRequestOptions(): ApiRequestOptions {
+    return {
+      ...this.config,
+      method: 'GET',
+      path: `/api/workflow/tags`,
+    };
+  }
+
+  public async workflowGetLogs({
+    runId,
+  }: {
+    /** The id of the workflow run to retrieve logs for **/
+    runId: string | null;
+  }): Promise<WorkflowLogsGetWebResponseModel> {
+    const options = this.workflowGetLogsApiRequestOptions({
+      runId,
+    });
+    const result = await __request(options);
+    return result.body;
+  }
+
+  public workflowGetLogsApiRequestOptions({
+    runId,
+  }: {
+    /** The id of the workflow run to retrieve logs for **/
+    runId: string | null;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -350,21 +635,37 @@ export class WorkflowServiceDefault implements WorkflowService {
     };
   }
 
-  public async workflowListTriggerLogs(
-    code: string,
-    page?: number,
-    pageSize?: number,
-  ): Promise<WorkflowLogTriggerListWebResponseModel> {
-    const options = this.workflowListTriggerLogsApiRequestOptions(code, page, pageSize);
+  public async workflowListTriggerLogs({
+    code,
+    page,
+    pageSize,
+  }: {
+    code: string;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<WorkflowLogTriggerListWebResponseModel> {
+    const options = this.workflowListTriggerLogsApiRequestOptions({
+      code,
+      page,
+      pageSize,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public workflowListTriggerLogsApiRequestOptions(
-    code: string,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public workflowListTriggerLogsApiRequestOptions({
+    code,
+    page,
+    pageSize,
+  }: {
+    code: string;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -376,47 +677,39 @@ export class WorkflowServiceDefault implements WorkflowService {
     };
   }
 
-  public async workflowListApplicableWorkflows(
-    code: string,
-    page?: number,
-    pageSize?: number,
-  ): Promise<WorkflowListApplicableWebResponseModel> {
-    const options = this.workflowListApplicableWorkflowsApiRequestOptions(code, page, pageSize);
+  public async workflowListCloningItemWorkflows({
+    itemId,
+    page,
+    pageSize,
+  }: {
+    /** The id of the item that will be cloned **/
+    itemId: string;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<WorkflowListCloningItemWebResponseModel> {
+    const options = this.workflowListCloningItemWorkflowsApiRequestOptions({
+      itemId,
+      page,
+      pageSize,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public workflowListApplicableWorkflowsApiRequestOptions(
-    code: string,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
-    return {
-      ...this.config,
-      method: 'GET',
-      path: `/api/workflow/applicable/${code}`,
-      query: {
-        Page: page,
-        PageSize: pageSize,
-      },
-    };
-  }
-
-  public async workflowListCloningItemWorkflows(
-    itemId: string,
-    page?: number,
-    pageSize?: number,
-  ): Promise<WorkflowListCloningItemWebResponseModel> {
-    const options = this.workflowListCloningItemWorkflowsApiRequestOptions(itemId, page, pageSize);
-    const result = await __request(options);
-    return result.body;
-  }
-
-  public workflowListCloningItemWorkflowsApiRequestOptions(
-    itemId: string,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public workflowListCloningItemWorkflowsApiRequestOptions({
+    itemId,
+    page,
+    pageSize,
+  }: {
+    /** The id of the item that will be cloned **/
+    itemId: string;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -428,28 +721,46 @@ export class WorkflowServiceDefault implements WorkflowService {
     };
   }
 
-  public async workflowWorkflowAccessAdvisorByUser(
-    username: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<WorkflowAccessAdvisorByUserListWebResponseModel> {
-    const options = this.workflowWorkflowAccessAdvisorByUserApiRequestOptions(
+  public async workflowWorkflowAccessAdvisorByUser({
+    username,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The name of the user to get workflow access advisor for **/
+    username: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<WorkflowAccessAdvisorByUserListWebResponseModel> {
+    const options = this.workflowWorkflowAccessAdvisorByUserApiRequestOptions({
       username,
       query,
       page,
       pageSize,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public workflowWorkflowAccessAdvisorByUserApiRequestOptions(
-    username: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public workflowWorkflowAccessAdvisorByUserApiRequestOptions({
+    username,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The name of the user to get workflow access advisor for **/
+    username: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -462,28 +773,46 @@ export class WorkflowServiceDefault implements WorkflowService {
     };
   }
 
-  public async workflowWorkflowAccessAdvisorByRole(
-    code: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<WorkflowAccessAdvisorByRoleListWebResponseModel> {
-    const options = this.workflowWorkflowAccessAdvisorByRoleApiRequestOptions(
+  public async workflowWorkflowAccessAdvisorByRole({
+    code,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The code of the role to get workflow access advisor for **/
+    code: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<WorkflowAccessAdvisorByRoleListWebResponseModel> {
+    const options = this.workflowWorkflowAccessAdvisorByRoleApiRequestOptions({
       code,
       query,
       page,
       pageSize,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public workflowWorkflowAccessAdvisorByRoleApiRequestOptions(
-    code: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public workflowWorkflowAccessAdvisorByRoleApiRequestOptions({
+    code,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The code of the role to get workflow access advisor for **/
+    code: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -496,17 +825,23 @@ export class WorkflowServiceDefault implements WorkflowService {
     };
   }
 
-  public async workflowWorkflowListNextDates(
-    requestBody: WorkflowListNextDateTimesWebRequestModel,
-  ): Promise<WorkflowListNextDateTimesWebResponseModel> {
-    const options = this.workflowWorkflowListNextDatesApiRequestOptions(requestBody);
+  public async workflowWorkflowListNextDates({
+    requestBody,
+  }: {
+    requestBody: WorkflowListNextDateTimesWebRequestModel;
+  }): Promise<WorkflowListNextDateTimesWebResponseModel> {
+    const options = this.workflowWorkflowListNextDatesApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public workflowWorkflowListNextDatesApiRequestOptions(
-    requestBody: WorkflowListNextDateTimesWebRequestModel,
-  ): ApiRequestOptions {
+  public workflowWorkflowListNextDatesApiRequestOptions({
+    requestBody,
+  }: {
+    requestBody: WorkflowListNextDateTimesWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -516,19 +851,30 @@ export class WorkflowServiceDefault implements WorkflowService {
     };
   }
 
-  public async workflowWorkflowManualRun(
-    code: string,
-    requestBody: CreateManualWorkflowRunWebRequestModel,
-  ): Promise<CreateManualWorkflowRunWebResponseModel> {
-    const options = this.workflowWorkflowManualRunApiRequestOptions(code, requestBody);
+  public async workflowWorkflowManualRun({
+    code,
+    requestBody,
+  }: {
+    /** The code of the workflow to run, which must have a time or manual trigger **/
+    code: string;
+    requestBody: CreateManualWorkflowRunWebRequestModel;
+  }): Promise<CreateManualWorkflowRunWebResponseModel> {
+    const options = this.workflowWorkflowManualRunApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public workflowWorkflowManualRunApiRequestOptions(
-    code: string,
-    requestBody: CreateManualWorkflowRunWebRequestModel,
-  ): ApiRequestOptions {
+  public workflowWorkflowManualRunApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The code of the workflow to run, which must have a time or manual trigger **/
+    code: string;
+    requestBody: CreateManualWorkflowRunWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',

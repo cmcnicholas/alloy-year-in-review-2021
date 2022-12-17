@@ -1,8 +1,8 @@
 /* eslint-disable */
 
 import type { AddDataSourceAttributeWebRequestModelBase } from './AddDataSourceAttributeWebRequestModelBase';
-import type { CollectionCode } from './CollectionCode';
-import type { LinkBehaviour } from './LinkBehaviour';
+import type { CollectionCodeWebModel } from './CollectionCodeWebModel';
+import type { CustomReportLinkBehaviourWebModel } from './CustomReportLinkBehaviourWebModel';
 
 export type AddDataSourceSingleItemWebRequestModel = AddDataSourceAttributeWebRequestModelBase & {
   /**
@@ -16,11 +16,11 @@ export type AddDataSourceSingleItemWebRequestModel = AddDataSourceAttributeWebRe
   /**
    * The linking behaviour for the single item to generated reports
    */
-  linkBehaviour: LinkBehaviour;
+  linkBehaviour: CustomReportLinkBehaviourWebModel;
   /**
    * The optional list of collections the item can belong to
    */
-  collectionCodes?: Array<CollectionCode> | null;
+  collectionCodes?: Array<CollectionCodeWebModel> | null;
 };
 
 export namespace AddDataSourceSingleItemWebRequestModel {

@@ -1,14 +1,14 @@
 /* eslint-disable */
 
 import type { AddDataSourceAttributeWebRequestModelBase } from './AddDataSourceAttributeWebRequestModelBase';
-import type { AqsJsonNode } from './AqsJsonNode';
+import type { AqsJsonNodeWebModel } from './AqsJsonNodeWebModel';
 
 export type AddDataSourceAqsStatisticsWebRequestModel =
   AddDataSourceAttributeWebRequestModelBase & {
     /**
      * The default value to use for reports if no run time value is specified
      */
-    aqs?: AqsJsonNode | null;
+    aqs?: AqsJsonNodeWebModel | null;
   };
 
 export namespace AddDataSourceAqsStatisticsWebRequestModel {

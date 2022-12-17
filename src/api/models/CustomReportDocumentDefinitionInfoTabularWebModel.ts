@@ -2,7 +2,7 @@
 
 import type { CustomReportControlTabularWebModelBase } from './CustomReportControlTabularWebModelBase';
 import type { CustomReportDocumentDefinitionInfoWebModelBase } from './CustomReportDocumentDefinitionInfoWebModelBase';
-import type { CustomReportDocumentTabularVisualizationType } from './CustomReportDocumentTabularVisualizationType';
+import type { CustomReportDocumentTabularVisualizationTypeWebModel } from './CustomReportDocumentTabularVisualizationTypeWebModel';
 
 export type CustomReportDocumentDefinitionInfoTabularWebModel =
   CustomReportDocumentDefinitionInfoWebModelBase & {
@@ -15,7 +15,7 @@ export type CustomReportDocumentDefinitionInfoTabularWebModel =
      * The array of visualizations to use for this document definition. For every visualization,
      * a new report document will be created when the custom report is run
      */
-    visualizations: Array<CustomReportDocumentTabularVisualizationType>;
+    visualizations: Array<CustomReportDocumentTabularVisualizationTypeWebModel>;
   };
 
 export namespace CustomReportDocumentDefinitionInfoTabularWebModel {

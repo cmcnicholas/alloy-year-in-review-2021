@@ -2,15 +2,15 @@
 
 import type { CustomReportControlFlowWebModelBase } from './CustomReportControlFlowWebModelBase';
 import type { CustomReportDocumentDefinitionInfoWebModelBase } from './CustomReportDocumentDefinitionInfoWebModelBase';
-import type { CustomReportDocumentFlowVisualizationType } from './CustomReportDocumentFlowVisualizationType';
-import type { CustomReportFlowDocumentOrientation } from './CustomReportFlowDocumentOrientation';
+import type { CustomReportDocumentFlowVisualizationTypeWebModel } from './CustomReportDocumentFlowVisualizationTypeWebModel';
+import type { CustomReportFlowDocumentOrientationWebModel } from './CustomReportFlowDocumentOrientationWebModel';
 
 export type CustomReportDocumentDefinitionInfoFlowWebModel =
   CustomReportDocumentDefinitionInfoWebModelBase & {
     /**
      * The orientation of the custom report flow document
      */
-    orientation?: CustomReportFlowDocumentOrientation;
+    orientation?: CustomReportFlowDocumentOrientationWebModel;
     /**
      * The list of controls that make up this custom report. The order in the array is the order in which they
      * appear in the report
@@ -20,7 +20,7 @@ export type CustomReportDocumentDefinitionInfoFlowWebModel =
      * The array of visualizations to use for this document definition. For every visualization,
      * a new report document will be created when the custom report is run
      */
-    visualizations: Array<CustomReportDocumentFlowVisualizationType>;
+    visualizations: Array<CustomReportDocumentFlowVisualizationTypeWebModel>;
   };
 
 export namespace CustomReportDocumentDefinitionInfoFlowWebModel {

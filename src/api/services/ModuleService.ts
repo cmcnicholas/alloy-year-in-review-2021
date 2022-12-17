@@ -8,19 +8,27 @@ export interface ModuleService {
   /**
    * Get an alloy module by its code
    * Fetches an alloy module by its globally unique code (Guc).
-   * @param code The Guc for the module being requested
    * @returns ModuleGetWebResponseModel
    */
-  moduleGet(code: string): Promise<ModuleGetWebResponseModel>;
+  moduleGet({
+    code,
+  }: {
+    /** The Guc for the module being requested **/
+    code: string;
+  }): Promise<ModuleGetWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Get an alloy module by its code
    * Fetches an alloy module by its globally unique code (Guc).
-   * @param code The Guc for the module being requested
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  moduleGetApiRequestOptions(code: string): ApiRequestOptions;
+  moduleGetApiRequestOptions({
+    code,
+  }: {
+    /** The Guc for the module being requested **/
+    code: string;
+  }): ApiRequestOptions;
 
   /**
    * Get a list of customer installed alloy modules

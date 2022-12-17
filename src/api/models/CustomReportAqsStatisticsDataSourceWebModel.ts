@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import type { AqsJsonNode } from './AqsJsonNode';
+import type { AqsJsonNodeWebModel } from './AqsJsonNodeWebModel';
 import type { CustomReportAttributeDataSourceWebModelBase } from './CustomReportAttributeDataSourceWebModelBase';
 
 export type CustomReportAqsStatisticsDataSourceWebModel =
@@ -8,7 +8,7 @@ export type CustomReportAqsStatisticsDataSourceWebModel =
     /**
      * The default value to use for reports if no run time value is specified
      */
-    aqs?: AqsJsonNode | null;
+    aqs?: AqsJsonNodeWebModel | null;
   };
 
 export namespace CustomReportAqsStatisticsDataSourceWebModel {

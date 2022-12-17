@@ -46,15 +46,23 @@ export class PowerBiServiceDefault implements PowerBiService {
     };
   }
 
-  public async powerBiGetEmbedTokenReportEdit(
-    reportKey: string,
-  ): Promise<GetEmbedTokenWebResponseModel> {
-    const options = this.powerBiGetEmbedTokenReportEditApiRequestOptions(reportKey);
+  public async powerBiGetEmbedTokenReportEdit({
+    reportKey,
+  }: {
+    reportKey: string;
+  }): Promise<GetEmbedTokenWebResponseModel> {
+    const options = this.powerBiGetEmbedTokenReportEditApiRequestOptions({
+      reportKey,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public powerBiGetEmbedTokenReportEditApiRequestOptions(reportKey: string): ApiRequestOptions {
+  public powerBiGetEmbedTokenReportEditApiRequestOptions({
+    reportKey,
+  }: {
+    reportKey: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -62,15 +70,23 @@ export class PowerBiServiceDefault implements PowerBiService {
     };
   }
 
-  public async powerBiGetEmbedTokenReportView(
-    reportKey: string,
-  ): Promise<GetEmbedTokenWebResponseModel> {
-    const options = this.powerBiGetEmbedTokenReportViewApiRequestOptions(reportKey);
+  public async powerBiGetEmbedTokenReportView({
+    reportKey,
+  }: {
+    reportKey: string;
+  }): Promise<GetEmbedTokenWebResponseModel> {
+    const options = this.powerBiGetEmbedTokenReportViewApiRequestOptions({
+      reportKey,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public powerBiGetEmbedTokenReportViewApiRequestOptions(reportKey: string): ApiRequestOptions {
+  public powerBiGetEmbedTokenReportViewApiRequestOptions({
+    reportKey,
+  }: {
+    reportKey: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -78,13 +94,19 @@ export class PowerBiServiceDefault implements PowerBiService {
     };
   }
 
-  public async powerBiDeleteReport(reportKey: string): Promise<void> {
-    const options = this.powerBiDeleteReportApiRequestOptions(reportKey);
+  public async powerBiDeleteReport({ reportKey }: { reportKey: string }): Promise<void> {
+    const options = this.powerBiDeleteReportApiRequestOptions({
+      reportKey,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public powerBiDeleteReportApiRequestOptions(reportKey: string): ApiRequestOptions {
+  public powerBiDeleteReportApiRequestOptions({
+    reportKey,
+  }: {
+    reportKey: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'DELETE',

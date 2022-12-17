@@ -6,7 +6,7 @@ import type { DodiAttributeOptionsWebModelBase } from './DodiAttributeOptionsWeb
 
 export type DodiAttributeOptionsAqsWebModel = DodiAttributeOptionsWebModelBase & {
   /**
-   * aqs types for the dodi. Could e Query, Join or StatisticsAggregation
+   * Aqs types for the dodi. Could be Query, Join or StatisticsAggregation
    */
   aqsTypes?: Array<AqsItemType> | null;
   /**

@@ -20,28 +20,46 @@ export class ReportServiceDefault implements ReportService {
     this.config = config;
   }
 
-  public async reportList(
-    dodiCode: string,
-    reportImplementsInterface?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<ReportListWebResponseModel> {
-    const options = this.reportListApiRequestOptions(
+  public async reportList({
+    dodiCode,
+    reportImplementsInterface,
+    page,
+    pageSize,
+  }: {
+    /** The Guc to filter reports that apply to this dodi **/
+    dodiCode: string;
+    /** Guc to filter report designs by. **/
+    reportImplementsInterface?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<ReportListWebResponseModel> {
+    const options = this.reportListApiRequestOptions({
       dodiCode,
       reportImplementsInterface,
       page,
       pageSize,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public reportListApiRequestOptions(
-    dodiCode: string,
-    reportImplementsInterface?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public reportListApiRequestOptions({
+    dodiCode,
+    reportImplementsInterface,
+    page,
+    pageSize,
+  }: {
+    /** The Guc to filter reports that apply to this dodi **/
+    dodiCode: string;
+    /** Guc to filter report designs by. **/
+    reportImplementsInterface?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -54,28 +72,46 @@ export class ReportServiceDefault implements ReportService {
     };
   }
 
-  public async reportListApplicableDodis(
-    dodiCode: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<ReportListApplicableDodisWebResponseModel> {
-    const options = this.reportListApplicableDodisApiRequestOptions(
+  public async reportListApplicableDodis({
+    dodiCode,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The Guc report dodi to get applicable dodis for **/
+    dodiCode: string;
+    /** Optional query to filter the report applicable dodis by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<ReportListApplicableDodisWebResponseModel> {
+    const options = this.reportListApplicableDodisApiRequestOptions({
       dodiCode,
       query,
       page,
       pageSize,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public reportListApplicableDodisApiRequestOptions(
-    dodiCode: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public reportListApplicableDodisApiRequestOptions({
+    dodiCode,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The Guc report dodi to get applicable dodis for **/
+    dodiCode: string;
+    /** Optional query to filter the report applicable dodis by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -88,17 +124,25 @@ export class ReportServiceDefault implements ReportService {
     };
   }
 
-  public async reportGenerate(
-    requestBody: ReportGenerateWebRequestModel,
-  ): Promise<ReportGeneratedWebResponseModel> {
-    const options = this.reportGenerateApiRequestOptions(requestBody);
+  public async reportGenerate({
+    requestBody,
+  }: {
+    /** The model containing the info about the report being created **/
+    requestBody: ReportGenerateWebRequestModel;
+  }): Promise<ReportGeneratedWebResponseModel> {
+    const options = this.reportGenerateApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public reportGenerateApiRequestOptions(
-    requestBody: ReportGenerateWebRequestModel,
-  ): ApiRequestOptions {
+  public reportGenerateApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the info about the report being created **/
+    requestBody: ReportGenerateWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',

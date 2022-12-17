@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import type { CustomReportControlPropertyWebModelOfNullableVerticalStackAlign } from './CustomReportControlPropertyWebModelOfNullableVerticalStackAlign';
+import type { CustomReportControlPropertyWebModelOfNullableCustomReportVerticalStackAlignWebModel } from './CustomReportControlPropertyWebModelOfNullableCustomReportVerticalStackAlignWebModel';
 import type { CustomReportControlWithControlsWebModel } from './CustomReportControlWithControlsWebModel';
 
 export type CustomReportControlVerticalStackFlowWebModel =
@@ -8,7 +8,7 @@ export type CustomReportControlVerticalStackFlowWebModel =
     /**
      * Optional alignment for the vertical stack, will default to left aligned
      */
-    align?: CustomReportControlPropertyWebModelOfNullableVerticalStackAlign | null;
+    align?: CustomReportControlPropertyWebModelOfNullableCustomReportVerticalStackAlignWebModel | null;
   };
 
 export namespace CustomReportControlVerticalStackFlowWebModel {

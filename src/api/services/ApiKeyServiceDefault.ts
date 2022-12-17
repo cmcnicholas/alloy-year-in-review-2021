@@ -21,13 +21,25 @@ export class ApiKeyServiceDefault implements ApiKeyService {
     this.config = config;
   }
 
-  public async apiKeyGet(id: string): Promise<ApiKeyWebModel> {
-    const options = this.apiKeyGetApiRequestOptions(id);
+  public async apiKeyGet({
+    id,
+  }: {
+    /** The AId for the Api key being requested **/
+    id: string;
+  }): Promise<ApiKeyWebModel> {
+    const options = this.apiKeyGetApiRequestOptions({
+      id,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public apiKeyGetApiRequestOptions(id: string): ApiRequestOptions {
+  public apiKeyGetApiRequestOptions({
+    id,
+  }: {
+    /** The AId for the Api key being requested **/
+    id: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -35,19 +47,32 @@ export class ApiKeyServiceDefault implements ApiKeyService {
     };
   }
 
-  public async apiKeyEdit(
-    id: string,
-    requestBody: ApiKeyEditWebRequestModel,
-  ): Promise<ApiKeyWebModel> {
-    const options = this.apiKeyEditApiRequestOptions(id, requestBody);
+  public async apiKeyEdit({
+    id,
+    requestBody,
+  }: {
+    /** The AId of the Api key to edit **/
+    id: string;
+    /** Model containing the new Api Key details **/
+    requestBody: ApiKeyEditWebRequestModel;
+  }): Promise<ApiKeyWebModel> {
+    const options = this.apiKeyEditApiRequestOptions({
+      id,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public apiKeyEditApiRequestOptions(
-    id: string,
-    requestBody: ApiKeyEditWebRequestModel,
-  ): ApiRequestOptions {
+  public apiKeyEditApiRequestOptions({
+    id,
+    requestBody,
+  }: {
+    /** The AId of the Api key to edit **/
+    id: string;
+    /** Model containing the new Api Key details **/
+    requestBody: ApiKeyEditWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -57,13 +82,25 @@ export class ApiKeyServiceDefault implements ApiKeyService {
     };
   }
 
-  public async apiKeyDelete(id: string): Promise<void> {
-    const options = this.apiKeyDeleteApiRequestOptions(id);
+  public async apiKeyDelete({
+    id,
+  }: {
+    /** The AId of the Api Key to delete **/
+    id: string;
+  }): Promise<void> {
+    const options = this.apiKeyDeleteApiRequestOptions({
+      id,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public apiKeyDeleteApiRequestOptions(id: string): ApiRequestOptions {
+  public apiKeyDeleteApiRequestOptions({
+    id,
+  }: {
+    /** The AId of the Api Key to delete **/
+    id: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'DELETE',
@@ -71,47 +108,78 @@ export class ApiKeyServiceDefault implements ApiKeyService {
     };
   }
 
-  public async apiKeyList(
-    query?: string | null,
-    username?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<ApiKeyListWebResponseModel> {
-    const options = this.apiKeyListApiRequestOptions(query, username, page, pageSize);
+  public async apiKeyList({
+    username,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** Username to filter Api Keys by **/
+    username: string | null;
+    /** Optional query to filter the Api keys by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<ApiKeyListWebResponseModel> {
+    const options = this.apiKeyListApiRequestOptions({
+      username,
+      query,
+      page,
+      pageSize,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public apiKeyListApiRequestOptions(
-    query?: string | null,
-    username?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public apiKeyListApiRequestOptions({
+    username,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** Username to filter Api Keys by **/
+    username: string | null;
+    /** Optional query to filter the Api keys by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
       path: `/api/api-key`,
       query: {
-        Query: query,
         Username: username,
+        Query: query,
         Page: page,
         PageSize: pageSize,
       },
     };
   }
 
-  public async apiKeyCreate(
-    requestBody: ApiKeyCreateWebRequestModel,
-  ): Promise<ApiKeyCreateWebResponseModel> {
-    const options = this.apiKeyCreateApiRequestOptions(requestBody);
+  public async apiKeyCreate({
+    requestBody,
+  }: {
+    /** Model containing the new Api key details **/
+    requestBody: ApiKeyCreateWebRequestModel;
+  }): Promise<ApiKeyCreateWebResponseModel> {
+    const options = this.apiKeyCreateApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public apiKeyCreateApiRequestOptions(
-    requestBody: ApiKeyCreateWebRequestModel,
-  ): ApiRequestOptions {
+  public apiKeyCreateApiRequestOptions({
+    requestBody,
+  }: {
+    /** Model containing the new Api key details **/
+    requestBody: ApiKeyCreateWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',

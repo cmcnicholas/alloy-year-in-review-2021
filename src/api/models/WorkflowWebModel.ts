@@ -1,5 +1,6 @@
 /* eslint-disable */
 
+import type { Context } from './Context';
 import type { MetadataWebModel } from './MetadataWebModel';
 import type { WorkflowFailureNotificationWebModel } from './WorkflowFailureNotificationWebModel';
 import type { WorkflowNodeInfoWebModel } from './WorkflowNodeInfoWebModel';
@@ -18,6 +19,14 @@ export type WorkflowWebModel = {
    * Optional description that provides additional information about this workflow
    */
   description?: string | null;
+  /**
+   * The workflow Context
+   */
+  context: Context;
+  /**
+   * The tags associated to this workflow
+   */
+  tags?: Array<string> | null;
   /**
    * If set to true, the workflow will run when conditions match the trigger.
    * Otherwise, it will be disabled.

@@ -27,6 +27,10 @@ export type AlloyUserWebModel = {
    */
   lastName: string;
   /**
+   * The datetime at which the user was created
+   */
+  createdDate: string;
+  /**
    * The tags for the user
    */
   tags?: Array<string> | null;

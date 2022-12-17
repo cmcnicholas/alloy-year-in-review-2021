@@ -17,265 +17,350 @@ export interface CardService {
   /**
    * Get a card by its code
    * Fetches a card by its globally unique code (Guc).
-   * @param code The Guc for the card being requested
    * @returns CardWithOperationsSummaryWebResponseModel
    */
-  cardGet(code: string): Promise<CardWithOperationsSummaryWebResponseModel>;
+  cardGet({
+    code,
+  }: {
+    /** The Guc for the card being requested **/
+    code: string;
+  }): Promise<CardWithOperationsSummaryWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Get a card by its code
    * Fetches a card by its globally unique code (Guc).
-   * @param code The Guc for the card being requested
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  cardGetApiRequestOptions(code: string): ApiRequestOptions;
+  cardGetApiRequestOptions({
+    code,
+  }: {
+    /** The Guc for the card being requested **/
+    code: string;
+  }): ApiRequestOptions;
 
   /**
    * Edit a card
    * Edits a card based on the information sent in the model
-   * @param code The Guc of the card to edit
-   * @param requestBody Model containing the new card details
    * @returns CardWithOperationsSummaryWebResponseModel
    */
-  cardEdit(
-    code: string,
-    requestBody: CardEditWebRequestModel,
-  ): Promise<CardWithOperationsSummaryWebResponseModel>;
+  cardEdit({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the card to edit **/
+    code: string;
+    /** Model containing the new card details **/
+    requestBody: CardEditWebRequestModel;
+  }): Promise<CardWithOperationsSummaryWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Edit a card
    * Edits a card based on the information sent in the model
-   * @param code The Guc of the card to edit
-   * @param requestBody Model containing the new card details
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  cardEditApiRequestOptions(code: string, requestBody: CardEditWebRequestModel): ApiRequestOptions;
+  cardEditApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the card to edit **/
+    code: string;
+    /** Model containing the new card details **/
+    requestBody: CardEditWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Delete a card
    * Deletes a card based on the information sent in the model
-   * @param code The Guc of the card to delete
    * @returns void
    */
-  cardDelete(code: string): Promise<void>;
+  cardDelete({
+    code,
+  }: {
+    /** The Guc of the card to delete **/
+    code: string;
+  }): Promise<void>;
 
   /**
    * **used to get the request options without making a http request**
    * Delete a card
    * Deletes a card based on the information sent in the model
-   * @param code The Guc of the card to delete
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  cardDeleteApiRequestOptions(code: string): ApiRequestOptions;
+  cardDeleteApiRequestOptions({
+    code,
+  }: {
+    /** The Guc of the card to delete **/
+    code: string;
+  }): ApiRequestOptions;
 
   /**
    * Get a list of cards
    * Fetches a list of cards optionally specifying page and the number of results to return per page.
-   * @param query Optional query to filter the cards by
-   * @param userGroup Optional Guc to filter cards by. If specified, only the cards
-   * that have this user group code within their permissions are returned
-   * @param context The optional cards context to filter on
-   * @param page The page number to fetch (1 based)
-   * @param pageSize The number of results to return per page
    * @returns CardListWebResponseModel
    */
-  cardList(
-    query?: string | null,
-    userGroup?: string | null,
-    context?: Context | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<CardListWebResponseModel>;
+  cardList({
+    query,
+    userGroup,
+    context,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the cards by **/
+    query?: string | null;
+    /** Optional Guc to filter cards by. If specified, only the cards
+     * that have this user group code within their permissions are returned **/
+    userGroup?: string | null;
+    /** The optional cards context to filter on **/
+    context?: Context | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<CardListWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Get a list of cards
    * Fetches a list of cards optionally specifying page and the number of results to return per page.
-   * @param query Optional query to filter the cards by
-   * @param userGroup Optional Guc to filter cards by. If specified, only the cards
-   * that have this user group code within their permissions are returned
-   * @param context The optional cards context to filter on
-   * @param page The page number to fetch (1 based)
-   * @param pageSize The number of results to return per page
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  cardListApiRequestOptions(
-    query?: string | null,
-    userGroup?: string | null,
-    context?: Context | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions;
+  cardListApiRequestOptions({
+    query,
+    userGroup,
+    context,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the cards by **/
+    query?: string | null;
+    /** Optional Guc to filter cards by. If specified, only the cards
+     * that have this user group code within their permissions are returned **/
+    userGroup?: string | null;
+    /** The optional cards context to filter on **/
+    context?: Context | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions;
 
   /**
    * Create a card
    * Creates a card based on the information sent in the model
-   * @param requestBody Model containing the new card details
    * @returns CardWithOperationsSummaryWebResponseModel
    */
-  cardCreate(
-    requestBody: CardCreateWebRequestModel,
-  ): Promise<CardWithOperationsSummaryWebResponseModel>;
+  cardCreate({
+    requestBody,
+  }: {
+    /** Model containing the new card details **/
+    requestBody: CardCreateWebRequestModel;
+  }): Promise<CardWithOperationsSummaryWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Create a card
    * Creates a card based on the information sent in the model
-   * @param requestBody Model containing the new card details
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  cardCreateApiRequestOptions(requestBody: CardCreateWebRequestModel): ApiRequestOptions;
+  cardCreateApiRequestOptions({
+    requestBody,
+  }: {
+    /** Model containing the new card details **/
+    requestBody: CardCreateWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Reset a card query
-   * @param code The Guc of the card to reset the query for
-   * @param id The AId of the query to reset
-   * @param requestBody The model containing the information necessary to reset a card query
    * @returns CardWithOperationsSummaryWebResponseModel
    */
-  cardResetQuery(
-    code: string,
-    id: string,
-    requestBody: CardQueryResetWebRequestModel,
-  ): Promise<CardWithOperationsSummaryWebResponseModel>;
+  cardResetQuery({
+    code,
+    id,
+    requestBody,
+  }: {
+    /** The Guc of the card to reset the query for **/
+    code: string;
+    /** The AId of the query to reset **/
+    id: string;
+    /** The model containing the information necessary to reset a card query **/
+    requestBody: CardQueryResetWebRequestModel;
+  }): Promise<CardWithOperationsSummaryWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Reset a card query
-   * @param code The Guc of the card to reset the query for
-   * @param id The AId of the query to reset
-   * @param requestBody The model containing the information necessary to reset a card query
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  cardResetQueryApiRequestOptions(
-    code: string,
-    id: string,
-    requestBody: CardQueryResetWebRequestModel,
-  ): ApiRequestOptions;
+  cardResetQueryApiRequestOptions({
+    code,
+    id,
+    requestBody,
+  }: {
+    /** The Guc of the card to reset the query for **/
+    code: string;
+    /** The AId of the query to reset **/
+    id: string;
+    /** The model containing the information necessary to reset a card query **/
+    requestBody: CardQueryResetWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Get a card permissions by its code
    * Fetches the permissions of a card by its Guc
-   * @param code The Guc for the card whose permissions are being requested
-   * @param username Optional username to get permissions for the specific user.
-   * This value is mutually exclusive with Role.
-   * @param role Optional role to get permissions for the specific role.
-   * This value is mutually exclusive with Username.
    * @returns CardPermissionsGetWebResponseModel
    */
-  cardGetPermissions(
-    code: string,
-    username?: string | null,
-    role?: string | null,
-  ): Promise<CardPermissionsGetWebResponseModel>;
+  cardGetPermissions({
+    code,
+    username,
+    role,
+  }: {
+    /** The Guc for the card whose permissions are being requested **/
+    code: string;
+    /** Optional username to get permissions for the specific user.
+     * This value is mutually exclusive with Role. **/
+    username?: string | null;
+    /** Optional role to get permissions for the specific role.
+     * This value is mutually exclusive with Username. **/
+    role?: string | null;
+  }): Promise<CardPermissionsGetWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Get a card permissions by its code
    * Fetches the permissions of a card by its Guc
-   * @param code The Guc for the card whose permissions are being requested
-   * @param username Optional username to get permissions for the specific user.
-   * This value is mutually exclusive with Role.
-   * @param role Optional role to get permissions for the specific role.
-   * This value is mutually exclusive with Username.
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  cardGetPermissionsApiRequestOptions(
-    code: string,
-    username?: string | null,
-    role?: string | null,
-  ): ApiRequestOptions;
+  cardGetPermissionsApiRequestOptions({
+    code,
+    username,
+    role,
+  }: {
+    /** The Guc for the card whose permissions are being requested **/
+    code: string;
+    /** Optional username to get permissions for the specific user.
+     * This value is mutually exclusive with Role. **/
+    username?: string | null;
+    /** Optional role to get permissions for the specific role.
+     * This value is mutually exclusive with Username. **/
+    role?: string | null;
+  }): ApiRequestOptions;
 
   /**
    * Edit permissions for a card
    * Edit the permissions on the card with the specified code
-   * @param code The Guc of the card to edit the permissions of
-   * @param requestBody The model containing the info necessary to the edit permissions operation
    * @returns CardWithPermissionsWebResponseModel
    */
-  cardEditPermissions(
-    code: string,
-    requestBody: CardPermissionsEditWebRequestModel,
-  ): Promise<CardWithPermissionsWebResponseModel>;
+  cardEditPermissions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the card to edit the permissions of **/
+    code: string;
+    /** The model containing the info necessary to the edit permissions operation **/
+    requestBody: CardPermissionsEditWebRequestModel;
+  }): Promise<CardWithPermissionsWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Edit permissions for a card
    * Edit the permissions on the card with the specified code
-   * @param code The Guc of the card to edit the permissions of
-   * @param requestBody The model containing the info necessary to the edit permissions operation
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  cardEditPermissionsApiRequestOptions(
-    code: string,
-    requestBody: CardPermissionsEditWebRequestModel,
-  ): ApiRequestOptions;
+  cardEditPermissionsApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the card to edit the permissions of **/
+    code: string;
+    /** The model containing the info necessary to the edit permissions operation **/
+    requestBody: CardPermissionsEditWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Lists user cards with their winning permission
    * Fetches a list of cards with winning permission optionally specifying page and the number of results to return per page.
-   * @param username The name of the user to get card access advisor for
-   * @param query Optional query (full or partial feature name) to filter the results by
-   * @param page The page number to fetch (1 based)
-   * @param pageSize The number of results to return per page
    * @returns CardAccessAdvisorByUserListWebResponseModel
    */
-  cardCardAccessAdvisorByUser(
-    username: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<CardAccessAdvisorByUserListWebResponseModel>;
+  cardCardAccessAdvisorByUser({
+    username,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The name of the user to get card access advisor for **/
+    username: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<CardAccessAdvisorByUserListWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Lists user cards with their winning permission
    * Fetches a list of cards with winning permission optionally specifying page and the number of results to return per page.
-   * @param username The name of the user to get card access advisor for
-   * @param query Optional query (full or partial feature name) to filter the results by
-   * @param page The page number to fetch (1 based)
-   * @param pageSize The number of results to return per page
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  cardCardAccessAdvisorByUserApiRequestOptions(
-    username: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions;
+  cardCardAccessAdvisorByUserApiRequestOptions({
+    username,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The name of the user to get card access advisor for **/
+    username: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions;
 
   /**
    * Lists role cards with their winning permission
    * Fetches a list of cards with winning permission optionally specifying page and the number of results to return per page.
-   * @param code The code of the role to get card access advisor for
-   * @param query Optional query (full or partial feature name) to filter the results by
-   * @param page The page number to fetch (1 based)
-   * @param pageSize The number of results to return per page
    * @returns CardAccessAdvisorByRoleListWebResponseModel
    */
-  cardCardAccessAdvisorByRole(
-    code: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<CardAccessAdvisorByRoleListWebResponseModel>;
+  cardCardAccessAdvisorByRole({
+    code,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The code of the role to get card access advisor for **/
+    code: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<CardAccessAdvisorByRoleListWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Lists role cards with their winning permission
    * Fetches a list of cards with winning permission optionally specifying page and the number of results to return per page.
-   * @param code The code of the role to get card access advisor for
-   * @param query Optional query (full or partial feature name) to filter the results by
-   * @param page The page number to fetch (1 based)
-   * @param pageSize The number of results to return per page
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  cardCardAccessAdvisorByRoleApiRequestOptions(
-    code: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions;
+  cardCardAccessAdvisorByRoleApiRequestOptions({
+    code,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The code of the role to get card access advisor for **/
+    code: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions;
 }

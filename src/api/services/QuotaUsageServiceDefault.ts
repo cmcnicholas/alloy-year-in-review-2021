@@ -18,34 +18,60 @@ export class QuotaUsageServiceDefault implements QuotaUsageService {
     this.config = config;
   }
 
-  public async quotaUsageListQuotaUsage(
-    start?: string | null,
-    end?: string | null,
-    category?: string | null,
-    component?: QuotaUsageComponent | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<QuotaListUsageWebResponseModel> {
-    const options = this.quotaUsageListQuotaUsageApiRequestOptions(
+  public async quotaUsageListQuotaUsage({
+    start,
+    end,
+    category,
+    component,
+    page,
+    pageSize,
+  }: {
+    /** Start time of quota usage to query **/
+    start?: string | null;
+    /** End time of quota usage to query **/
+    end?: string | null;
+    /** Category to filter by **/
+    category?: string | null;
+    /** Component to filter by **/
+    component?: QuotaUsageComponent | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<QuotaListUsageWebResponseModel> {
+    const options = this.quotaUsageListQuotaUsageApiRequestOptions({
       start,
       end,
       category,
       component,
       page,
       pageSize,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public quotaUsageListQuotaUsageApiRequestOptions(
-    start?: string | null,
-    end?: string | null,
-    category?: string | null,
-    component?: QuotaUsageComponent | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public quotaUsageListQuotaUsageApiRequestOptions({
+    start,
+    end,
+    category,
+    component,
+    page,
+    pageSize,
+  }: {
+    /** Start time of quota usage to query **/
+    start?: string | null;
+    /** End time of quota usage to query **/
+    end?: string | null;
+    /** Category to filter by **/
+    category?: string | null;
+    /** Component to filter by **/
+    component?: QuotaUsageComponent | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',

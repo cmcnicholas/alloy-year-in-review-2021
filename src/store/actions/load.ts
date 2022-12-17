@@ -1,17 +1,25 @@
 import { AqsItemType } from '@/api/models/AqsItemType';
 import { AqsJsonNode } from '@/api/models/AqsJsonNode';
+import { Context } from '@/api/models/Context';
+import { QuotaListUsageWebResponseModel } from '@/api/models/QuotaListUsageWebResponseModel';
+import { QuotaUsageComponent } from '@/api/models/QuotaUsageComponent';
 import { AqsService } from '@/api/services/AqsService';
 import { AqsServiceDefault } from '@/api/services/AqsServiceDefault';
+import { DodiServiceDefault } from '@/api/services/DodiServiceDefault';
 import { ImportServiceDefault } from '@/api/services/ImportServiceDefault';
 import { LayerServiceDefault } from '@/api/services/LayerServiceDefault';
+import { QuotaUsageService } from '@/api/services/QuotaUsageService';
+import { QuotaUsageServiceDefault } from '@/api/services/QuotaUsageServiceDefault';
 import { WorkflowServiceDefault } from '@/api/services/WorkflowServiceDefault';
 import { getApiName } from '@/utils/getApiName';
 import { getApiUrl } from '@/utils/getApiUrl';
 import { ActionContext } from 'vuex';
 import { State } from '../State';
 
-const StartOfYearObjectId = '5fee66000000000000000000';
-const EndOfYearObjectId = '61cf99800000000000000000';
+const StartOfYearObjectId = '61cf99800000000000000000';
+const EndOfYearObjectId = '63b0cd000000000000000000';
+const StartOfYearIsoDate = '2022-01-01T00:00:00.000Z';
+const EndOfYearIsoDate = '2023-01-01T00:00:00.000Z';
 
 export async function load(context: ActionContext<State, State>): Promise<void> {
   await loadAssets(context);
@@ -36,6 +44,10 @@ export async function load(context: ActionContext<State, State>): Promise<void> 
   await randomWait();
 
   await loadWorkflows(context);
+  await loadWorkflowSeconds(context);
+
+  await loadDesignsCustom(context);
+  await loadReportsRan(context);
 
   // we're done!
   context.state.loaded = true;
@@ -240,7 +252,10 @@ async function loadWorkflows(context: ActionContext<State, State>): Promise<void
         token: context.state.token ?? 'unknown',
       },
     });
-    const result = await service.workflowList(undefined, undefined, undefined, 1, 0);
+    const result = await service.workflowList({
+      page: 1,
+      pageSize: 0,
+    });
     context.state.workflowsActive = result.totalResults;
   } catch (e) {
     console.error('failed to get count of workflows');
@@ -256,7 +271,10 @@ async function loadImports(context: ActionContext<State, State>): Promise<void> 
         token: context.state.token ?? 'unknown',
       },
     });
-    const result = await service.importList(undefined, 1, 0);
+    const result = await service.importList({
+      page: 1,
+      pageSize: 0,
+    });
     context.state.importsProcessed = result.totalResults;
   } catch (e) {
     console.error('failed to get count of imports');
@@ -272,22 +290,90 @@ async function loadLayers(context: ActionContext<State, State>): Promise<void> {
         token: context.state.token ?? 'unknown',
       },
     });
-    const result = await service.layerList(
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      1,
-      0,
-    );
+    const result = await service.layerList({
+      page: 1,
+      pageSize: 0,
+    });
     context.state.layersManaged = result.totalResults;
   } catch (e) {
     console.error('failed to get count of layers');
     context.state.layersManaged = 0;
   }
+}
+
+async function loadDesignsCustom(context: ActionContext<State, State>): Promise<void> {
+  try {
+    const service = new DodiServiceDefault({
+      baseUrl: getApiUrl(getApiName()),
+      defaultHeaders: {
+        token: context.state.token ?? 'unknown',
+      },
+    });
+    const result = await service.dodiList({
+      context: Context.Customer,
+      page: 1,
+      pageSize: 0,
+    });
+    context.state.designsCustom = result.totalResults;
+  } catch (e) {
+    console.error('failed to get count of custom dodis');
+    context.state.designsCustom = 0;
+  }
+}
+
+async function loadWorkflowSeconds(context: ActionContext<State, State>): Promise<void> {
+  try {
+    const service = new QuotaUsageServiceDefault({
+      baseUrl: getApiUrl(getApiName()),
+      defaultHeaders: {
+        token: context.state.token ?? 'unknown',
+      },
+    });
+    const results = (
+      await Promise.all([
+        loadQuotaUsage(service, QuotaUsageComponent.TaskExecutor, 'Workflows', 1),
+        loadQuotaUsage(service, QuotaUsageComponent.TaskExecutor, 'Workflows', 2),
+        loadQuotaUsage(service, QuotaUsageComponent.TaskExecutor, 'Workflows', 3),
+        loadQuotaUsage(service, QuotaUsageComponent.TaskExecutor, 'Workflows', 4),
+      ])
+    )
+      .map((x) => x.results)
+      .flat();
+    context.state.workflowSeconds = results
+      .map((x) => x.value)
+      .reduce((prev, curr) => prev + curr, 0);
+  } catch (e) {
+    console.error('failed to get workflow seconds');
+    context.state.workflowSeconds = 0;
+  }
+}
+
+async function loadReportsRan(context: ActionContext<State, State>): Promise<void> {
+  context.state.reportsRan = await getAqsCountResult(context, {
+    type: AqsItemType.StatisticsAggregation,
+    properties: {
+      dodiCode: 'designInterfaces_reports',
+      collectionCode: 'All',
+      aggregationType: 'Count',
+    },
+    children: [aqsDateRange()],
+  });
+}
+
+async function loadQuotaUsage(
+  service: QuotaUsageService,
+  component: QuotaUsageComponent,
+  category: string,
+  page: number,
+): Promise<QuotaListUsageWebResponseModel> {
+  return service.quotaUsageListQuotaUsage({
+    category,
+    component,
+    start: StartOfYearIsoDate,
+    end: EndOfYearIsoDate,
+    page,
+    pageSize: 100,
+  });
 }
 
 async function getAqsCountResult(
@@ -297,7 +383,9 @@ async function getAqsCountResult(
   try {
     const service = getAqsService(context);
     const result = await service.aqsStatisticsAggregation({
-      aqs,
+      requestBody: {
+        aqs,
+      },
     });
     if (result.results.length === 1) {
       if (typeof result.results[0].value.value === 'number') {

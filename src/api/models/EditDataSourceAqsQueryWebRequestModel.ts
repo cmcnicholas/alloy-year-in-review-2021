@@ -1,14 +1,14 @@
 /* eslint-disable */
 
-import type { AqsJsonNode } from './AqsJsonNode';
-import type { EditDataSourceAqsQueryHeaderSettingsWebRequestModel } from './EditDataSourceAqsQueryHeaderSettingsWebRequestModel';
+import type { AqsJsonNodeWebModel } from './AqsJsonNodeWebModel';
+import type { EditDataSourceAqsQueryHeadersWebRequestModel } from './EditDataSourceAqsQueryHeadersWebRequestModel';
 import type { EditDataSourceAttributeWebRequestModelBase } from './EditDataSourceAttributeWebRequestModelBase';
 
 export type EditDataSourceAqsQueryWebRequestModel = EditDataSourceAttributeWebRequestModelBase & {
   /**
    * The default value to use for reports if no run time value is specified
    */
-  aqs?: AqsJsonNode | null;
+  aqs?: AqsJsonNodeWebModel | null;
   /**
    * The Dodi code for the AQS query
    */
@@ -22,9 +22,9 @@ export type EditDataSourceAqsQueryWebRequestModel = EditDataSourceAttributeWebRe
    */
   joinAttributes?: Array<string> | null;
   /**
-   * Header settings for the data source.
+   * Updates the headers on this data source
    */
-  headerSettings?: Array<EditDataSourceAqsQueryHeaderSettingsWebRequestModel> | null;
+  headers?: Array<EditDataSourceAqsQueryHeadersWebRequestModel> | null;
 };
 
 export namespace EditDataSourceAqsQueryWebRequestModel {

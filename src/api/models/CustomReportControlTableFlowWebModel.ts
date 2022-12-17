@@ -1,8 +1,9 @@
 /* eslint-disable */
 
 import type { CustomReportControlFlowWebModelBase } from './CustomReportControlFlowWebModelBase';
-import type { CustomReportControlPropertyWebModelOfNullableHeaderType } from './CustomReportControlPropertyWebModelOfNullableHeaderType';
-import type { CustomReportControlPropertyWebModelOfNullableTableDirection } from './CustomReportControlPropertyWebModelOfNullableTableDirection';
+import type { CustomReportControlPropertyWebModelOfNullableCustomReportHeaderTypeWebModel } from './CustomReportControlPropertyWebModelOfNullableCustomReportHeaderTypeWebModel';
+import type { CustomReportControlPropertyWebModelOfNullableCustomReportTableDirectionWebModel } from './CustomReportControlPropertyWebModelOfNullableCustomReportTableDirectionWebModel';
+import type { CustomReportControlTableFlowSummaryWebModel } from './CustomReportControlTableFlowSummaryWebModel';
 import type { CustomReportControlTableHeaderFlowWebModel } from './CustomReportControlTableHeaderFlowWebModel';
 
 export type CustomReportControlTableFlowWebModel = CustomReportControlFlowWebModelBase & {
@@ -15,13 +16,17 @@ export type CustomReportControlTableFlowWebModel = CustomReportControlFlowWebMod
    */
   headers?: Array<CustomReportControlTableHeaderFlowWebModel> | null;
   /**
+   * Summary data regarding on what mathematical operations to apply to headers
+   */
+  summary?: CustomReportControlTableFlowSummaryWebModel | null;
+  /**
    * The table direction
    */
-  direction?: CustomReportControlPropertyWebModelOfNullableTableDirection | null;
+  direction?: CustomReportControlPropertyWebModelOfNullableCustomReportTableDirectionWebModel | null;
   /**
    * The type of header to use for default data source column names
    */
-  headerType?: CustomReportControlPropertyWebModelOfNullableHeaderType | null;
+  headerType?: CustomReportControlPropertyWebModelOfNullableCustomReportHeaderTypeWebModel | null;
 };
 
 export namespace CustomReportControlTableFlowWebModel {

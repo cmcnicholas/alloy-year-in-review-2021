@@ -22,143 +22,191 @@ export interface LayerService {
   /**
    * Get a layer by its code
    * Fetches a layer by its globally unique code (GUC).
-   * @param code The Guc for the layer being requested
    * @returns LayerWithOperationsSummaryWebResponseModel
    */
-  layerGet(code: string): Promise<LayerWithOperationsSummaryWebResponseModel>;
+  layerGet({
+    code,
+  }: {
+    /** The Guc for the layer being requested **/
+    code: string;
+  }): Promise<LayerWithOperationsSummaryWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Get a layer by its code
    * Fetches a layer by its globally unique code (GUC).
-   * @param code The Guc for the layer being requested
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  layerGetApiRequestOptions(code: string): ApiRequestOptions;
+  layerGetApiRequestOptions({
+    code,
+  }: {
+    /** The Guc for the layer being requested **/
+    code: string;
+  }): ApiRequestOptions;
 
   /**
    * Edit a layer
    * Edits a layer based on the information sent in the model
-   * @param code The Guc of the layer to edit
-   * @param requestBody Model containing the new layer details
    * @returns LayerWithOperationsSummaryWebResponseModel
    */
-  layerEdit(
-    code: string,
-    requestBody: LayerEditWebRequestModel,
-  ): Promise<LayerWithOperationsSummaryWebResponseModel>;
+  layerEdit({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the layer to edit **/
+    code: string;
+    /** Model containing the new layer details **/
+    requestBody: LayerEditWebRequestModel;
+  }): Promise<LayerWithOperationsSummaryWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Edit a layer
    * Edits a layer based on the information sent in the model
-   * @param code The Guc of the layer to edit
-   * @param requestBody Model containing the new layer details
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  layerEditApiRequestOptions(
-    code: string,
-    requestBody: LayerEditWebRequestModel,
-  ): ApiRequestOptions;
+  layerEditApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the layer to edit **/
+    code: string;
+    /** Model containing the new layer details **/
+    requestBody: LayerEditWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Delete a layer
    * Deletes a layer based on the information sent in the model
-   * @param code The Guc of the layer to delete
    * @returns void
    */
-  layerDelete(code: string): Promise<void>;
+  layerDelete({
+    code,
+  }: {
+    /** The Guc of the layer to delete **/
+    code: string;
+  }): Promise<void>;
 
   /**
    * **used to get the request options without making a http request**
    * Delete a layer
    * Deletes a layer based on the information sent in the model
-   * @param code The Guc of the layer to delete
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  layerDeleteApiRequestOptions(code: string): ApiRequestOptions;
+  layerDeleteApiRequestOptions({
+    code,
+  }: {
+    /** The Guc of the layer to delete **/
+    code: string;
+  }): ApiRequestOptions;
 
   /**
    * Get a list of layers allowing to filter by some optional query parameters
    * Fetches a list of layers optionally specifying page and the number of results to return per page.
-   * @param name The optional layer name (full or partial) to filter on
-   * @param context The optional layer context to filter on
-   * @param andTags If this parameter is passed, only the layers with ALL of the specified tags will be returned
-   * It is possible to use this in conjunction with the other tags conditions
-   * @param orTags If this parameter is passed, only the layers with AT LEAST one of the specified tags will be returned
-   * It is possible to use this in conjunction with the other tags conditions
-   * @param notTags If this parameter is passed, only the layers with NONE of the specified tags will be returned
-   * It is possible to use this in conjunction with the other tags conditions
-   * @param userGroup Optional Guc to filter layers by. If specified, only the layers
-   * that have this user group code within their permissions are returned
-   * @param visualisations The optional layer style visualisations to filter on. If specified, only layers
-   * that contain any styles with the given visualisations are returned
-   * @param page The page number to fetch (1 based)
-   * @param pageSize The number of results to return per page
    * @returns LayerListWebResponseModel
    */
-  layerList(
-    name?: string | null,
-    context?: Context | null,
-    andTags?: Array<string> | null,
-    orTags?: Array<string> | null,
-    notTags?: Array<string> | null,
-    userGroup?: string | null,
-    visualisations?: Array<LayerVisualisationType> | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<LayerListWebResponseModel>;
+  layerList({
+    name,
+    context,
+    andTags,
+    orTags,
+    notTags,
+    userGroup,
+    visualisations,
+    page,
+    pageSize,
+  }: {
+    /** The optional layer name (full or partial) to filter on **/
+    name?: string | null;
+    /** The optional layer context to filter on **/
+    context?: Context | null;
+    /** If this parameter is passed, only the layers with ALL of the specified tags will be returned
+     * It is possible to use this in conjunction with the other tags conditions **/
+    andTags?: Array<string> | null;
+    /** If this parameter is passed, only the layers with AT LEAST one of the specified tags will be returned
+     * It is possible to use this in conjunction with the other tags conditions **/
+    orTags?: Array<string> | null;
+    /** If this parameter is passed, only the layers with NONE of the specified tags will be returned
+     * It is possible to use this in conjunction with the other tags conditions **/
+    notTags?: Array<string> | null;
+    /** Optional Guc to filter layers by. If specified, only the layers
+     * that have this user group code within their permissions are returned **/
+    userGroup?: string | null;
+    /** The optional layer style visualisations to filter on. If specified, only layers
+     * that contain any styles with the given visualisations are returned **/
+    visualisations?: Array<LayerVisualisationType> | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<LayerListWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Get a list of layers allowing to filter by some optional query parameters
    * Fetches a list of layers optionally specifying page and the number of results to return per page.
-   * @param name The optional layer name (full or partial) to filter on
-   * @param context The optional layer context to filter on
-   * @param andTags If this parameter is passed, only the layers with ALL of the specified tags will be returned
-   * It is possible to use this in conjunction with the other tags conditions
-   * @param orTags If this parameter is passed, only the layers with AT LEAST one of the specified tags will be returned
-   * It is possible to use this in conjunction with the other tags conditions
-   * @param notTags If this parameter is passed, only the layers with NONE of the specified tags will be returned
-   * It is possible to use this in conjunction with the other tags conditions
-   * @param userGroup Optional Guc to filter layers by. If specified, only the layers
-   * that have this user group code within their permissions are returned
-   * @param visualisations The optional layer style visualisations to filter on. If specified, only layers
-   * that contain any styles with the given visualisations are returned
-   * @param page The page number to fetch (1 based)
-   * @param pageSize The number of results to return per page
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  layerListApiRequestOptions(
-    name?: string | null,
-    context?: Context | null,
-    andTags?: Array<string> | null,
-    orTags?: Array<string> | null,
-    notTags?: Array<string> | null,
-    userGroup?: string | null,
-    visualisations?: Array<LayerVisualisationType> | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions;
+  layerListApiRequestOptions({
+    name,
+    context,
+    andTags,
+    orTags,
+    notTags,
+    userGroup,
+    visualisations,
+    page,
+    pageSize,
+  }: {
+    /** The optional layer name (full or partial) to filter on **/
+    name?: string | null;
+    /** The optional layer context to filter on **/
+    context?: Context | null;
+    /** If this parameter is passed, only the layers with ALL of the specified tags will be returned
+     * It is possible to use this in conjunction with the other tags conditions **/
+    andTags?: Array<string> | null;
+    /** If this parameter is passed, only the layers with AT LEAST one of the specified tags will be returned
+     * It is possible to use this in conjunction with the other tags conditions **/
+    orTags?: Array<string> | null;
+    /** If this parameter is passed, only the layers with NONE of the specified tags will be returned
+     * It is possible to use this in conjunction with the other tags conditions **/
+    notTags?: Array<string> | null;
+    /** Optional Guc to filter layers by. If specified, only the layers
+     * that have this user group code within their permissions are returned **/
+    userGroup?: string | null;
+    /** The optional layer style visualisations to filter on. If specified, only layers
+     * that contain any styles with the given visualisations are returned **/
+    visualisations?: Array<LayerVisualisationType> | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions;
 
   /**
    * Create a layer
    * Creates a layer based on the information sent in the model
-   * @param requestBody Model containing the new layer details
    * @returns LayerWithOperationsSummaryWebResponseModel
    */
-  layerCreate(
-    requestBody: LayerCreateWebRequestModel,
-  ): Promise<LayerWithOperationsSummaryWebResponseModel>;
+  layerCreate({
+    requestBody,
+  }: {
+    /** Model containing the new layer details **/
+    requestBody: LayerCreateWebRequestModel;
+  }): Promise<LayerWithOperationsSummaryWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Create a layer
    * Creates a layer based on the information sent in the model
-   * @param requestBody Model containing the new layer details
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  layerCreateApiRequestOptions(requestBody: LayerCreateWebRequestModel): ApiRequestOptions;
+  layerCreateApiRequestOptions({
+    requestBody,
+  }: {
+    /** Model containing the new layer details **/
+    requestBody: LayerCreateWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Get the list of the layer tags in the system
@@ -177,30 +225,38 @@ export interface LayerService {
 
   /**
    * Reset a layer style
-   * @param code The Guc of the layer to reset the style for
-   * @param id The AId of the style to reset
-   * @param requestBody The model containing the information necessary to reset a layer style
    * @returns LayerWithOperationsSummaryWebResponseModel
    */
-  layerResetQuery(
-    code: string,
-    id: string,
-    requestBody: LayerStyleResetWebRequestModel,
-  ): Promise<LayerWithOperationsSummaryWebResponseModel>;
+  layerResetQuery({
+    code,
+    id,
+    requestBody,
+  }: {
+    /** The Guc of the layer to reset the style for **/
+    code: string;
+    /** The AId of the style to reset **/
+    id: string;
+    /** The model containing the information necessary to reset a layer style **/
+    requestBody: LayerStyleResetWebRequestModel;
+  }): Promise<LayerWithOperationsSummaryWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Reset a layer style
-   * @param code The Guc of the layer to reset the style for
-   * @param id The AId of the style to reset
-   * @param requestBody The model containing the information necessary to reset a layer style
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  layerResetQueryApiRequestOptions(
-    code: string,
-    id: string,
-    requestBody: LayerStyleResetWebRequestModel,
-  ): ApiRequestOptions;
+  layerResetQueryApiRequestOptions({
+    code,
+    id,
+    requestBody,
+  }: {
+    /** The Guc of the layer to reset the style for **/
+    code: string;
+    /** The AId of the style to reset **/
+    id: string;
+    /** The model containing the information necessary to reset a layer style **/
+    requestBody: LayerStyleResetWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Get a network tile for a layer
@@ -217,23 +273,29 @@ export interface LayerService {
    * * title: The item title
    * * subtitle: The item subtitle
    * * z: The original zoom level that this feature was created for
-   * @param code The code of the layer to query for
-   * @param x The x google tile coordinate
-   * @param y The y google tile coordinate
-   * @param z The z google tile coordinate
-   * @param styleIds The list of style ids to query for. An item will only be returned in one style.
-   * The order of the styles specified is thus important since an item belonging to both the first
-   * and the last style in the list, will only appear for the first one.
-   * A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account
    * @returns LayerGetNetworkTileWebResponseModel
    */
-  layerGetNetworkLayerTile(
-    code: string,
-    x: number,
-    y: number,
-    z: number,
-    styleIds?: Array<string> | null,
-  ): Promise<LayerGetNetworkTileWebResponseModel>;
+  layerGetNetworkLayerTile({
+    code,
+    x,
+    y,
+    z,
+    styleIds,
+  }: {
+    /** The code of the layer to query for **/
+    code: string;
+    /** The x google tile coordinate **/
+    x: number;
+    /** The y google tile coordinate **/
+    y: number;
+    /** The z google tile coordinate **/
+    z: number;
+    /** The list of style ids to query for. An item will only be returned in one style.
+     * The order of the styles specified is thus important since an item belonging to both the first
+     * and the last style in the list, will only appear for the first one.
+     * A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account **/
+    styleIds?: Array<string> | null;
+  }): Promise<LayerGetNetworkTileWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
@@ -251,23 +313,29 @@ export interface LayerService {
    * * title: The item title
    * * subtitle: The item subtitle
    * * z: The original zoom level that this feature was created for
-   * @param code The code of the layer to query for
-   * @param x The x google tile coordinate
-   * @param y The y google tile coordinate
-   * @param z The z google tile coordinate
-   * @param styleIds The list of style ids to query for. An item will only be returned in one style.
-   * The order of the styles specified is thus important since an item belonging to both the first
-   * and the last style in the list, will only appear for the first one.
-   * A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  layerGetNetworkLayerTileApiRequestOptions(
-    code: string,
-    x: number,
-    y: number,
-    z: number,
-    styleIds?: Array<string> | null,
-  ): ApiRequestOptions;
+  layerGetNetworkLayerTileApiRequestOptions({
+    code,
+    x,
+    y,
+    z,
+    styleIds,
+  }: {
+    /** The code of the layer to query for **/
+    code: string;
+    /** The x google tile coordinate **/
+    x: number;
+    /** The y google tile coordinate **/
+    y: number;
+    /** The z google tile coordinate **/
+    z: number;
+    /** The list of style ids to query for. An item will only be returned in one style.
+     * The order of the styles specified is thus important since an item belonging to both the first
+     * and the last style in the list, will only appear for the first one.
+     * A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account **/
+    styleIds?: Array<string> | null;
+  }): ApiRequestOptions;
 
   /**
    * Get a cluster tile for a layer
@@ -290,21 +358,27 @@ export interface LayerService {
    * * itemId: The item id
    * * colour: The item colour
    * * icon: The item icon code
-   * @param code The code of the layer to query for
-   * @param x The x google tile coordinate
-   * @param y The y google tile coordinate
-   * @param z The z google tile coordinate
-   * @param styleIds The list of style ids to query for.
-   * A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account
    * @returns LayerGetClusterTileWebResponseModel
    */
-  layerGetClusterLayerTile(
-    code: string,
-    x: number,
-    y: number,
-    z: number,
-    styleIds?: Array<string> | null,
-  ): Promise<LayerGetClusterTileWebResponseModel>;
+  layerGetClusterLayerTile({
+    code,
+    x,
+    y,
+    z,
+    styleIds,
+  }: {
+    /** The code of the layer to query for **/
+    code: string;
+    /** The x google tile coordinate **/
+    x: number;
+    /** The y google tile coordinate **/
+    y: number;
+    /** The z google tile coordinate **/
+    z: number;
+    /** The list of style ids to query for.
+     * A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account **/
+    styleIds?: Array<string> | null;
+  }): Promise<LayerGetClusterTileWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
@@ -328,21 +402,27 @@ export interface LayerService {
    * * itemId: The item id
    * * colour: The item colour
    * * icon: The item icon code
-   * @param code The code of the layer to query for
-   * @param x The x google tile coordinate
-   * @param y The y google tile coordinate
-   * @param z The z google tile coordinate
-   * @param styleIds The list of style ids to query for.
-   * A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  layerGetClusterLayerTileApiRequestOptions(
-    code: string,
-    x: number,
-    y: number,
-    z: number,
-    styleIds?: Array<string> | null,
-  ): ApiRequestOptions;
+  layerGetClusterLayerTileApiRequestOptions({
+    code,
+    x,
+    y,
+    z,
+    styleIds,
+  }: {
+    /** The code of the layer to query for **/
+    code: string;
+    /** The x google tile coordinate **/
+    x: number;
+    /** The y google tile coordinate **/
+    y: number;
+    /** The z google tile coordinate **/
+    z: number;
+    /** The list of style ids to query for.
+     * A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account **/
+    styleIds?: Array<string> | null;
+  }): ApiRequestOptions;
 
   /**
    * Get a basic tile for a layer
@@ -357,21 +437,27 @@ export interface LayerService {
    * * itemId: The item id
    * * colour: The item colour
    * * icon: The item icon code
-   * @param code The code of the layer to query for
-   * @param x The x google tile coordinate
-   * @param y The y google tile coordinate
-   * @param z The z google tile coordinate
-   * @param styleIds The list of style ids to query for.
-   * A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account
    * @returns LayerGetBasicTileWebResponseModel
    */
-  layerGetBasicLayerTile(
-    code: string,
-    x: number,
-    y: number,
-    z: number,
-    styleIds?: Array<string> | null,
-  ): Promise<LayerGetBasicTileWebResponseModel>;
+  layerGetBasicLayerTile({
+    code,
+    x,
+    y,
+    z,
+    styleIds,
+  }: {
+    /** The code of the layer to query for **/
+    code: string;
+    /** The x google tile coordinate **/
+    x: number;
+    /** The y google tile coordinate **/
+    y: number;
+    /** The z google tile coordinate **/
+    z: number;
+    /** The list of style ids to query for.
+     * A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account **/
+    styleIds?: Array<string> | null;
+  }): Promise<LayerGetBasicTileWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
@@ -387,143 +473,183 @@ export interface LayerService {
    * * itemId: The item id
    * * colour: The item colour
    * * icon: The item icon code
-   * @param code The code of the layer to query for
-   * @param x The x google tile coordinate
-   * @param y The y google tile coordinate
-   * @param z The z google tile coordinate
-   * @param styleIds The list of style ids to query for.
-   * A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  layerGetBasicLayerTileApiRequestOptions(
-    code: string,
-    x: number,
-    y: number,
-    z: number,
-    styleIds?: Array<string> | null,
-  ): ApiRequestOptions;
+  layerGetBasicLayerTileApiRequestOptions({
+    code,
+    x,
+    y,
+    z,
+    styleIds,
+  }: {
+    /** The code of the layer to query for **/
+    code: string;
+    /** The x google tile coordinate **/
+    x: number;
+    /** The y google tile coordinate **/
+    y: number;
+    /** The z google tile coordinate **/
+    z: number;
+    /** The list of style ids to query for.
+     * A non specified value or an empty list means that all the styles belonging to the layer have to be taken into account **/
+    styleIds?: Array<string> | null;
+  }): ApiRequestOptions;
 
   /**
    * Get the permissions of a layer by its code
    * Fetches the permissions of a layer by its Guc
-   * @param code The Guc for the layer whose permissions are being requested
-   * @param username Optional username to get permissions for the specific user.
-   * This value is mutually exclusive with Role.
-   * @param role Optional role to get permissions for the specific role.
-   * This value is mutually exclusive with Username.
    * @returns LayerPermissionsGetWebResponseModel
    */
-  layerGetPermissions(
-    code: string,
-    username?: string | null,
-    role?: string | null,
-  ): Promise<LayerPermissionsGetWebResponseModel>;
+  layerGetPermissions({
+    code,
+    username,
+    role,
+  }: {
+    /** The Guc for the layer whose permissions are being requested **/
+    code: string;
+    /** Optional username to get permissions for the specific user.
+     * This value is mutually exclusive with Role. **/
+    username?: string | null;
+    /** Optional role to get permissions for the specific role.
+     * This value is mutually exclusive with Username. **/
+    role?: string | null;
+  }): Promise<LayerPermissionsGetWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Get the permissions of a layer by its code
    * Fetches the permissions of a layer by its Guc
-   * @param code The Guc for the layer whose permissions are being requested
-   * @param username Optional username to get permissions for the specific user.
-   * This value is mutually exclusive with Role.
-   * @param role Optional role to get permissions for the specific role.
-   * This value is mutually exclusive with Username.
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  layerGetPermissionsApiRequestOptions(
-    code: string,
-    username?: string | null,
-    role?: string | null,
-  ): ApiRequestOptions;
+  layerGetPermissionsApiRequestOptions({
+    code,
+    username,
+    role,
+  }: {
+    /** The Guc for the layer whose permissions are being requested **/
+    code: string;
+    /** Optional username to get permissions for the specific user.
+     * This value is mutually exclusive with Role. **/
+    username?: string | null;
+    /** Optional role to get permissions for the specific role.
+     * This value is mutually exclusive with Username. **/
+    role?: string | null;
+  }): ApiRequestOptions;
 
   /**
    * Edit permissions for a layer
    * Edit the permissions on the layer with the specified code
-   * @param code The Guc of the layer to edit the permissions of
-   * @param requestBody The model containing the info necessary to the edit permissions operation
    * @returns LayerWithPermissionsWebResponseModel
    */
-  layerEditPermissions(
-    code: string,
-    requestBody: LayerPermissionsEditWebRequestModel,
-  ): Promise<LayerWithPermissionsWebResponseModel>;
+  layerEditPermissions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the layer to edit the permissions of **/
+    code: string;
+    /** The model containing the info necessary to the edit permissions operation **/
+    requestBody: LayerPermissionsEditWebRequestModel;
+  }): Promise<LayerWithPermissionsWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Edit permissions for a layer
    * Edit the permissions on the layer with the specified code
-   * @param code The Guc of the layer to edit the permissions of
-   * @param requestBody The model containing the info necessary to the edit permissions operation
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  layerEditPermissionsApiRequestOptions(
-    code: string,
-    requestBody: LayerPermissionsEditWebRequestModel,
-  ): ApiRequestOptions;
+  layerEditPermissionsApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the layer to edit the permissions of **/
+    code: string;
+    /** The model containing the info necessary to the edit permissions operation **/
+    requestBody: LayerPermissionsEditWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Lists user layers with their winning permission
    * Fetches a list of layers with winning permission optionally specifying page and the number of results to return per page.
-   * @param username The name of the user to get layer access advisor for
-   * @param query Optional query (full or partial feature name) to filter the results by
-   * @param page The page number to fetch (1 based)
-   * @param pageSize The number of results to return per page
    * @returns LayerAccessAdvisorByUserListWebResponseModel
    */
-  layerLayerAccessAdvisorByUser(
-    username: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<LayerAccessAdvisorByUserListWebResponseModel>;
+  layerLayerAccessAdvisorByUser({
+    username,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The name of the user to get layer access advisor for **/
+    username: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<LayerAccessAdvisorByUserListWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Lists user layers with their winning permission
    * Fetches a list of layers with winning permission optionally specifying page and the number of results to return per page.
-   * @param username The name of the user to get layer access advisor for
-   * @param query Optional query (full or partial feature name) to filter the results by
-   * @param page The page number to fetch (1 based)
-   * @param pageSize The number of results to return per page
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  layerLayerAccessAdvisorByUserApiRequestOptions(
-    username: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions;
+  layerLayerAccessAdvisorByUserApiRequestOptions({
+    username,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The name of the user to get layer access advisor for **/
+    username: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions;
 
   /**
    * Lists role layers with their winning permission
    * Fetches a list of layers with winning permission optionally specifying page and the number of results to return per page.
-   * @param code The code of the role to get layer access advisor for
-   * @param query Optional query (full or partial feature name) to filter the results by
-   * @param page The page number to fetch (1 based)
-   * @param pageSize The number of results to return per page
    * @returns LayerAccessAdvisorByRoleListWebResponseModel
    */
-  layerLayerAccessAdvisorByRole(
-    code: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<LayerAccessAdvisorByRoleListWebResponseModel>;
+  layerLayerAccessAdvisorByRole({
+    code,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The code of the role to get layer access advisor for **/
+    code: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<LayerAccessAdvisorByRoleListWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Lists role layers with their winning permission
    * Fetches a list of layers with winning permission optionally specifying page and the number of results to return per page.
-   * @param code The code of the role to get layer access advisor for
-   * @param query Optional query (full or partial feature name) to filter the results by
-   * @param page The page number to fetch (1 based)
-   * @param pageSize The number of results to return per page
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  layerLayerAccessAdvisorByRoleApiRequestOptions(
-    code: string,
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions;
+  layerLayerAccessAdvisorByRoleApiRequestOptions({
+    code,
+    query,
+    page,
+    pageSize,
+  }: {
+    /** The code of the role to get layer access advisor for **/
+    code: string;
+    /** Optional query (full or partial feature name) to filter the results by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions;
 }

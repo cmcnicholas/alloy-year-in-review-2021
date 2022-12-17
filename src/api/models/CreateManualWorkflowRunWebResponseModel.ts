@@ -8,6 +8,10 @@ export type CreateManualWorkflowRunWebResponseModel = {
    * The Workflow run Id
    */
   runId: string;
+  /**
+   * The Workflow run Ids
+   */
+  runIds: Array<string>;
 };
 
 export namespace CreateManualWorkflowRunWebResponseModel {

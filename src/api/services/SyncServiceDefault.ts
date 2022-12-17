@@ -18,15 +18,25 @@ export class SyncServiceDefault implements SyncService {
     this.config = config;
   }
 
-  public async syncBootStrap(requestBody: SyncBootstrapItemsRequestModel): Promise<any> {
-    const options = this.syncBootStrapApiRequestOptions(requestBody);
+  public async syncBootStrap({
+    requestBody,
+  }: {
+    /** Parameters **/
+    requestBody: SyncBootstrapItemsRequestModel;
+  }): Promise<any> {
+    const options = this.syncBootStrapApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public syncBootStrapApiRequestOptions(
-    requestBody: SyncBootstrapItemsRequestModel,
-  ): ApiRequestOptions {
+  public syncBootStrapApiRequestOptions({
+    requestBody,
+  }: {
+    /** Parameters **/
+    requestBody: SyncBootstrapItemsRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -36,15 +46,25 @@ export class SyncServiceDefault implements SyncService {
     };
   }
 
-  public async syncBootStrapObsolete(requestBody: SyncBootstrapItemsRequestModel): Promise<any> {
-    const options = this.syncBootStrapObsoleteApiRequestOptions(requestBody);
+  public async syncBootStrapObsolete({
+    requestBody,
+  }: {
+    /** Parameters **/
+    requestBody: SyncBootstrapItemsRequestModel;
+  }): Promise<any> {
+    const options = this.syncBootStrapObsoleteApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public syncBootStrapObsoleteApiRequestOptions(
-    requestBody: SyncBootstrapItemsRequestModel,
-  ): ApiRequestOptions {
+  public syncBootStrapObsoleteApiRequestOptions({
+    requestBody,
+  }: {
+    /** Parameters **/
+    requestBody: SyncBootstrapItemsRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -54,13 +74,25 @@ export class SyncServiceDefault implements SyncService {
     };
   }
 
-  public async syncDelta(requestBody: SyncDeltaItemsRequestModel): Promise<any> {
-    const options = this.syncDeltaApiRequestOptions(requestBody);
+  public async syncDelta({
+    requestBody,
+  }: {
+    /** Parameters **/
+    requestBody: SyncDeltaItemsRequestModel;
+  }): Promise<any> {
+    const options = this.syncDeltaApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public syncDeltaApiRequestOptions(requestBody: SyncDeltaItemsRequestModel): ApiRequestOptions {
+  public syncDeltaApiRequestOptions({
+    requestBody,
+  }: {
+    /** Parameters **/
+    requestBody: SyncDeltaItemsRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -70,15 +102,25 @@ export class SyncServiceDefault implements SyncService {
     };
   }
 
-  public async syncDeltaObsolete(requestBody: SyncDeltaItemsRequestModel): Promise<any> {
-    const options = this.syncDeltaObsoleteApiRequestOptions(requestBody);
+  public async syncDeltaObsolete({
+    requestBody,
+  }: {
+    /** Parameters **/
+    requestBody: SyncDeltaItemsRequestModel;
+  }): Promise<any> {
+    const options = this.syncDeltaObsoleteApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public syncDeltaObsoleteApiRequestOptions(
-    requestBody: SyncDeltaItemsRequestModel,
-  ): ApiRequestOptions {
+  public syncDeltaObsoleteApiRequestOptions({
+    requestBody,
+  }: {
+    /** Parameters **/
+    requestBody: SyncDeltaItemsRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',

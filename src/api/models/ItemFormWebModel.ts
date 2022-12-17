@@ -3,6 +3,7 @@
 import type { Context } from './Context';
 import type { ItemFormAction } from './ItemFormAction';
 import type { ItemFormControlWebModel } from './ItemFormControlWebModel';
+import type { ItemFormExpressionWebModel } from './ItemFormExpressionWebModel';
 import type { MetadataWebModel } from './MetadataWebModel';
 
 /**
@@ -37,6 +38,10 @@ export type ItemFormWebModel = {
    * The item form actions, tells user if this form should be used when creating items, editing/deleting them or both
    */
   actions: Array<ItemFormAction>;
+  /**
+   * The expressions of this item form
+   */
+  expressions?: Array<ItemFormExpressionWebModel> | null;
   /**
    * The metadata to an item form
    */

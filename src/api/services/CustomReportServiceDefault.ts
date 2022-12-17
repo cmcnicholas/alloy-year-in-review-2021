@@ -34,13 +34,25 @@ export class CustomReportServiceDefault implements CustomReportService {
     this.config = config;
   }
 
-  public async customReportGet(code: string): Promise<CustomReportGetWebResponseModel> {
-    const options = this.customReportGetApiRequestOptions(code);
+  public async customReportGet({
+    code,
+  }: {
+    /** The Guc for the Custom Report being requested **/
+    code: string;
+  }): Promise<CustomReportGetWebResponseModel> {
+    const options = this.customReportGetApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public customReportGetApiRequestOptions(code: string): ApiRequestOptions {
+  public customReportGetApiRequestOptions({
+    code,
+  }: {
+    /** The Guc for the Custom Report being requested **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -48,19 +60,32 @@ export class CustomReportServiceDefault implements CustomReportService {
     };
   }
 
-  public async customReportEdit(
-    code: string,
-    requestBody: CustomReportEditWebRequestModel,
-  ): Promise<CustomReportEditWebResponseModel> {
-    const options = this.customReportEditApiRequestOptions(code, requestBody);
+  public async customReportEdit({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the custom report to edit/> **/
+    code: string;
+    /** Model containing the new Custom Report details **/
+    requestBody: CustomReportEditWebRequestModel;
+  }): Promise<CustomReportEditWebResponseModel> {
+    const options = this.customReportEditApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public customReportEditApiRequestOptions(
-    code: string,
-    requestBody: CustomReportEditWebRequestModel,
-  ): ApiRequestOptions {
+  public customReportEditApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the custom report to edit/> **/
+    code: string;
+    /** Model containing the new Custom Report details **/
+    requestBody: CustomReportEditWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -70,13 +95,25 @@ export class CustomReportServiceDefault implements CustomReportService {
     };
   }
 
-  public async customReportDelete(code: string): Promise<void> {
-    const options = this.customReportDeleteApiRequestOptions(code);
+  public async customReportDelete({
+    code,
+  }: {
+    /** The Guc of the Custom Report to delete **/
+    code: string;
+  }): Promise<void> {
+    const options = this.customReportDeleteApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public customReportDeleteApiRequestOptions(code: string): ApiRequestOptions {
+  public customReportDeleteApiRequestOptions({
+    code,
+  }: {
+    /** The Guc of the Custom Report to delete **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'DELETE',
@@ -84,21 +121,39 @@ export class CustomReportServiceDefault implements CustomReportService {
     };
   }
 
-  public async customReportList(
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<CustomReportListWebResponseModel> {
-    const options = this.customReportListApiRequestOptions(query, page, pageSize);
+  public async customReportList({
+    query,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the designs by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<CustomReportListWebResponseModel> {
+    const options = this.customReportListApiRequestOptions({
+      query,
+      page,
+      pageSize,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public customReportListApiRequestOptions(
-    query?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public customReportListApiRequestOptions({
+    query,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the designs by **/
+    query?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -111,17 +166,25 @@ export class CustomReportServiceDefault implements CustomReportService {
     };
   }
 
-  public async customReportCreate(
-    requestBody: CustomReportCreateWebRequestModel,
-  ): Promise<CustomReportCreateWebResponseModel> {
-    const options = this.customReportCreateApiRequestOptions(requestBody);
+  public async customReportCreate({
+    requestBody,
+  }: {
+    /** Model containing the new Custom Report details **/
+    requestBody: CustomReportCreateWebRequestModel;
+  }): Promise<CustomReportCreateWebResponseModel> {
+    const options = this.customReportCreateApiRequestOptions({
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public customReportCreateApiRequestOptions(
-    requestBody: CustomReportCreateWebRequestModel,
-  ): ApiRequestOptions {
+  public customReportCreateApiRequestOptions({
+    requestBody,
+  }: {
+    /** Model containing the new Custom Report details **/
+    requestBody: CustomReportCreateWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -131,19 +194,32 @@ export class CustomReportServiceDefault implements CustomReportService {
     };
   }
 
-  public async customReportClone(
-    code: string,
-    requestBody: CustomReportCloneWebRequestModel,
-  ): Promise<CustomReportCloneWebResponseModel> {
-    const options = this.customReportCloneApiRequestOptions(code, requestBody);
+  public async customReportClone({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the report to clone. **/
+    code: string;
+    /** Model containing the Custom Report details we can override from the original report. **/
+    requestBody: CustomReportCloneWebRequestModel;
+  }): Promise<CustomReportCloneWebResponseModel> {
+    const options = this.customReportCloneApiRequestOptions({
+      code,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public customReportCloneApiRequestOptions(
-    code: string,
-    requestBody: CustomReportCloneWebRequestModel,
-  ): ApiRequestOptions {
+  public customReportCloneApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the report to clone. **/
+    code: string;
+    /** Model containing the Custom Report details we can override from the original report. **/
+    requestBody: CustomReportCloneWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -153,19 +229,32 @@ export class CustomReportServiceDefault implements CustomReportService {
     };
   }
 
-  public async customReportAddDataSource(
-    customReportCode: string,
-    requestBody: AddDataSourceWebRequestModelBase,
-  ): Promise<AddDataSourceWebResponseModel> {
-    const options = this.customReportAddDataSourceApiRequestOptions(customReportCode, requestBody);
+  public async customReportAddDataSource({
+    customReportCode,
+    requestBody,
+  }: {
+    /** The Guc of the report to add the data source to **/
+    customReportCode: string;
+    /** The model containing the info about the data source to add **/
+    requestBody: AddDataSourceWebRequestModelBase;
+  }): Promise<AddDataSourceWebResponseModel> {
+    const options = this.customReportAddDataSourceApiRequestOptions({
+      customReportCode,
+      requestBody,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public customReportAddDataSourceApiRequestOptions(
-    customReportCode: string,
-    requestBody: AddDataSourceWebRequestModelBase,
-  ): ApiRequestOptions {
+  public customReportAddDataSourceApiRequestOptions({
+    customReportCode,
+    requestBody,
+  }: {
+    /** The Guc of the report to add the data source to **/
+    customReportCode: string;
+    /** The model containing the info about the data source to add **/
+    requestBody: AddDataSourceWebRequestModelBase;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -175,25 +264,39 @@ export class CustomReportServiceDefault implements CustomReportService {
     };
   }
 
-  public async customReportEditDataSource(
-    customReportCode: string,
-    code: string,
-    requestBody: EditDataSourceWebRequestModelBase,
-  ): Promise<EditDataSourceWebResponseModel> {
-    const options = this.customReportEditDataSourceApiRequestOptions(
+  public async customReportEditDataSource({
+    customReportCode,
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the report containing the data source to edit **/
+    customReportCode: string;
+    /** The Guc of the data source to edit **/
+    code: string;
+    /** The model containing the info about the data source to edit **/
+    requestBody: EditDataSourceWebRequestModelBase;
+  }): Promise<EditDataSourceWebResponseModel> {
+    const options = this.customReportEditDataSourceApiRequestOptions({
       customReportCode,
       code,
       requestBody,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public customReportEditDataSourceApiRequestOptions(
-    customReportCode: string,
-    code: string,
-    requestBody: EditDataSourceWebRequestModelBase,
-  ): ApiRequestOptions {
+  public customReportEditDataSourceApiRequestOptions({
+    customReportCode,
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the report containing the data source to edit **/
+    customReportCode: string;
+    /** The Guc of the data source to edit **/
+    code: string;
+    /** The model containing the info about the data source to edit **/
+    requestBody: EditDataSourceWebRequestModelBase;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -203,25 +306,41 @@ export class CustomReportServiceDefault implements CustomReportService {
     };
   }
 
-  public async customReportRemoveDataSource(
-    customReportCode: string,
-    code: string,
-    signature?: string | null,
-  ): Promise<RemoveDataSourceWebResponseModel> {
-    const options = this.customReportRemoveDataSourceApiRequestOptions(
+  public async customReportRemoveDataSource({
+    customReportCode,
+    code,
+    signature,
+  }: {
+    /** The Guc of the report containing the data source to remove **/
+    customReportCode: string;
+    /** The Guc of the data source to remove **/
+    code: string;
+    /** The signature is used to ensure that the custom report being edited is actually the one provided to the system.
+     * This is enforced in order to avoid applying possibly invalid edits after another user has edited the same custom report **/
+    signature: string | null;
+  }): Promise<RemoveDataSourceWebResponseModel> {
+    const options = this.customReportRemoveDataSourceApiRequestOptions({
       customReportCode,
       code,
       signature,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public customReportRemoveDataSourceApiRequestOptions(
-    customReportCode: string,
-    code: string,
-    signature?: string | null,
-  ): ApiRequestOptions {
+  public customReportRemoveDataSourceApiRequestOptions({
+    customReportCode,
+    code,
+    signature,
+  }: {
+    /** The Guc of the report containing the data source to remove **/
+    customReportCode: string;
+    /** The Guc of the data source to remove **/
+    code: string;
+    /** The signature is used to ensure that the custom report being edited is actually the one provided to the system.
+     * This is enforced in order to avoid applying possibly invalid edits after another user has edited the same custom report **/
+    signature: string | null;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'DELETE',
@@ -232,22 +351,32 @@ export class CustomReportServiceDefault implements CustomReportService {
     };
   }
 
-  public async customReportAddDocumentDefinition(
-    customReportCode: string,
-    requestBody: AddDocumentDefinitionWebRequestModel,
-  ): Promise<AddDocumentDefinitionWebResponseModel> {
-    const options = this.customReportAddDocumentDefinitionApiRequestOptions(
+  public async customReportAddDocumentDefinition({
+    customReportCode,
+    requestBody,
+  }: {
+    /** The Guc of the report to add the document definition to **/
+    customReportCode: string;
+    /** The model containing the info about the document definition to add **/
+    requestBody: AddDocumentDefinitionWebRequestModel;
+  }): Promise<AddDocumentDefinitionWebResponseModel> {
+    const options = this.customReportAddDocumentDefinitionApiRequestOptions({
       customReportCode,
       requestBody,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public customReportAddDocumentDefinitionApiRequestOptions(
-    customReportCode: string,
-    requestBody: AddDocumentDefinitionWebRequestModel,
-  ): ApiRequestOptions {
+  public customReportAddDocumentDefinitionApiRequestOptions({
+    customReportCode,
+    requestBody,
+  }: {
+    /** The Guc of the report to add the document definition to **/
+    customReportCode: string;
+    /** The model containing the info about the document definition to add **/
+    requestBody: AddDocumentDefinitionWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'POST',
@@ -257,25 +386,39 @@ export class CustomReportServiceDefault implements CustomReportService {
     };
   }
 
-  public async customReportEditDocumentDefinition(
-    customReportCode: string,
-    id: string,
-    requestBody: EditDocumentDefinitionWebRequestModel,
-  ): Promise<EditDocumentDefinitionWebResponseModel> {
-    const options = this.customReportEditDocumentDefinitionApiRequestOptions(
+  public async customReportEditDocumentDefinition({
+    customReportCode,
+    id,
+    requestBody,
+  }: {
+    /** The Guc of the report containing the document definition to edit **/
+    customReportCode: string;
+    /** The AId of the document definition to edit **/
+    id: string;
+    /** The model containing the info about the document definition to edit **/
+    requestBody: EditDocumentDefinitionWebRequestModel;
+  }): Promise<EditDocumentDefinitionWebResponseModel> {
+    const options = this.customReportEditDocumentDefinitionApiRequestOptions({
       customReportCode,
       id,
       requestBody,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public customReportEditDocumentDefinitionApiRequestOptions(
-    customReportCode: string,
-    id: string,
-    requestBody: EditDocumentDefinitionWebRequestModel,
-  ): ApiRequestOptions {
+  public customReportEditDocumentDefinitionApiRequestOptions({
+    customReportCode,
+    id,
+    requestBody,
+  }: {
+    /** The Guc of the report containing the document definition to edit **/
+    customReportCode: string;
+    /** The AId of the document definition to edit **/
+    id: string;
+    /** The model containing the info about the document definition to edit **/
+    requestBody: EditDocumentDefinitionWebRequestModel;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'PUT',
@@ -285,25 +428,41 @@ export class CustomReportServiceDefault implements CustomReportService {
     };
   }
 
-  public async customReportRemoveDocumentDefinition(
-    customReportCode: string,
-    id: string,
-    signature?: string | null,
-  ): Promise<RemoveDocumentDefinitionWebResponseModel> {
-    const options = this.customReportRemoveDocumentDefinitionApiRequestOptions(
+  public async customReportRemoveDocumentDefinition({
+    customReportCode,
+    id,
+    signature,
+  }: {
+    /** The Guc of the report containing the document definition to remove **/
+    customReportCode: string;
+    /** The AId of the document definition to remove **/
+    id: string;
+    /** The signature is used to ensure that the custom report being edited is actually the one provided to the system.
+     * This is enforced in order to avoid applying possibly invalid edits after another user has edited the same custom report **/
+    signature: string | null;
+  }): Promise<RemoveDocumentDefinitionWebResponseModel> {
+    const options = this.customReportRemoveDocumentDefinitionApiRequestOptions({
       customReportCode,
       id,
       signature,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public customReportRemoveDocumentDefinitionApiRequestOptions(
-    customReportCode: string,
-    id: string,
-    signature?: string | null,
-  ): ApiRequestOptions {
+  public customReportRemoveDocumentDefinitionApiRequestOptions({
+    customReportCode,
+    id,
+    signature,
+  }: {
+    /** The Guc of the report containing the document definition to remove **/
+    customReportCode: string;
+    /** The AId of the document definition to remove **/
+    id: string;
+    /** The signature is used to ensure that the custom report being edited is actually the one provided to the system.
+     * This is enforced in order to avoid applying possibly invalid edits after another user has edited the same custom report **/
+    signature: string | null;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'DELETE',

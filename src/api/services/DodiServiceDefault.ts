@@ -19,13 +19,25 @@ export class DodiServiceDefault implements DodiService {
     this.config = config;
   }
 
-  public async dodiGet(code: string): Promise<DodiWithOperationsSummaryWebResponseModel> {
-    const options = this.dodiGetApiRequestOptions(code);
+  public async dodiGet({
+    code,
+  }: {
+    /** The Guc to use to fetch the required dodi **/
+    code: string;
+  }): Promise<DodiWithOperationsSummaryWebResponseModel> {
+    const options = this.dodiGetApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public dodiGetApiRequestOptions(code: string): ApiRequestOptions {
+  public dodiGetApiRequestOptions({
+    code,
+  }: {
+    /** The Guc to use to fetch the required dodi **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',
@@ -33,18 +45,41 @@ export class DodiServiceDefault implements DodiService {
     };
   }
 
-  public async dodiList(
-    query?: string | null,
-    context?: Context | null,
-    implementsInterface?: string | null,
-    userGroup?: string | null,
-    childDodi?: string | null,
-    lastEditDate?: string | null,
-    queryCompleteDodi?: boolean | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<DodiListWebResponseModel> {
-    const options = this.dodiListApiRequestOptions(
+  public async dodiList({
+    query,
+    context,
+    implementsInterface,
+    userGroup,
+    childDodi,
+    lastEditDate,
+    queryCompleteDodi,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the dodis by **/
+    query?: string | null;
+    /** Optional dodis Context filter **/
+    context?: Context | null;
+    /** The optional dodi code Guc, if specified, only the dodis
+     * implementing that interface code will be returned **/
+    implementsInterface?: string | null;
+    /** The optional user group Guc. If specified, only the dodis
+     * that have this user group code within their permissions or the permissions
+     * of the attributes within them are returned **/
+    userGroup?: string | null;
+    /** Optional Guc to filter dodis by. If specified, only the dodis
+     * that have a link attribute pointing to the specified dodi are returned **/
+    childDodi?: string | null;
+    /** The optional last edit date to return only dodis created or edited after this date **/
+    lastEditDate?: string | null;
+    /** Optional boolean that can be set to false to query against dodis without taking into account inheritance **/
+    queryCompleteDodi?: boolean | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<DodiListWebResponseModel> {
+    const options = this.dodiListApiRequestOptions({
       query,
       context,
       implementsInterface,
@@ -54,22 +89,45 @@ export class DodiServiceDefault implements DodiService {
       queryCompleteDodi,
       page,
       pageSize,
-    );
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public dodiListApiRequestOptions(
-    query?: string | null,
-    context?: Context | null,
-    implementsInterface?: string | null,
-    userGroup?: string | null,
-    childDodi?: string | null,
-    lastEditDate?: string | null,
-    queryCompleteDodi?: boolean | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions {
+  public dodiListApiRequestOptions({
+    query,
+    context,
+    implementsInterface,
+    userGroup,
+    childDodi,
+    lastEditDate,
+    queryCompleteDodi,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the dodis by **/
+    query?: string | null;
+    /** Optional dodis Context filter **/
+    context?: Context | null;
+    /** The optional dodi code Guc, if specified, only the dodis
+     * implementing that interface code will be returned **/
+    implementsInterface?: string | null;
+    /** The optional user group Guc. If specified, only the dodis
+     * that have this user group code within their permissions or the permissions
+     * of the attributes within them are returned **/
+    userGroup?: string | null;
+    /** Optional Guc to filter dodis by. If specified, only the dodis
+     * that have a link attribute pointing to the specified dodi are returned **/
+    childDodi?: string | null;
+    /** The optional last edit date to return only dodis created or edited after this date **/
+    lastEditDate?: string | null;
+    /** Optional boolean that can be set to false to query against dodis without taking into account inheritance **/
+    queryCompleteDodi?: boolean | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',

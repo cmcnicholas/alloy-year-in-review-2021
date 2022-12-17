@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import type { CustomReportControlPropertyWebModelOfNullableBoolean } from './CustomReportControlPropertyWebModelOfNullableBoolean';
-import type { CustomReportControlPropertyWebModelOfNullableTextAlign } from './CustomReportControlPropertyWebModelOfNullableTextAlign';
+import type { CustomReportControlPropertyWebModelOfNullableCustomReportTextAlignWebModel } from './CustomReportControlPropertyWebModelOfNullableCustomReportTextAlignWebModel';
 import type { CustomReportControlPropertyWebModelOfString } from './CustomReportControlPropertyWebModelOfString';
 
 /**
@@ -19,7 +19,7 @@ export type CustomReportControlTableHeaderFlowWebModel = {
   /**
    * Optional alignment of the text, defaults to left
    */
-  align?: CustomReportControlPropertyWebModelOfNullableTextAlign | null;
+  align?: CustomReportControlPropertyWebModelOfNullableCustomReportTextAlignWebModel | null;
   /**
    * Whether the table header wraps or not
    */

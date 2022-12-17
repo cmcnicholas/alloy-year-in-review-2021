@@ -21,16 +21,6 @@ export type ItemWebModel = {
    */
   collection: CollectionCode;
   /**
-   * The item start date which is the date at which this item
-   * started being in effect
-   */
-  start: string;
-  /**
-   * The item end date which is the date at which this item
-   * stopped being in effect
-   */
-  end: string;
-  /**
    * The item icon code, if specified, otherwise the design icon has to be used instead
    */
   icon: string;

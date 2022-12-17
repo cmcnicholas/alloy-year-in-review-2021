@@ -14,113 +14,151 @@ import type { ApiRequestOptions } from '../core/ApiRequestOptions';
 export interface UserGroupService {
   /**
    * Gets a user group by code
-   * @param code The code of the user group to retrieve
    * @returns AlloyUserGroupGetWebResponseModel Retrieves the user group matching the specified code
    */
-  userGroupGet(code: string): Promise<AlloyUserGroupGetWebResponseModel>;
+  userGroupGet({
+    code,
+  }: {
+    /** The code of the user group to retrieve **/
+    code: string;
+  }): Promise<AlloyUserGroupGetWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Gets a user group by code
-   * @param code The code of the user group to retrieve
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  userGroupGetApiRequestOptions(code: string): ApiRequestOptions;
+  userGroupGetApiRequestOptions({
+    code,
+  }: {
+    /** The code of the user group to retrieve **/
+    code: string;
+  }): ApiRequestOptions;
 
   /**
    * Edits a user group
    * Edits the user group matching the provided code
-   * @param code The Guc of the user group to edit
-   * @param requestBody The model containing the edit info
    * @returns UserGroupEditWebResponseModel
    */
-  userGroupEdit(
-    code: string,
-    requestBody: UserGroupEditWebRequestModel,
-  ): Promise<UserGroupEditWebResponseModel>;
+  userGroupEdit({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the user group to edit **/
+    code: string;
+    /** The model containing the edit info **/
+    requestBody: UserGroupEditWebRequestModel;
+  }): Promise<UserGroupEditWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * Edits a user group
    * Edits the user group matching the provided code
-   * @param code The Guc of the user group to edit
-   * @param requestBody The model containing the edit info
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  userGroupEditApiRequestOptions(
-    code: string,
-    requestBody: UserGroupEditWebRequestModel,
-  ): ApiRequestOptions;
+  userGroupEditApiRequestOptions({
+    code,
+    requestBody,
+  }: {
+    /** The Guc of the user group to edit **/
+    code: string;
+    /** The model containing the edit info **/
+    requestBody: UserGroupEditWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Deletes a user group
    * Deletes a user group matching the specified code
-   * @param code The Guc of the user group to delete
    * @returns void
    */
-  userGroupDelete(code: string): Promise<void>;
+  userGroupDelete({
+    code,
+  }: {
+    /** The Guc of the user group to delete **/
+    code: string;
+  }): Promise<void>;
 
   /**
    * **used to get the request options without making a http request**
    * Deletes a user group
    * Deletes a user group matching the specified code
-   * @param code The Guc of the user group to delete
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  userGroupDeleteApiRequestOptions(code: string): ApiRequestOptions;
+  userGroupDeleteApiRequestOptions({
+    code,
+  }: {
+    /** The Guc of the user group to delete **/
+    code: string;
+  }): ApiRequestOptions;
 
   /**
    * List and filter user groups
    * List the user groups in the system by taking advantage of the provided optional filters
-   * @param query Optional query to filter the user groups by
-   * @param context Optional Context filter
-   * @param username Optional username parameter to return only groups containing the correspondent user
-   * @param role Optional role parameter to return only groups that are part of this role
-   * @param page The page number to fetch (1 based)
-   * @param pageSize The number of results to return per page
    * @returns AlloyUserGroupListWebResponseModel
    */
-  userGroupList(
-    query?: string | null,
-    context?: Context | null,
-    username?: string | null,
-    role?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): Promise<AlloyUserGroupListWebResponseModel>;
+  userGroupList({
+    query,
+    context,
+    username,
+    role,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the user groups by **/
+    query?: string | null;
+    /** Optional Context filter **/
+    context?: Context | null;
+    /** Optional username parameter to return only groups containing the correspondent user **/
+    username?: string | null;
+    /** Optional role parameter to return only groups that are part of this role **/
+    role?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): Promise<AlloyUserGroupListWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
    * List and filter user groups
    * List the user groups in the system by taking advantage of the provided optional filters
-   * @param query Optional query to filter the user groups by
-   * @param context Optional Context filter
-   * @param username Optional username parameter to return only groups containing the correspondent user
-   * @param role Optional role parameter to return only groups that are part of this role
-   * @param page The page number to fetch (1 based)
-   * @param pageSize The number of results to return per page
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  userGroupListApiRequestOptions(
-    query?: string | null,
-    context?: Context | null,
-    username?: string | null,
-    role?: string | null,
-    page?: number,
-    pageSize?: number,
-  ): ApiRequestOptions;
+  userGroupListApiRequestOptions({
+    query,
+    context,
+    username,
+    role,
+    page,
+    pageSize,
+  }: {
+    /** Optional query to filter the user groups by **/
+    query?: string | null;
+    /** Optional Context filter **/
+    context?: Context | null;
+    /** Optional username parameter to return only groups containing the correspondent user **/
+    username?: string | null;
+    /** Optional role parameter to return only groups that are part of this role **/
+    role?: string | null;
+    /** The page number to fetch (1 based) **/
+    page?: number;
+    /** The number of results to return per page **/
+    pageSize?: number;
+  }): ApiRequestOptions;
 
   /**
    * Creates a user group
    * Creates a user group using the information specified. A user group is the unit of permissions in Alloy.
    * It contains users and it is associated to permissions for objects with UAC
    * rules like Designs and Layers
-   * @param requestBody The model containing the creation info
    * @returns UserGroupCreateWebResponseModel
    */
-  userGroupCreate(
-    requestBody: UserGroupCreateWebRequestModel,
-  ): Promise<UserGroupCreateWebResponseModel>;
+  userGroupCreate({
+    requestBody,
+  }: {
+    /** The model containing the creation info **/
+    requestBody: UserGroupCreateWebRequestModel;
+  }): Promise<UserGroupCreateWebResponseModel>;
 
   /**
    * **used to get the request options without making a http request**
@@ -128,46 +166,62 @@ export interface UserGroupService {
    * Creates a user group using the information specified. A user group is the unit of permissions in Alloy.
    * It contains users and it is associated to permissions for objects with UAC
    * rules like Designs and Layers
-   * @param requestBody The model containing the creation info
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  userGroupCreateApiRequestOptions(requestBody: UserGroupCreateWebRequestModel): ApiRequestOptions;
+  userGroupCreateApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the creation info **/
+    requestBody: UserGroupCreateWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Adds a user to a group
    * This endpoint allows to add new users to an existing user group
-   * @param requestBody The model containing the info necessary to add a user to a group
    * @returns void
    */
-  userGroupAddUser(requestBody: UserGroupAddUserWebRequestModel): Promise<void>;
+  userGroupAddUser({
+    requestBody,
+  }: {
+    /** The model containing the info necessary to add a user to a group **/
+    requestBody: UserGroupAddUserWebRequestModel;
+  }): Promise<void>;
 
   /**
    * **used to get the request options without making a http request**
    * Adds a user to a group
    * This endpoint allows to add new users to an existing user group
-   * @param requestBody The model containing the info necessary to add a user to a group
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  userGroupAddUserApiRequestOptions(
-    requestBody: UserGroupAddUserWebRequestModel,
-  ): ApiRequestOptions;
+  userGroupAddUserApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the info necessary to add a user to a group **/
+    requestBody: UserGroupAddUserWebRequestModel;
+  }): ApiRequestOptions;
 
   /**
    * Removes a user from a group
    * This endpoint allows to remove users from an existing user group
-   * @param requestBody The model containing the info necessary to remove a user from a group
    * @returns void
    */
-  userGroupRemoveUser(requestBody: UserGroupRemoveUserWebRequestModel): Promise<void>;
+  userGroupRemoveUser({
+    requestBody,
+  }: {
+    /** The model containing the info necessary to remove a user from a group **/
+    requestBody: UserGroupRemoveUserWebRequestModel;
+  }): Promise<void>;
 
   /**
    * **used to get the request options without making a http request**
    * Removes a user from a group
    * This endpoint allows to remove users from an existing user group
-   * @param requestBody The model containing the info necessary to remove a user from a group
    * @returns ApiRequestOptions the request options to fulfill a http request
    */
-  userGroupRemoveUserApiRequestOptions(
-    requestBody: UserGroupRemoveUserWebRequestModel,
-  ): ApiRequestOptions;
+  userGroupRemoveUserApiRequestOptions({
+    requestBody,
+  }: {
+    /** The model containing the info necessary to remove a user from a group **/
+    requestBody: UserGroupRemoveUserWebRequestModel;
+  }): ApiRequestOptions;
 }

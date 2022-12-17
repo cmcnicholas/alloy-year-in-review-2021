@@ -32,8 +32,10 @@ export async function login(
 
   try {
     const response = await sessionService.sessionCreate({
-      email: payload.email,
-      password: payload.password,
+      requestBody: {
+        email: payload.email,
+        password: payload.password,
+      },
     });
     context.state.token = response.token;
   } catch (e) {
@@ -47,7 +49,10 @@ export async function login(
   };
 
   try {
-    const response = await customerService.customerList(undefined, undefined, 1, 100);
+    const response = await customerService.customerList({
+      page: 1,
+      pageSize: 100,
+    });
 
     return {
       token: context.state.token,

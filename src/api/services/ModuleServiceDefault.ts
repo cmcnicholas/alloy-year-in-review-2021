@@ -18,13 +18,25 @@ export class ModuleServiceDefault implements ModuleService {
     this.config = config;
   }
 
-  public async moduleGet(code: string): Promise<ModuleGetWebResponseModel> {
-    const options = this.moduleGetApiRequestOptions(code);
+  public async moduleGet({
+    code,
+  }: {
+    /** The Guc for the module being requested **/
+    code: string;
+  }): Promise<ModuleGetWebResponseModel> {
+    const options = this.moduleGetApiRequestOptions({
+      code,
+    });
     const result = await __request(options);
     return result.body;
   }
 
-  public moduleGetApiRequestOptions(code: string): ApiRequestOptions {
+  public moduleGetApiRequestOptions({
+    code,
+  }: {
+    /** The Guc for the module being requested **/
+    code: string;
+  }): ApiRequestOptions {
     return {
       ...this.config,
       method: 'GET',

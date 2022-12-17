@@ -1,5 +1,6 @@
 /* eslint-disable */
 
+import type { EditDataSourceJoinHeadersWebRequestModel } from './EditDataSourceJoinHeadersWebRequestModel';
 import type { EditDataSourceWebRequestModelBase } from './EditDataSourceWebRequestModelBase';
 
 export type EditDataSourceJoinWebRequestModel = EditDataSourceWebRequestModelBase & {
@@ -19,6 +20,10 @@ export type EditDataSourceJoinWebRequestModel = EditDataSourceWebRequestModelBas
    * Header of the right data source to use for the join
    */
   rightHeader: string;
+  /**
+   * Updates the headers on this data source
+   */
+  headers?: Array<EditDataSourceJoinHeadersWebRequestModel> | null;
 };
 
 export namespace EditDataSourceJoinWebRequestModel {

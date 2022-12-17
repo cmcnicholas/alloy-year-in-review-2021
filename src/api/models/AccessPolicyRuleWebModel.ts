@@ -7,6 +7,10 @@ export type AccessPolicyRuleWebModel = {
   /**
    * The accessPolicy rule Alloy Id
    */
+  id: string;
+  /**
+   * The accessPolicy rule DODI code
+   */
   dodiCode: string;
   /**
    * The rule name to display
